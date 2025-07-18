@@ -6,7 +6,4 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    internal class Apartamento
-    {
-    }
 }
