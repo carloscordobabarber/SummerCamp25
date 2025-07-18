@@ -14,25 +14,32 @@
       <FileName>District.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dominio.Incidencia">
-    <Position X="1" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA0AAAAAAAAAA=</HashCode>
-      <FileName>Incidencia.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Dominio.Edificio">
-    <Position X="0.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAACAAAAAgAAgAAAAIAAAAAAAQAAAAEAAAAAAAAAA=</HashCode>
-      <FileName>Edificio.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Client">
     <Position X="2.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAEAhBAIAIAAAAAEAAAAAAEAEAAAAAAAAQAIAFgA=</HashCode>
       <FileName>Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dominio.Incidence">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAIgAAAAAAAAAAACQgIAAUIAAAAAAAAA=</HashCode>
+      <FileName>Incidence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dominio.Building">
+    <Position X="4.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAgAAgAAAAIAAIAAAASAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Building.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Contract">
+    <Position X="2.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QBAAAEAAAAAAAAgAALAAAACgAAAAAAIAwAACAkAACAA=</HashCode>
+      <FileName>Contract.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

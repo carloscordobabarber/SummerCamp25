@@ -9,6 +9,11 @@ namespace Dominio
 {
     internal class Building
     {
+        int idBuilding;
+        string direcction;
+        int floor;
+        string door;
+
         public int IdBuilding { get; set; }
         public string Direcction { get; set; }
         public int Floor { get; set; }

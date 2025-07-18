@@ -15,6 +15,7 @@ namespace Dominio
         string direcction;
         string incidence;
         
+
         public int IdIncidence { get; set; }
         public string OwnersName { get; set; }
         public string ClientName { get; set; }

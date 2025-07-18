@@ -22,72 +22,16 @@ public class Contract
         this.endDate = endDate;
         this.apartmentAddress = apartmentAddress;
     }
+    public int ContractId { get => contractId; set => contractId = value; }
+    public string ClientDni { get => clientDni; set => clientDni = value; }
+    public string ClientName { get => clientName; set => clientName = value; }
+        
+    public string ClientBankAccount { get => clientBankAccount; set => clientBankAccount = value; }
+    public int Payment { get => payment; set => payment = value; }
+    public DateTime StartDate { get => startDate; set => startDate = value; }
+    public DateTime EndDate { get => endDate; set => endDate = value; }
+    public string ApartmentAddress { get => apartmentAddress; set => apartmentAddress = value; }
 
-    // Getters
-    public int get ContractId()
-    {
-        return contractId;
-    }
-    public string get ClientDni()
-    {
-        return clientDni;
-    }
-    public string get ClientName()
-    {
-        return clientName;
-    }
-    public string get ClientBankAccount()
-    {
-        return clientBankAccount;
-    }
-    public int get Payment()
-    {
-        return payment;
-    }
-    public DateTime get StartDate()
-    {
-        return startDate;
-    }
-    public DateTime get EndDate()
-    {
-        return endDate;
-    }
-    public string get ApartmentAddress()
-    {
-        return apartmentAddress;
-    }
 
-    // Setters
-    public void set ContractId(int contractId)
-    {
-        this.contractId = contractId;
+
     }
-    public void set ClientDni(string clientDni)
-    {
-        this.clientDni = clientDni;
-    }
-    public void set ClientName(string clientName)
-    {
-        this.clientName = clientName;
-    }
-    public void set ClientBankAccount(string clientBankAccount)
-    {
-        this.clientBankAccount = clientBankAccount;
-    }
-    public void set Payment(int payment)
-    {
-        this.payment = payment;
-    }
-    public void set StartDate(DateTime startDate)
-    {
-        this.startDate = startDate;
-    }
-    public void set EndDate(DateTime endDate)
-    {
-        this.endDate = endDate;
-    }
-    public void set ApartmentAddress(string apartmentAddress)
-    {
-        this.apartmentAddress = apartmentAddress;
-    }
-}
