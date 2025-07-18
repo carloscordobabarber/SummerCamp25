@@ -7,28 +7,22 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    internal class Edificio
+    internal class Building
     {
-        private string direcction;
-        private int floor;
-        private string door;
-
+        public int IdBuilding { get; set; }
         public string Direcction { get; set; }
-
         public int Floor { get; set; }
-
         public string Door { get; set; }
 
 
-        public Edificio() { }
+        public Building() { }
 
-        public Edificio(string direcction, int floor, string door)
+        public Building(int idBuilding, string direcction, int floor, string door)
         {
+            this.IdBuilding = idBuilding;
             this.Direcction = direcction;
             this.Floor = floor;
             this.Door = door;
         }
-
-
     }
 }
