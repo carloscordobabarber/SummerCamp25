@@ -20,6 +20,13 @@ namespace Dominio
             this.landmark = landmark;
         }
 
+        public int getId() { return id; }
+        public string getName() { return name; }
+        public string getDescription() { return description; }
+        public string getLandmark() { return landmark; }
+
+
+
 
 
 
