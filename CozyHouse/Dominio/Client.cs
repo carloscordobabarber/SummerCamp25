@@ -2,13 +2,15 @@
 
 public class Client
 {
+    private int id;
 	private string dni;
 	private string name;
 	private string bankAccount;
 	private string phoneNumber;
 
-	public Client(string dni, string name, string bankAccount, string phoneNumber)
+	public Client(int id, string dni, string name, string bankAccount, string phoneNumber)
 	{
+        this.id = id;
         this.dni = dni;
         this.name = name;
         this.bankAccount = bankAccount;
@@ -16,6 +18,10 @@ public class Client
     }
 
     // Getters
+    public int GetId()
+    {
+        return id;
+    }
 	public string GetDni()
     {
         return dni;
@@ -34,6 +40,10 @@ public class Client
     }
 
     // Setters
+    public void SetId(int id)
+    {
+        this.id = id;
+    }
     public void SetDni(string dni)
     {
         this.dni = dni;

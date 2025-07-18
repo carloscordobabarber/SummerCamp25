@@ -13,14 +13,14 @@ public class Contract
 
     public Contract(int contractId, string clientDni, string clientName, string clientBankAccount, int payment, DateTime startDate, DateTime endDate, string apartmentAddress)
     {
-        this.ContractId = contractId;
-        this.ClientDni = clientDni;
-        this.ClientName = clientName;
-        this.ClientBankAccount = clientBankAccount;
-        this.Payment = payment;
-        this.StartDate = startDate;
-        this.EndDate = endDate;
-        this.ApartmentAddress = apartmentAddress;
+        this.contractId = contractId;
+        this.clientDni = clientDni;
+        this.clientName = clientName;
+        this.clientBankAccount = clientBankAccount;
+        this.payment = payment;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.apartmentAddress = apartmentAddress;
     }
 
     // Getters
