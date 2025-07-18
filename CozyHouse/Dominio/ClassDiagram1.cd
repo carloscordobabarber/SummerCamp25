@@ -1,17 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Dominio.Apartment">
-    <Position X="5.75" Y="3.5" Width="1.5" />
+    <Position X="7.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIABAAAAAIBAAAABAAAYAAAAAAIBAAAAAAAAAAAABiM=</HashCode>
       <FileName>Apartment.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Dominio.District">
-    <Position X="9.5" Y="2.5" Width="1.5" />
+    <Position X="4.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAACAAgAAgAAAAIAAAAAAAAAAEAAAAAAAEAAAAAgA=</HashCode>
       <FileName>District.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dominio.Incidencia">
+    <Position X="1" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA0AAAAAAAAAA=</HashCode>
+      <FileName>Incidencia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dominio.Edificio">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAgAAgAAAAIAAAAAAAQAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Edificio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Client">
+    <Position X="2.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAEAhBAIAIAAAAAEAAAAAAEAEAAAAAAAAQAIAFgA=</HashCode>
+      <FileName>Client.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

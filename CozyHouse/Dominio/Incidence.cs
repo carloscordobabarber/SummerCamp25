@@ -7,7 +7,14 @@ using System.Threading.Tasks;
 namespace Dominio
 {
     public class Incidence
+
     {
+        int idIncidence;
+        string ownersName;
+        string clientName;
+        string direcction;
+        string incidence;
+        
         public int IdIncidence { get; set; }
         public string OwnersName { get; set; }
         public string ClientName { get; set; }
