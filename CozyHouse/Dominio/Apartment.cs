@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Archivo: Apartment.cs
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,31 +8,31 @@ namespace Dominio
 {
     public class Apartment
     {
-        int Id;
-        string Address;
-        int NumberOfRooms;
-        double Price;
-        int Floor;
-        int NumberOfBathrooms;
-        double Area;
+        int id;
+        string address;
+        int numberOfRooms;
+        double price;
+        int floor;
+        int numberOfBathrooms;
+        double area;
 
         public Apartment(int id, string address, int numberOfRooms, double price, int floor, int numberOfBathrooms, double area)
         {
-            this.Id = id;
-            this.Address = address;
-            this.NumberOfRooms = numberOfRooms;
-            this.Price = price;
-            this.Floor = floor;
-            this.NumberOfBathrooms = numberOfBathrooms;
-            this.Area = area;
+            this.id = id;
+            this.address = address;
+            this.numberOfRooms = numberOfRooms;
+            this.price = price;
+            this.floor = floor;
+            this.numberOfBathrooms = numberOfBathrooms;
+            this.area = area;
         }
 
-        public int IdProperty { get => Id; set => Id = value; }
-        public string AddressProperty { get => Address; set => Address = value; }
-        public int NumberOfRoomsProperty { get => NumberOfRooms; set => NumberOfRooms = value; }
-        public double PriceProperty { get => Price; set => Price = value; }
-        public int FloorProperty { get => Floor; set => Floor = value; }
-        public int NumberOfBathroomsProperty { get => NumberOfBathrooms; set => NumberOfBathrooms = value; }
-        public double AreaProperty { get => Area; set => Area = value; }
+        public int IdProperty { get => id; set => id = value; }
+        public string AddressProperty { get => address; set => address = value; }
+        public int NumberOfRoomsProperty { get => numberOfRooms; set => numberOfRooms = value; }
+        public double PriceProperty { get => price; set => price = value; }
+        public int FloorProperty { get => floor; set => floor = value; }
+        public int NumberOfBathroomsProperty { get => numberOfBathrooms; set => numberOfBathrooms = value; }
+        public double AreaProperty { get => area; set => area = value; }
     }
 }
