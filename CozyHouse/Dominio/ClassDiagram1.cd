@@ -7,7 +7,7 @@
       <FileName>Pisos.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Dominio.Zonas">
+  <Class Name="Dominio.District">
     <Position X="9.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAgAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAgA=</HashCode>
