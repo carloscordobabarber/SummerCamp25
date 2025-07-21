@@ -19,4 +19,3 @@ Client client= new Client(1, dni, name, bankAccount, phoneNumber);
 
 Console.WriteLine(client.GetDni() + ", " + client.GetName() + ", " + client.GetBankAccount() + ", " + client.GetPhoneNumber());
 
-// prueba
