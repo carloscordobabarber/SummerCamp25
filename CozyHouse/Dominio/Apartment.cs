@@ -15,6 +15,8 @@ namespace Dominio
         int floor;
         int numberOfBathrooms;
         double area;
+        bool isAvailable;
+
 
         public Apartment(int id, string address, int numberOfRooms, double price, int floor, int numberOfBathrooms, double area)
         {
@@ -25,6 +27,7 @@ namespace Dominio
             this.floor = floor;
             this.numberOfBathrooms = numberOfBathrooms;
             this.area = area;
+            this.isAvailable = true; // Default value for availability
         }
 
         public int IdProperty { get => id; set => id = value; }
@@ -34,5 +37,6 @@ namespace Dominio
         public int FloorProperty { get => floor; set => floor = value; }
         public int NumberOfBathroomsProperty { get => numberOfBathrooms; set => numberOfBathrooms = value; }
         public double AreaProperty { get => area; set => area = value; }
+        public bool IsAvailableProperty { get => isAvailable; set => isAvailable = value; }
     }
 }
