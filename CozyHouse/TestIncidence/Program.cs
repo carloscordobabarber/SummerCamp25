@@ -4,35 +4,36 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        // Pseudocódigo:
-        // 1. Crear una instancia de la clase Incidence.
-        // 2. Asignar valores a sus propiedades.
-        // 3. Mostrar los valores por consola.
-        // 4. Comprobar que los valores son correctos.
+        Console.Write("Propietario de la vivienda: ");
+        string ownersName = Console.ReadLine();
 
+        Console.Write("Nombre del cliente: ");
+        string clientName = Console.ReadLine();
 
-        Incidence incidence1 = new Incidence();
-  
+        Console.Write("Dirección de la incidencia: ");
+        string direcction = Console.ReadLine();
 
-        incidence1.IdIncidence = 1;
-        incidence1.OwnersName = "Juan Pérez";
-        incidence1.ClientName = "Ana García";
-        incidence1.Direcction = "Calle Falsa 123";
-        incidence1.TheIncidence = "Fuga de agua en el baño";
+        Console.Write("Descripción de la incidencia: ");
+        string incidence = Console.ReadLine();
 
-        Console.WriteLine($"Nºincidencia: {incidence1.IdIncidence}");
+        Incidence incidence1 = new Incidence(1, ownersName, clientName, direcction, incidence);
+        Console.WriteLine($"\nNºincidencia: {incidence1.IdIncidence}");
         Console.WriteLine($"El propietario es: {incidence1.OwnersName}");
         Console.WriteLine($"Ha llamado el cliente: {incidence1.ClientName}");
         Console.WriteLine($"Ha habido la incidencia: {incidence1.TheIncidence}");
 
-        //// Comprobación simple
-        //if (incidence.Id == 1 && incidence.Description == "Prueba de incidencia" && incidence.IsActive)
-        //{
-        //    Console.WriteLine("La clase Incidence funciona correctamente.");
-        //}
-        //else
-        //{
-        //    Console.WriteLine("Error en la clase Incidence.");
-        //}
+        Incidence incidence2 = new Incidence();
+
+        incidence2.IdIncidence = 2;
+        incidence2.OwnersName = "Juan Pérez";
+        incidence2.ClientName = "Ana García";
+        incidence2.Direcction = "Calle Falsa 123";
+        incidence2.TheIncidence = "Fuga de agua en el baño";
+
+        Console.WriteLine($"\nNºincidencia: {incidence2.IdIncidence}");
+        Console.WriteLine($"El propietario es: {incidence2.OwnersName}");
+        Console.WriteLine($"Ha llamado el cliente: {incidence2.ClientName}");
+        Console.WriteLine($"Ha habido la incidencia: {incidence2.TheIncidence}");
+
     }
 }
