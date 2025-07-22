@@ -3,17 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CozyHouseConsola", "CozyHouseConsola\CozyHouseConsola.csproj", "{B1689B50-1686-4B8B-AF0C-6A10D04830A6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio", "Dominio\Dominio.csproj", "{ED7119C8-1A56-4ABD-9679-B23717A3B40E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientTest", "ClientTest\ClientTest.csproj", "{C950298E-C462-482C-89A1-C04C3C5EB489}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrearPisos", "CrearPisos\CrearPisos.csproj", "{D38934A2-490A-4406-9844-804784A37AF8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractTest", "ContractTest\ContractTest.csproj", "{24D48FB0-6FC6-472E-B178-849726343EA3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrearDistrict", "CrearDistrict\CrearDistrict.csproj", "{DFB62DF1-489F-40B0-83DD-360B223C6E15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CozyHouseConsola", "CozyHouseConsola\CozyHouseConsola.csproj", "{8025EA1F-D6F9-4028-A9B3-EAD53818D634}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,30 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B1689B50-1686-4B8B-AF0C-6A10D04830A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1689B50-1686-4B8B-AF0C-6A10D04830A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1689B50-1686-4B8B-AF0C-6A10D04830A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1689B50-1686-4B8B-AF0C-6A10D04830A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED7119C8-1A56-4ABD-9679-B23717A3B40E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED7119C8-1A56-4ABD-9679-B23717A3B40E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED7119C8-1A56-4ABD-9679-B23717A3B40E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED7119C8-1A56-4ABD-9679-B23717A3B40E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C950298E-C462-482C-89A1-C04C3C5EB489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C950298E-C462-482C-89A1-C04C3C5EB489}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C950298E-C462-482C-89A1-C04C3C5EB489}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C950298E-C462-482C-89A1-C04C3C5EB489}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D38934A2-490A-4406-9844-804784A37AF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D38934A2-490A-4406-9844-804784A37AF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D38934A2-490A-4406-9844-804784A37AF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D38934A2-490A-4406-9844-804784A37AF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{24D48FB0-6FC6-472E-B178-849726343EA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{24D48FB0-6FC6-472E-B178-849726343EA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{24D48FB0-6FC6-472E-B178-849726343EA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{24D48FB0-6FC6-472E-B178-849726343EA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFB62DF1-489F-40B0-83DD-360B223C6E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFB62DF1-489F-40B0-83DD-360B223C6E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFB62DF1-489F-40B0-83DD-360B223C6E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFB62DF1-489F-40B0-83DD-360B223C6E15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8025EA1F-D6F9-4028-A9B3-EAD53818D634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8025EA1F-D6F9-4028-A9B3-EAD53818D634}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8025EA1F-D6F9-4028-A9B3-EAD53818D634}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8025EA1F-D6F9-4028-A9B3-EAD53818D634}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
