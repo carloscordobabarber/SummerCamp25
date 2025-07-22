@@ -17,6 +17,10 @@ public class Client
         this.phoneNumber = phoneNumber;
     }
 
+    // Métodos
+
+
+
     // Getters
     public int GetId()
     {
