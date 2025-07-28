@@ -44,5 +44,28 @@ namespace SistemaAPI.Controllers
             incidencias.Add(nuevaIncidencia);
             return CreatedAtAction(nameof(GetById), new { id = nuevaIncidencia.IdIncidence }, nuevaIncidencia);
         }
+
+        //Metodo PUT
+
+        [HttpPut("{id}/status")]
+        public IActionResult UpdateStatus(int id, [FromBody] string newStatus)
+        {
+            var incidencia = incidencias.FirstOrDefault(i => i.IdIncidence == id);
+
+            if (incidencia == null)
+            {
+                return NotFound($"No se encontró ninguna incidencia con id {id}");
+            }
+
+            try
+            {
+                incidencia.UpdateStatus(newStatus);
+                return Ok(incidencia);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
