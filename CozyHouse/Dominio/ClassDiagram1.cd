@@ -3,7 +3,7 @@
   <Class Name="Dominio.Apartment">
     <Position X="7.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIABAAAAAIBAAAABAAAYAAAAAAIBAAAAAAAAAAAABiM=</HashCode>
+      <HashCode>AIABAAAAAIBAAAABAAAYAAAAAAIBAAAAgAAAAAAABic=</HashCode>
       <FileName>Apartment.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -23,8 +23,15 @@
   </Class>
   <Class Name="Dominio.Incidence">
     <Position X="0.5" Y="6.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Dominio.Incidence.Priority" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Incidence.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAEAAAAAAAIgAAAAAAAAAAACQgIAAUIAAAAAAAAA=</HashCode>
+      <HashCode>YASAAECEAAAggIAAIAAAAIBAAAAQhIAAUIYAAAgAAAA=</HashCode>
       <FileName>Incidence.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -38,7 +45,7 @@
   <Class Name="Contract">
     <Position X="2.5" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QBAAAEAAAAAAAAgAALAAAACgAAAAAAIAwAACAkAACAA=</HashCode>
+      <HashCode>QBAAAEAAAAAAAAgAELAAAACgAAAAAAIAwAACAkAACAA=</HashCode>
       <FileName>Contract.cs</FileName>
     </TypeIdentifier>
   </Class>
