@@ -29,7 +29,7 @@ namespace SistemaAPI.Controllers
         public IActionResult Get(int id)
         {
             // Búsqueda de un apartamento por ID
-            var apartment = apartments.FirstOrDefault(a => a.IdProperty == id);
+            var apartment = apartments.FirstOrDefault(a => a.Id == id);
 
 
             // Si el apartamento no existe, devuelve NotFound
