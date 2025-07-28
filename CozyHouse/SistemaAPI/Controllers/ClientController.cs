@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-// Archivo: ClientController.cs
+﻿// Archivo: ClientController.cs
 using Microsoft.AspNetCore.Mvc;
 using Dominio;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SistemaAPI.Controllers
 {
@@ -9,20 +10,57 @@ namespace SistemaAPI.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
-        // GET api/client
-        [HttpGet]
-        public IActionResult Get()
+        private static List<Client> clientes = new List<Client>
         {
-            var cliente = new Client(1, "12345678A", "Juan Pérez", "ES1234567890123456789012", "612345678");
+            new Client(1, "12345678A", "Juan Pérez", "ES1234567890123456789012", "612345678"),
+            new Client(2, "87654321B", "María García", "ES0987654321098765432109", "699998888"),
+            new Client(3, "11223344C", "Carlos Ruiz", "ES2233445566778899001122", "655554444")
+        };
+
+        // GET: api/client
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Ok(clientes);
+        }
+
+        // GET: api/client/2
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var cliente = clientes.FirstOrDefault(c => c.Id == id);
+
+            if (cliente == null)
+            {
+                return NotFound($"No se encontró ningún cliente con id {id}");
+            }
+
             return Ok(cliente);
         }
 
-        // POST api/client
+        // POST: api/client
         [HttpPost]
         public IActionResult Post([FromBody] Client client)
         {
-            // Aquí podrías agregar lógica para guardar el cliente en una base de datos
-            return CreatedAtAction(nameof(Get), new { id = client.Id }, client);
+            clientes.Add(client);
+            return CreatedAtAction(nameof(GetById), new { id = client.Id }, client);
+        }
+
+
+        //DELETE Cliente by id
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var cliente = clientes.FirstOrDefault(c => c.Id == id);
+
+            if (cliente == null)
+            {
+                return NotFound($"No se encontró ningún cliente con id {id}");
+            }
+
+            clientes.Remove(cliente);
+            return NoContent(); // 204: Operación exitosa sin contenido de respuesta
         }
     }
 }
