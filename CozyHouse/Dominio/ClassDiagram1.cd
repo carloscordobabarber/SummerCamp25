@@ -3,7 +3,7 @@
   <Class Name="Dominio.Apartment">
     <Position X="7.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIABAAAAAIBAAAABAAAYAAAAAAIBAAAAgAAAAAAABic=</HashCode>
+      <HashCode>AIABAAAAAIBAAIAFAAAYAAAAAAIBAAAAgAAAAAAABic=</HashCode>
       <FileName>Apartment.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -14,24 +14,10 @@
       <FileName>District.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Client">
-    <Position X="2.75" Y="2.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AACAAEAhBAIAIAAAAAEAAAAAAEAEAAAAAAAAQAIAFgA=</HashCode>
-      <FileName>Client.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Dominio.Incidence">
     <Position X="0.5" Y="6.75" Width="1.5" />
-    <NestedTypes>
-      <Enum Name="Dominio.Incidence.Priority" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Incidence.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>YASAAECEAAAggIAAIAAAAIBAAAAQhIAAUIYAAAgAAAA=</HashCode>
+      <HashCode>IAQAAAAEAAAAAAgAAAAAAIAAAAAAgIABUAAAAAAAAAA=</HashCode>
       <FileName>Incidence.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -40,13 +26,6 @@
     <TypeIdentifier>
       <HashCode>AAAAACAAAAAgAAgAAAAIAAIAAAASAAAAEAAAAAAAAAA=</HashCode>
       <FileName>Building.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Contract">
-    <Position X="2.5" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QBAAAEAAAAAAAAgAELAAAACgAAAAAAIAwAACAkAACAA=</HashCode>
-      <FileName>Contract.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
