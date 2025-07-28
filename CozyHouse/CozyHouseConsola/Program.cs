@@ -7,10 +7,10 @@ namespace CozyHouseAlquiler
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             MostrarLogo();
-            MostrarMenu();
+            await MostrarMenu();
         }
 
         static void MostrarLogo()
@@ -29,7 +29,7 @@ namespace CozyHouseAlquiler
             Console.ResetColor();
         }
 
-        static void MostrarMenu()
+        static async Task MostrarMenu()
         {
             int opcion;
 
@@ -57,13 +57,7 @@ namespace CozyHouseAlquiler
                         Console.WriteLine("→ Funcionalidad: Introducir cliente");
                         break;
                     case 2:
-                        Console.WriteLine("→ Funcionalidad: Listar pisos");
-                        Console.WriteLine(" piso 1");
-                        Console.WriteLine(" piso 2");
-
-                        Console.WriteLine(" piso 3");
-
-                        Console.WriteLine(" piso 4");
+                        await Apartment.ShowApartmentsList();
 
 
                         break;
