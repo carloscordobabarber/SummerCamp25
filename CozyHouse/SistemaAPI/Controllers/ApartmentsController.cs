@@ -1,23 +1,26 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Dominio;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SistemaAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/apartments")]
     [ApiController]
     public class ApartmentsController : ControllerBase
     {
+        //crea una lista de apartamentos ficticios
+        List<Apartment> apartments = new List<Apartment>
+        {
+            new Apartment(1, "Calle Mayor 10, Madrid", 3, 18000, 2, 2, 90.0),
+            new Apartment(2, "Av. Diagonal 245, Barcelona", 2, 14400, 3, 1, 70.0),
+            new Apartment(3, "Gran Vía 100, Madrid", 4, 24000, 5, 2, 110.5),
+            new Apartment(4, "Paseo del Prado 20, Madrid", 1, 10800, 1, 1, 55.0),
+            new Apartment(5, "Rambla Nova 50, Tarragona", 3, 13200, 4, 2, 80.0)
+        };
+
         [HttpGet]
         public IActionResult Get()
         {
-            //crea una lista de apartamentos ficticios
-            var apartments = new List<string>
-            {
-                "Apartamento 1: 2 habitaciones, 1 baño, cocina equipada",
-                "Apartamento 2: 3 habitaciones, 2 baños, salón amplio",
-                "Apartamento 3: 1 habitación, 1 baño, ideal para solteros",
-                "Apartamento 4: 4 habitaciones, jardín privado, garaje"
-            };
             //devuelve la lista de apartamentos como respuesta
             return Ok(apartments);
         }
@@ -25,11 +28,12 @@ namespace SistemaAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            // Simula la búsqueda de un apartamento por ID
-            var apartment = $"Apartamento {id}: 2 habitaciones, 1 baño, cocina equipada";
+            // Búsqueda de un apartamento por ID
+            var apartment = apartments.FirstOrDefault(a => a.IdProperty == id);
+
 
             // Si el apartamento no existe, devuelve NotFound
-            if (id < 1 || id > 4)
+            if (apartment == null)
             {
                 return NotFound($"Apartamento con ID {id} no encontrado.");
             }
