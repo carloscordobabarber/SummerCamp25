@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 namespace Dominio;
 public class Client
 {
@@ -10,15 +11,20 @@ public class Client
     public string PhoneNumber { get; set; }
     public string Email { get; set; } = string.Empty;
 
+    public DateTime Birthday { get; set; }
+    public string Email { get; set; }
+
     public Client() { }
 
-    public Client(int id, string dni, string name, string bankAccount, string phoneNumber)
+    public Client(int id, string dni, string name, string bankAccount, string phoneNumber, string email,DateTime birthday)
     {
         Id = id;
         Dni = dni;
         Name = name;
         BankAccount = bankAccount;
         PhoneNumber = phoneNumber;
+        Email = email;
+        Birthday = birthday;
     }
 
     public Client(int id, string dni, string name, DateTime dateOfBirth, string bankAccount, string phoneNumber, string email)

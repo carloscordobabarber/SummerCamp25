@@ -42,7 +42,61 @@ namespace SistemaAPI.Controllers
         public IActionResult Post([FromBody] Incidence nuevaIncidencia)
         {
             incidencias.Add(nuevaIncidencia);
-            return CreatedAtAction(nameof(GetById), new { id = nuevaIncidencia.IdIncidence }, nuevaIncidencia);
+
+            var log = new Log(
+                DateTime.Now,
+                "Creación de incidencia",
+                "API Post Incidencia", // Puedes cambiar por el usuario real si lo tienes
+                $"Incidencia creada con ID {nuevaIncidencia.IdIncidence}",
+                "Incidence"
+            );
+
+            return CreatedAtAction(nameof(GetById), new { id = nuevaIncidencia.IdIncidence }, new { Incidence = nuevaIncidencia, Log = log });
+        }
+
+        //Metodo PUT
+        [HttpPut("{id}/status")]
+        public IActionResult UpdateStatus(int id, [FromBody] string newStatus)
+        {
+            var incidencia = incidencias.FirstOrDefault(i => i.IdIncidence == id);
+
+            if (incidencia == null)
+            {
+                var log = new Log(
+                    DateTime.Now,
+                    "Actualización de estado",
+                    "API",
+                    $"Intento fallido de actualizar incidencia con ID {id}",
+                    "Incidence"
+                );
+                return NotFound(new { Mensaje = $"No se encontró ninguna incidencia con id {id}", Log = log });
+            }
+
+            try
+            {
+                incidencia.UpdateStatus(newStatus);
+
+                var log = new Log(
+                    DateTime.Now,
+                    "Actualización de estado",
+                    "API",
+                    $"Estado actualizado a '{newStatus}' para incidencia con ID {id}",
+                    "Incidence"
+                );
+
+                return Ok(new { Incidence = incidencia, Log = log });
+            }
+            catch (ArgumentException ex)
+            {
+                var log = new Log(
+                    DateTime.Now,
+                    "Actualización de estado",
+                    "API",
+                    $"Error al actualizar incidencia con ID {id}: {ex.Message}",
+                    "Incidence"
+                );
+                return BadRequest(new { Mensaje = ex.Message, Log = log });
+            }
         }
     }
 }

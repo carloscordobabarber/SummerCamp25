@@ -10,43 +10,49 @@ namespace Dominio
     public class Apartment
     {
         int id;
-        string address;
+        string door;
         int numberOfRooms;
         double price;
         int floor;
         int numberOfBathrooms;
         double area;
         bool isAvailable;
+        string address;
+        // Relación con Building
 
-
-        public Apartment(int id, string address, int numberOfRooms, double price, int floor, int numberOfBathrooms, double area)
+        public Apartment(int id, string door, int numberOfRooms, double price, int floor, int numberOfBathrooms, double area, bool isAvailable,string address, Building building)
         {
             this.id = id;
-            this.address = address;
+            this.door = door;
             this.numberOfRooms = numberOfRooms;
             this.price = price;
             this.floor = floor;
             this.numberOfBathrooms = numberOfBathrooms;
             this.area = area;
-            this.isAvailable = true; // Default value for availability
+            this.isAvailable = isAvailable;
+            this.address = address;
+
+            this.Building = building;
         }
 
-        public int IdProperty { get => id; set => id = value; }
-        public string AddressProperty { get => address; set => address = value; }
-        public int NumberOfRoomsProperty { get => numberOfRooms; set => numberOfRooms = value; }
-        public double PriceProperty { get => price; set => price = value; }
-        public int FloorProperty { get => floor; set => floor = value; }
-        public int NumberOfBathroomsProperty { get => numberOfBathrooms; set => numberOfBathrooms = value; }
-        public double AreaProperty { get => area; set => area = value; }
-        public bool IsAvailableProperty { get => isAvailable; set => isAvailable = value; }
+        public int Id { get => id; set => id = value; }
+        public string Door { get => door; set => door = value; }
+        public int NumberOfRooms { get => numberOfRooms; set => numberOfRooms = value; }
+        public double Price { get => price; set => price = value; }
+        public int Floor { get => floor; set => floor = value; }
+        public int NumberOfBathrooms { get => numberOfBathrooms; set => numberOfBathrooms = value; }
+        public double Area { get => area; set => area = value; }
+        public bool IsAvailable { get => isAvailable; set => isAvailable = value; }
+        public string Address { get => address; set => address = value; }
+        public Building Building { get; set; }
 
         //ToString
         public override string ToString()
         {
-            return $"Apartment ID: {id}, Address: {address}, Rooms: {numberOfRooms}, Price: {price}, Floor: {floor}, Bathrooms: {numberOfBathrooms}, Area: {area} m², Available: {isAvailable}";
+            return $"Apartment ID: {id}, Address: {door}, Rooms: {numberOfRooms}, Price: {price}, Floor: {floor}, Bathrooms: {numberOfBathrooms}, Area: {area} m², Available: {isAvailable}, In Building: {Building.Direcction}";
         }
 
-        public void ShowApartmentsList() {
+        public static async Task ShowApartmentsList() {
 
             // FRAGMENTO DE CÓDIGO PARA LEER ARCHIVOS
 
@@ -80,7 +86,48 @@ namespace Dominio
             //    Console.WriteLine("Archivo JSON no encontrado.");
             //}
 
+            try
+            {
+                using HttpClient client = new HttpClient();
 
+                string apiUrl = "https://localhost:7195/api/apartments";
+
+                // Realizar una petición GET al endpoint para obtener los apartamentos
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                
+                
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Leer el contenido JSON de la respuesta como string
+                    string json = await response.Content.ReadAsStringAsync();
+
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                    // Convertir el JSON a una lista de objetos Apartment
+                    List<Apartment> apartments = JsonSerializer.Deserialize<List<Apartment>>(json, options);
+
+                    if (apartments != null)
+                    {
+                        foreach (var apartment in apartments)
+                        {
+                            Console.WriteLine(apartment);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No se pudo convertir el json a una lista de apartamentos.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Error al llamar a la API: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Excepción: {ex.Message}");
+            }
         }
     }
 }
