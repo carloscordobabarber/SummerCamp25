@@ -12,9 +12,9 @@ namespace SistemaAPI.Controllers
     {
         private static List<Client> clientes = new List<Client>
         {
-            new Client(1, "12345678A", "Juan Pérez", "ES1234567890123456789012", "612345678"),
-            new Client(2, "87654321B", "María García", "ES0987654321098765432109", "699998888"),
-            new Client(3, "11223344C", "Carlos Ruiz", "ES2233445566778899001122", "655554444")
+            new Client(1, "12345678A", "Juan Pérez", "ES1234567890123456789012", "612345678", "garf@dfg.com", new DateTime(07,05,05)),
+            new Client(2, "87654321B", "María García", "ES0987654321098765432109", "699998888", "garf@dfg.com", new DateTime(07, 05, 05)),
+            new Client(3, "11223344C", "Carlos Ruiz", "ES2233445566778899001122", "655554444", "garf@dfg.com", new DateTime(07, 05, 05))
         };
 
         // GET: api/client

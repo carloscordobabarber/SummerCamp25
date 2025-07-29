@@ -10,40 +10,46 @@ namespace Dominio
     public class Apartment
     {
         int id;
-        string address;
+        string door;
         int numberOfRooms;
         double price;
         int floor;
         int numberOfBathrooms;
         double area;
         bool isAvailable;
+        string address;
+        // Relación con Building
 
-
-        public Apartment(int id, string address, int numberOfRooms, double price, int floor, int numberOfBathrooms, double area)
+        public Apartment(int id, string door, int numberOfRooms, double price, int floor, int numberOfBathrooms, double area, bool isAvailable,string address, Building building)
         {
             this.id = id;
-            this.address = address;
+            this.door = door;
             this.numberOfRooms = numberOfRooms;
             this.price = price;
             this.floor = floor;
             this.numberOfBathrooms = numberOfBathrooms;
             this.area = area;
-            this.isAvailable = true; // Default value for availability
+            this.isAvailable = isAvailable;
+            this.address = address;
+
+            this.Building = building;
         }
 
         public int Id { get => id; set => id = value; }
-        public string Address { get => address; set => address = value; }
+        public string Door { get => door; set => door = value; }
         public int NumberOfRooms { get => numberOfRooms; set => numberOfRooms = value; }
         public double Price { get => price; set => price = value; }
         public int Floor { get => floor; set => floor = value; }
         public int NumberOfBathrooms { get => numberOfBathrooms; set => numberOfBathrooms = value; }
         public double Area { get => area; set => area = value; }
         public bool IsAvailable { get => isAvailable; set => isAvailable = value; }
+        public string Address { get => address; set => address = value; }
+        public Building Building { get; set; }
 
         //ToString
         public override string ToString()
         {
-            return $"Apartment ID: {id}, Address: {address}, Rooms: {numberOfRooms}, Price: {price}, Floor: {floor}, Bathrooms: {numberOfBathrooms}, Area: {area} m², Available: {isAvailable}";
+            return $"Apartment ID: {id}, Address: {door}, Rooms: {numberOfRooms}, Price: {price}, Floor: {floor}, Bathrooms: {numberOfBathrooms}, Area: {area} m², Available: {isAvailable}, In Building: {Building.Direcction}";
         }
 
         public static async Task ShowApartmentsList() {

@@ -11,6 +11,7 @@ namespace Dominio
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string ApartmentAddress { get; set; } = string.Empty;
+        public Apartment Apartment { get; set; } = new Apartment(0, string.Empty, 0, 0.0, 0, 0, 0.0, true, "", new Building(0, string.Empty));
 
         public Contract() { }
 
