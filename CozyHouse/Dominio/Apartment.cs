@@ -19,8 +19,9 @@ namespace Dominio
         bool isAvailable;
         string address;
         // Relación con Building
+        int idBuilding;
 
-        public Apartment(int id, string door, int numberOfRooms, double price, int floor, int numberOfBathrooms, double area, bool isAvailable,string address, Building building)
+        public Apartment(int id, string door, int numberOfRooms, double price, int floor, int numberOfBathrooms, double area, bool isAvailable,string address, int idBuilding)
         {
             this.id = id;
             this.door = door;
@@ -32,7 +33,7 @@ namespace Dominio
             this.isAvailable = isAvailable;
             this.address = address;
 
-            this.Building = building;
+            this.idBuilding = idBuilding;
         }
 
         public int Id { get => id; set => id = value; }
@@ -44,7 +45,7 @@ namespace Dominio
         public double Area { get => area; set => area = value; }
         public bool IsAvailable { get => isAvailable; set => isAvailable = value; }
         public string Address { get => address; set => address = value; }
-        public Building Building { get; set; }
+        public int IdBuilding { get => idBuilding; set => idBuilding = value; }
 
         //ToString
         public override string ToString()

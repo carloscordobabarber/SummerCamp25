@@ -37,7 +37,7 @@ namespace SistemaAPI.Controllers
             return Ok(incidencia);
         }
 
-        // POST: api/incidence
+        // POST: api/incidence 
         [HttpPost]
         public IActionResult Post([FromBody] Incidence nuevaIncidencia)
         {
