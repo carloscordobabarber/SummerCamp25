@@ -1,0 +1,33 @@
+/* Archivo: src/app/components/dashboard/dashboard.component.css */
+
+.banner {
+  background-color: #1a73e8;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.banner .resaltado {
+  color: #ffc107;
+}
+
+.section {
+  padding: 20px;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.property-card {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}

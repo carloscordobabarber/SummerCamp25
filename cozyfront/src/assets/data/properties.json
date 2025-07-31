@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "Casa Moderna en Zona Residencial",
+    "status": "Disponible",
+    "type": "Casa",
+    "price": 450000,
+    "address": "Av. Los Robles 1234, San Miguel",
+    "rooms": 3,
+    "bathrooms": 2,
+    "area": 280,
+    "views": 320,
+    "pricePerM2": 1600,
+    "dateAdded": "2024-10-10"
+  },
+  {
+    "id": 2,
+    "title": "Departamento de Lujo Vista al Mar",
+    "status": "Pendiente",
+    "type": "Departamento",
+    "price": 620000,
+    "address": "Malecon de la Marina 567, Miraflores",
+    "rooms": 3,
+    "bathrooms": 2,
+    "area": 180,
+    "views": 243,
+    "pricePerM2": 3444,
+    "dateAdded": "2024-11-01"
+  },
+  {
+    "id": 3,
+    "title": "Casa Familiar en Surco",
+    "status": "Disponible",
+    "type": "Casa",
+    "price": 320000,
+    "address": "Jr. Las Magnolias 890, Santiago de Surco",
+    "rooms": 2,
+    "bathrooms": 1,
+    "area": 220,
+    "views": 105,
+    "pricePerM2": 1455,
+    "dateAdded": "2025-01-20"
+  }
+]
