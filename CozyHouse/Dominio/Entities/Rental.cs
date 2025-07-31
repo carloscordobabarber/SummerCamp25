@@ -1,16 +1,23 @@
-﻿namespace SistemaAPI.Entidades;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SistemaAPI.Entidades;
 
 public class Rental {
-    public int Id { get; set; }
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public bool IsConfirmed { get; set; }
 
     // Relación con usuario
-    public int UserId { get; set; }
-    public User? User { get; set; }
+    [Required]
+    public Guid UserId { get; set; }
+    [Required]
+    public User User { get; set; }
 
     // Relación con apartamento
-    public int ApartmentId { get; set; }
-    public Apartment? Apartment { get; set; }
+    [Required]
+    public Guid ApartmentId { get; set; }
+    [Required]
+    public Apartment Apartment { get; set; }
 }
