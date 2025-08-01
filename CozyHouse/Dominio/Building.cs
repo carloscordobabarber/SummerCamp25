@@ -1,28 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Dominio
-{
-    public class Building
-    {
-       
-        public int IdBuilding { get; set; }
-        public string Direcction { get; set; }
+namespace Dominio;
 
-        //public string Name { get; set; }
-      
+public class Building {
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();
+    [Required]
+    [MaxLength(100)]
+    public string Name { get; set; } = string.Empty;
+    [Required]
+    [MaxLength(100)]
+    public string Address { get; set; } = string.Empty;
 
-
-        public Building() { }
-
-        public Building(int idBuilding, string direcction)
-        {
-            this.IdBuilding = idBuilding;
-            this.Direcction = direcction;
-        }
-    }
+    // Relación: un edificio tiene varios apartamentos
+    public ICollection<Apartment> Apartments { get; set; } = new List<Apartment>();
 }

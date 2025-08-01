@@ -1,5 +1,5 @@
 ﻿// Archivo: Incidence.cs
-namespace Dominio
+namespace DTOS
 {
     public class Incidence
     {

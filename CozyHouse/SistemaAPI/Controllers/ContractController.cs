@@ -1,8 +1,8 @@
 ﻿// Archivo: ContractController.cs
 using Microsoft.AspNetCore.Mvc;
-using Dominio;
 using System.Collections.Generic;
 using System.Linq;
+using DTOS;
 
 namespace SistemaAPI.Controllers
 {

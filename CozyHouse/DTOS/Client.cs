@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using System;
-namespace Dominio;
+namespace DTOS;
 public class Client
 {
     public int Id { get; set; }

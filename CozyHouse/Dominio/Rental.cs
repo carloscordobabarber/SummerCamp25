@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SistemaAPI.Entidades;
+namespace Dominio;
 
 public class Rental {
     [Key]

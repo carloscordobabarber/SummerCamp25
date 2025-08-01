@@ -1,5 +1,5 @@
 ﻿// Archivo: Contract.cs
-namespace Dominio
+namespace DTOS
 {
     public class Contract
     {
