@@ -8,8 +8,8 @@ public class Apartment {
     public double Area { get; set; }
     public int NumberOfRooms { get; set; }
     public int NumberOfBathrooms { get; set; }
-    public bool IsAvailable { get; set; }
 
+    public bool IsAvailable { get; set; }
     // FK y navegación al edificio
     public int BuildingId { get; set; }
     public Building? Building { get; set; }

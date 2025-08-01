@@ -50,7 +50,7 @@ namespace Dominio
         //ToString
         public override string ToString()
         {
-            return $"Apartment ID: {id}, Address: {door}, Rooms: {numberOfRooms}, Price: {price}, Floor: {floor}, Bathrooms: {numberOfBathrooms}, Area: {area} m², Available: {isAvailable}, In Building: {Building.Direcction}";
+            return $"Apartment ID: {id}, Address: {door}, Rooms: {numberOfRooms}, Price: {price}, Floor: {floor}, Bathrooms: {numberOfBathrooms}, Area: {area} m², Available: {isAvailable}";
         }
 
         public static async Task ShowApartmentsList() {
