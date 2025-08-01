@@ -21,7 +21,7 @@ namespace Dominio
         // Relación con Building
         int idBuilding;
 
-        public Apartment(int id, string door, int numberOfRooms, double price, int floor, int numberOfBathrooms, double area, bool isAvailable,string address, int idBuilding)
+        public Apartment(int id, string door, int numberOfRooms, double price, int floor, int numberOfBathrooms, double area, bool isAvailable, string address, int idBuilding)
         {
             this.id = id;
             this.door = door;
@@ -48,9 +48,10 @@ namespace Dominio
         public int IdBuilding { get => idBuilding; set => idBuilding = value; }
 
         //ToString
+        public Apartment(){}
         public override string ToString()
         {
-            return $"Apartment ID: {id}, Address: {door}, Rooms: {numberOfRooms}, Price: {price}, Floor: {floor}, Bathrooms: {numberOfBathrooms}, Area: {area} m², Available: {isAvailable}, In Building: {Building.Direcction}";
+            return $"Apartment ID: {id}, Address: {address}, Rooms: {numberOfRooms}, Price: {price}, Floor: {floor}, Bathrooms: {numberOfBathrooms}, Area: {area} m², Available: {isAvailable}, In Building:{idBuilding}";
         }
 
         public static async Task ShowApartmentsList() {
