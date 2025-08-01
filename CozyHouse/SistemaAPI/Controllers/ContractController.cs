@@ -12,8 +12,8 @@ namespace SistemaAPI.Controllers
     {
         private static List<Contract> contracts = new List<Contract>
         {
-            new Contract(1, "12345678A", "Juan Pérez", "ES1234567890123456789012", 500, new DateTime(2024, 1, 1), new DateTime(2024, 12, 31), "Calle Mayor 123"),
-            new Contract(2, "87654321B", "Ana López", "ES0987654321098765432109", 600, new DateTime(2024, 3, 1), new DateTime(2025, 2, 28), "Avenida Real 45")
+            new Contract(1, "12345678A", "Juan Pérez", "ES1234567890123456789012", 500, new DateTime(2024, 1, 1), new DateTime(2024, 12, 31), "Calle Mayor 123", 1, 1),
+            new Contract(2, "87654321B", "Ana López", "ES0987654321098765432109", 600, new DateTime(2024, 3, 1), new DateTime(2025, 2, 28), "Avenida Real 45", 2, 1)
         };
 
         // GET: api/contract

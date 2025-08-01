@@ -21,7 +21,7 @@ namespace Dominio
         // Relación con Building
         int idBuilding;
 
-        public Apartment(int id, string door, int numberOfRooms, double price, int floor, int numberOfBathrooms, double area, bool isAvailable, string address, int idBuilding)
+        public Apartment(int id, string address, int floor, string door, int numberOfRooms, double price, int numberOfBathrooms, double area, bool isAvailable,  int idBuilding)
         {
             this.id = id;
             this.door = door;
@@ -51,7 +51,7 @@ namespace Dominio
         public Apartment(){}
         public override string ToString()
         {
-            return $"Apartment ID: {id}, Address: {door}, Rooms: {numberOfRooms}, Price: {price}, Floor: {floor}, Bathrooms: {numberOfBathrooms}, Area: {area} m², Available: {isAvailable}";
+            return $"Apartment ID: {id}, Address: {address}, Floor: {floor}, Door: {door} Rooms: {numberOfRooms}, Price: {price},  Bathrooms: {numberOfBathrooms}, Area: {area} m², Available: {isAvailable}";
         }
 
         public static async Task ShowApartmentsList() {
@@ -97,8 +97,6 @@ namespace Dominio
                 // Realizar una petición GET al endpoint para obtener los apartamentos
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
                 
-                
-
                 if (response.IsSuccessStatusCode)
                 {
                     // Leer el contenido JSON de la respuesta como string

@@ -91,18 +91,7 @@ namespace CozyHouseAlquiler
                         break;
 
                     case 2:
-                        var apartamentos = new[]
-                        {
-                            new Apartment(1, "A1", 3, 1200.0, 2, 2, 80.0, true, "Calle Mayor 10", 1),
-                            new Apartment(2, "B2", 2, 950.0, 1, 1, 60.0, true, "Avenida Sol 5", 2),
-                            new Apartment(3, "C3", 4, 1800.0, 3, 2, 110.0, false, "Plaza Luna 3", 3)
-                        };
-
-                        Console.WriteLine("\n→ Listado de apartamentos:");
-                        foreach (var apt in apartamentos)
-                        {
-                            Console.WriteLine(apt.ToString());
-                        }
+                        await Apartment.ShowApartmentsList();
                         break;
 
                     case 3:
