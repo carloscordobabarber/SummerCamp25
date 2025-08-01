@@ -1,7 +1,7 @@
 ﻿using Dominio;
-
-// Archivo: Program.cs
 using System;
+using System.Net;
+using System.Xml.Linq;
 
 namespace CozyHouseAlquiler
 {
@@ -54,19 +54,65 @@ namespace CozyHouseAlquiler
                 switch (opcion)
                 {
                     case 1:
-                        Console.WriteLine("→ Funcionalidad: Introducir cliente");
+                        Console.WriteLine("→ Introducir datos del cliente:");
+                        Console.Write("Id: ");
+                        int id = int.Parse(Console.ReadLine() ?? "0");
+
+                        Console.Write("Nombre: ");
+                        string nombre = Console.ReadLine() ?? "";
+
+                        Console.Write("Dni: ");
+                        string dni = Console.ReadLine() ?? "";
+
+                        Console.Write("Fecha de nacimiento (dd/mm/yyyy): ");
+                        string fechaNacimientoTexto = Console.ReadLine() ?? "";
+                        DateTime birthday = DateTime.ParseExact(fechaNacimientoTexto, "dd/MM/yyyy", null);
+
+                        Console.Write("Cuenta bancaria: ");
+                        string bankAccount = Console.ReadLine() ?? "";
+
+                        Console.Write("Email: ");
+                        string email = Console.ReadLine() ?? "";
+
+                        Console.Write("Teléfono: ");
+                        string phoneNumber = Console.ReadLine() ?? "";
+
+                        // Crear instancia del cliente
+                        Client cliente = new Client(id, dni, nombre, bankAccount, phoneNumber, email, birthday);
+
+                        Console.WriteLine($"\n→ Cliente introducido:");
+                        Console.WriteLine($"  ID: {cliente.Id}");
+                        Console.WriteLine($"  DNI: {cliente.Dni}");
+                        Console.WriteLine($"  Nombre: {cliente.Name}");
+                        Console.WriteLine($"  Cuenta bancaria: {cliente.BankAccount}");
+                        Console.WriteLine($"  Email: {cliente.Email}");
+                        Console.WriteLine($"  Teléfono: {cliente.PhoneNumber}");
+                        Console.WriteLine($"  Fecha nacimiento: {cliente.Birthday:dd/MM/yyyy}");
                         break;
+
                     case 2:
-                        await Apartment.ShowApartmentsList();
+                        var apartamentos = new[]
+                        {
+                            new Apartment(1, "A1", 3, 1200.0, 2, 2, 80.0, true, "Calle Mayor 10", 1),
+                            new Apartment(2, "B2", 2, 950.0, 1, 1, 60.0, true, "Avenida Sol 5", 2),
+                            new Apartment(3, "C3", 4, 1800.0, 3, 2, 110.0, false, "Plaza Luna 3", 3)
+                        };
 
-
+                        Console.WriteLine("\n→ Listado de apartamentos:");
+                        foreach (var apt in apartamentos)
+                        {
+                            Console.WriteLine(apt.ToString());
+                        }
                         break;
+
                     case 3:
-                        Console.WriteLine("→ Funcionalidad: Alquilar piso");
+                        Console.WriteLine("→ Funcionalidad: Alquilar piso (en desarrollo)");
                         break;
+
                     case 4:
                         Console.WriteLine("Saliendo del programa...");
                         break;
+
                     default:
                         Console.WriteLine("⚠️ Opción no válida. Intente de nuevo.");
                         break;

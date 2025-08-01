@@ -25,8 +25,8 @@ public class Apartment {
     [Required]
     [Range(1, int.MaxValue)]
     public int NumberOfBathrooms { get; set; }
-    public bool IsAvailable { get; set; }
 
+    public bool IsAvailable { get; set; }
     // FK y navegación al edificio
     [Required]
     public Guid BuildingId { get; set; }
