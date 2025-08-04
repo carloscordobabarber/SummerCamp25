@@ -29,7 +29,7 @@ public class Apartment {
     public bool IsAvailable { get; set; }
     // FK y navegación al edificio
     [Required]
-    public Guid BuildingId { get; set; }
+    public int BuildingId { get; set; }
     [Required]
     public Building Building { get; set; }
 
