@@ -4,20 +4,22 @@ namespace Dominio;
 
 public class Rental {
     [Key]
+    public int RentalId { get; set; }
+
+  
+    
     public Guid Id { get; set; } = Guid.NewGuid();
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
-    public bool IsConfirmed { get; set; }
 
     // Relación con usuario
     [Required]
-    public Guid UserId { get; set; }
+    public int UserId { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public bool IsConfirmed { get; set; }
     [Required]
-    public User User { get; set; }
+    public int ApartmentId { get; set; }
 
-    // Relación con apartamento
-    [Required]
-    public Guid ApartmentId { get; set; }
-    [Required]
-    public Apartment Apartment { get; set; }
+  
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

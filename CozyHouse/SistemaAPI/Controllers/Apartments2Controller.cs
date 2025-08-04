@@ -12,25 +12,25 @@ namespace SistemaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Apartments1Controller : ControllerBase
+    public class Apartments2Controller : ControllerBase
     {
         private readonly ContextoAPI _context;
 
-        public Apartments1Controller(ContextoAPI context)
+        public Apartments2Controller(ContextoAPI context)
         {
             _context = context;
         }
 
-        // GET: api/Apartments1
+        // GET: api/Apartments2
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Apartment>>> GetApartments()
         {
             return await _context.Apartments.ToListAsync();
         }
 
-        // GET: api/Apartments1/5
+        // GET: api/Apartments2/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Apartment>> GetApartment(Guid id)
+        public async Task<ActionResult<Apartment>> GetApartment(int id)
         {
             var apartment = await _context.Apartments.FindAsync(id);
 
@@ -42,15 +42,18 @@ namespace SistemaAPI.Controllers
             return apartment;
         }
 
-        // PUT: api/Apartments1/5
+        // PUT: api/Apartments2/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{ApartmentId}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutApartment(int id, Apartment apartment)
         {
             if (id != apartment.ApartmentId)
             {
                 return BadRequest();
             }
+
+            // Actualiza la fecha de modificación
+            apartment.UpdatedAt = DateTime.UtcNow;
 
             _context.Entry(apartment).State = EntityState.Modified;
 
@@ -73,7 +76,7 @@ namespace SistemaAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Apartments1
+        // POST: api/Apartments2
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Apartment>> PostApartment(Apartment apartment)
@@ -81,12 +84,12 @@ namespace SistemaAPI.Controllers
             _context.Apartments.Add(apartment);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetApartment", new { id = apartment.Id }, apartment);
+            return CreatedAtAction("GetApartment", new { id = apartment.ApartmentId }, apartment);
         }
 
-        // DELETE: api/Apartments1/5
+        // DELETE: api/Apartments2/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteApartment(Guid id)
+        public async Task<IActionResult> DeleteApartment(int id)
         {
             var apartment = await _context.Apartments.FindAsync(id);
             if (apartment == null)

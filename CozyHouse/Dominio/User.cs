@@ -4,6 +4,8 @@ namespace Dominio;
 
 public class User {
     [Key]
+    public int UserId { get; set; }
+    
     public Guid Id { get; set; } = Guid.NewGuid();
     [Required]
     [MaxLength(100)]
@@ -20,6 +22,7 @@ public class User {
     [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d\s]).{8,}$", ErrorMessage = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.")]
     public string Password { get; set; } = string.Empty;
 
-    // Relación: un usuario puede tener varios alquileres
-    public ICollection<Rental>? Rentals { get; set; } = new List<Rental>();
+    
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

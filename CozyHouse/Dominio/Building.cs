@@ -3,15 +3,24 @@
 namespace Dominio;
 
 public class Building {
-    [Key]
+  
     public Guid Id { get; set; } = Guid.NewGuid();
+
+    
+    [Key]
+    public int BuildingId { get; set; }
+    
     [Required]
     [MaxLength(100)]
+
     public string Name { get; set; } = string.Empty;
     [Required]
     [MaxLength(100)]
     public string Address { get; set; } = string.Empty;
 
-    // Relación: un edificio tiene varios apartamentos
-    public ICollection<Apartment> Apartments { get; set; } = new List<Apartment>();
+
+
+    
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

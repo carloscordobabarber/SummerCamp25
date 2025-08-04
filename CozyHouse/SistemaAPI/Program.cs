@@ -30,15 +30,16 @@ using (var scope = app.Services.CreateScope())
             db.Buildings.Add(building);
             db.SaveChanges();
         }
+
         db.Apartments.AddRange(
             new Apartment {
-                Door = "A", Floor = 1, Price = 120000, Area = 80, NumberOfRooms = 3, NumberOfBathrooms = 2, IsAvailable = true, BuildingId = building.Id
+                Door = "A", Floor = 1, Price = 120000, Area = 80, NumberOfRooms = 3, NumberOfBathrooms = 2, IsAvailable = true, BuildingId = building.BuildingId
             },
             new Apartment {
-                Door = "B", Floor = 2, Price = 95000, Area = 65, NumberOfRooms = 2, NumberOfBathrooms = 1, IsAvailable = true, BuildingId = building.Id
+                Door = "B", Floor = 2, Price = 95000, Area = 65, NumberOfRooms = 2, NumberOfBathrooms = 1, IsAvailable = true, BuildingId = building.BuildingId
             },
             new Apartment {
-                Door = "C", Floor = 3, Price = 150000, Area = 100, NumberOfRooms = 4, NumberOfBathrooms = 2, IsAvailable = false, BuildingId = building.Id
+                Door = "C", Floor = 3, Price = 150000, Area = 100, NumberOfRooms = 4, NumberOfBathrooms = 2, IsAvailable = false, BuildingId = building.BuildingId
             }
         );
         db.SaveChanges();
