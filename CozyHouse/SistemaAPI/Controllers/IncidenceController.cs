@@ -1,6 +1,5 @@
 ﻿// Archivo: IncidenceController.cs
 using Microsoft.AspNetCore.Mvc;
-using Dominio;
 using System.Collections.Generic;
 using System.Linq;
 using DTOS;
