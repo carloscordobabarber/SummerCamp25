@@ -16,5 +16,6 @@ namespace CozyData
 
         public DbSet<Log> Logs { get; set; }
         public DbSet<Incidence> Incidences { get; set; }
+        public DbSet<District> Districts { get; set; }
     }
 }

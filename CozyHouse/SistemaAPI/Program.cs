@@ -407,6 +407,21 @@ using (var scope = app.Services.CreateScope())
         db.Incidences.AddRange(incidences);
         db.SaveChanges();
     }
+
+    // Seeding de Districts
+    if (!db.Districts.Any())
+    {
+        var districts = new List<District>
+        {
+            new District { Name = "Centro", Landmark = "Catedral, Plaza Mayor, Oficina de Correos" },
+            new District { Name = "Norte", Landmark = "Hospital General, Parque Norte, Parada de metro Línea 2" },
+            new District { Name = "Sur", Landmark = "Centro Comercial Sur, Estación de autobuses, Mirador Sur" },
+            new District { Name = "Este", Landmark = "Museo de Arte, Parada de bus 15, Biblioteca Municipal" },
+            new District { Name = "Oeste", Landmark = "Estadio Municipal, Mercado de Abastos, Vistas al río" }
+        };
+        db.Districts.AddRange(districts);
+        db.SaveChanges();
+    }
 }
 
 // Configure the HTTP request pipeline.
