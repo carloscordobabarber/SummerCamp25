@@ -13,8 +13,8 @@ namespace SistemaAPI.Controllers
     {
         private static List<Incidence> incidencias = new List<Incidence>
         {
-            new Incidence(1, "Propietario 1", "Cliente 1", "Calle 1", "Fuga de agua", "Pendiente"),
-            new Incidence(2, "Propietario 2", "Cliente 2", "Calle 2", "Problemas eléctricos", "En Proceso")
+            new Incidence(1, "Propietario 1", "Cliente 1", "Calle 1", "Fuga de agua", "Pendiente",DateTime.Now, DateTime.Now),
+            new Incidence(2, "Propietario 2", "Cliente 2", "Calle 2", "Problemas eléctricos", "En Proceso", DateTime.Now, DateTime.Now)
         };
 
         // GET: api/incidence
