@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CozyData.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class Logmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,24 @@ namespace CozyData.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Buildings", x => x.BuildingId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Logs",
+                columns: table => new
+                {
+                    LogID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ActionPerformed = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    User = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TableAffected = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logs", x => x.LogID);
                 });
 
             migrationBuilder.CreateTable(
@@ -99,6 +117,9 @@ namespace CozyData.Migrations
 
             migrationBuilder.DropTable(
                 name: "Buildings");
+
+            migrationBuilder.DropTable(
+                name: "Logs");
 
             migrationBuilder.DropTable(
                 name: "Rentals");

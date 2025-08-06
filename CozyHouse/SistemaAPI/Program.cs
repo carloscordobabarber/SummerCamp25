@@ -170,6 +170,42 @@ using (var scope = app.Services.CreateScope())
         db.Rentals.AddRange(rentals);
         db.SaveChanges();
     }
+
+    // Seeding de Logs
+    if (!db.Logs.Any())
+    {
+        var users = db.Users.ToList();
+        var logs = new List<Log>
+        {
+            new Log { ActionPerformed = "POST", User = users[0].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[1].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[2].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[3].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[4].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[5].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[6].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[7].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[8].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[9].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[10].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[11].UserId.ToString(), TableAffected = "users", Description = "Usuario creado" },
+            new Log { ActionPerformed = "POST", User = users[0].UserId.ToString(), TableAffected = "rental", Description = "Nuevo alquiler registrado" },
+            new Log { ActionPerformed = "POST", User = users[1].UserId.ToString(), TableAffected = "rental", Description = "Nuevo alquiler registrado" },
+            new Log { ActionPerformed = "POST", User = users[2].UserId.ToString(), TableAffected = "rental", Description = "Nuevo alquiler registrado" },
+            new Log { ActionPerformed = "POST", User = users[3].UserId.ToString(), TableAffected = "rental", Description = "Nuevo alquiler registrado" },
+            new Log { ActionPerformed = "POST", User = users[4].UserId.ToString(), TableAffected = "rental", Description = "Nuevo alquiler registrado" },
+            new Log { ActionPerformed = "POST", User = users[5].UserId.ToString(), TableAffected = "rental", Description = "Nuevo alquiler registrado" },
+            new Log { ActionPerformed = "POST", User = users[6].UserId.ToString(), TableAffected = "rental", Description = "Nuevo alquiler registrado" },
+            new Log { ActionPerformed = "POST", User = users[7].UserId.ToString(), TableAffected = "rental", Description = "Nuevo alquiler registrado" },
+            new Log { ActionPerformed = "POST", User = users[8].UserId.ToString(), TableAffected = "rental", Description = "Nuevo alquiler registrado" },
+            new Log { ActionPerformed = "POST", User = users[9].UserId.ToString(), TableAffected = "rental", Description = "Nuevo alquiler registrado" },
+            new Log { ActionPerformed = "UPDATE", User = users[0].UserId.ToString(), TableAffected = "users", Description = "Cambio de password por usuario" },
+            new Log { ActionPerformed = "UPDATE", User = users[1].UserId.ToString(), TableAffected = "users", Description = "Actualización de correo electrónico" },
+            new Log { ActionPerformed = "DELETE", User = users[2].UserId.ToString(), TableAffected = "rental", Description = "Alquiler eliminado por usuario" }
+        };
+        db.Logs.AddRange(logs);
+        db.SaveChanges();
+    }
 }
 
 // Configure the HTTP request pipeline.
