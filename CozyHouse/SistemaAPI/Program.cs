@@ -206,6 +206,207 @@ using (var scope = app.Services.CreateScope())
         db.Logs.AddRange(logs);
         db.SaveChanges();
     }
+    // Seeding de Incidence
+    if (!db.Incidences.Any())
+    {
+        var rentals = db.Rentals.ToList();
+        var apartments = db.Apartments.ToList();
+        var buildings = db.Buildings.ToList();
+
+        // Helper para obtener dirección completa
+        string GetFullDirection(Apartment apt)
+        {
+            var building = buildings.FirstOrDefault(b => b.BuildingId == apt.BuildingId);
+            return $"{building?.Address ?? "Dirección desconocida"}, Puerta {apt.Door}, Piso {apt.Floor}";
+        }
+
+        var incidences = new List<Incidence>
+    {
+        new Incidence
+        {
+            Tenant = "Juan Pérez",
+            Spokesperson = "Ana García",
+            Direction = GetFullDirection(apartments[0]),
+            Description = "La lavadora no funciona correctamente.",
+            CompanyIncidence = "Electrodomésticos S.A.",
+            ApartmentId = apartments[0].ApartmentId,
+            RentalId = rentals[0].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Carlos Ruiz",
+            Spokesperson = "Lucía Torres",
+            Direction = GetFullDirection(apartments[1]),
+            Description = "La calefacción no enciende en el salón.",
+            CompanyIncidence = "Clima Hogar",
+            ApartmentId = apartments[1].ApartmentId,
+            RentalId = rentals[1].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Marta López",
+            Spokesperson = "Pedro Sánchez",
+            Direction = GetFullDirection(apartments[2]),
+            Description = "El grifo de la cocina pierde agua.",
+            CompanyIncidence = "Fontanería Express",
+            ApartmentId = apartments[2].ApartmentId,
+            RentalId = rentals[2].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Sofía Díaz",
+            Spokesperson = "David Gómez",
+            Direction = GetFullDirection(apartments[0]),
+            Description = "La puerta principal no cierra bien.",
+            CompanyIncidence = "Cerrajeros Rápidos",
+            ApartmentId = apartments[0].ApartmentId,
+            RentalId = rentals[3].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Elena Martín",
+            Spokesperson = "Manuel Romero",
+            Direction = GetFullDirection(apartments[1]),
+            Description = "La luz del baño parpadea.",
+            CompanyIncidence = "Electricidad Total",
+            ApartmentId = apartments[1].ApartmentId,
+            RentalId = rentals[4].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Paula Navarro",
+            Spokesperson = "Javier Ramos",
+            Direction = GetFullDirection(apartments[2]),
+            Description = "El horno no calienta.",
+            CompanyIncidence = "Electrodomésticos S.A.",
+            ApartmentId = apartments[2].ApartmentId,
+            RentalId = rentals[5].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Carmen Castro",
+            Spokesperson = "Alberto Molina",
+            Direction = GetFullDirection(apartments[0]),
+            Description = "El aire acondicionado no enfría.",
+            CompanyIncidence = "Clima Hogar",
+            ApartmentId = apartments[0].ApartmentId,
+            RentalId = rentals[6].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Teresa Gil",
+            Spokesperson = "Raúl Herrera",
+            Direction = GetFullDirection(apartments[1]),
+            Description = "La ventana del dormitorio no cierra.",
+            CompanyIncidence = "Ventanas Seguras",
+            ApartmentId = apartments[1].ApartmentId,
+            RentalId = rentals[7].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Juan Pérez",
+            Spokesperson = "Ana García",
+            Direction = GetFullDirection(apartments[2]),
+            Description = "El frigorífico no enfría.",
+            CompanyIncidence = "Electrodomésticos S.A.",
+            ApartmentId = apartments[2].ApartmentId,
+            RentalId = rentals[8].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Carlos Ruiz",
+            Spokesperson = "Lucía Torres",
+            Direction = GetFullDirection(apartments[0]),
+            Description = "El timbre no funciona.",
+            CompanyIncidence = "Electricidad Total",
+            ApartmentId = apartments[0].ApartmentId,
+            RentalId = rentals[9].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Marta López",
+            Spokesperson = "Pedro Sánchez",
+            Direction = GetFullDirection(apartments[1]),
+            Description = "El extractor de la cocina hace ruido.",
+            CompanyIncidence = "Electrodomésticos S.A.",
+            ApartmentId = apartments[1].ApartmentId,
+            RentalId = rentals[10].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Sofía Díaz",
+            Spokesperson = "David Gómez",
+            Direction = GetFullDirection(apartments[2]),
+            Description = "El calentador de agua no enciende.",
+            CompanyIncidence = "Clima Hogar",
+            ApartmentId = apartments[2].ApartmentId,
+            RentalId = rentals[11].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Elena Martín",
+            Spokesperson = "Manuel Romero",
+            Direction = GetFullDirection(apartments[0]),
+            Description = "El suelo del baño está levantado.",
+            CompanyIncidence = "Reformas Express",
+            ApartmentId = apartments[0].ApartmentId,
+            RentalId = rentals[0].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Paula Navarro",
+            Spokesperson = "Javier Ramos",
+            Direction = GetFullDirection(apartments[1]),
+            Description = "La persiana del salón está rota.",
+            CompanyIncidence = "Ventanas Seguras",
+            ApartmentId = apartments[1].ApartmentId,
+            RentalId = rentals[1].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        },
+        new Incidence
+        {
+            Tenant = "Carmen Castro",
+            Spokesperson = "Alberto Molina",
+            Direction = GetFullDirection(apartments[2]),
+            Description = "El wifi no funciona en el apartamento.",
+            CompanyIncidence = "Telecom S.A.",
+            ApartmentId = apartments[2].ApartmentId,
+            RentalId = rentals[2].RentalId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        }
+    };
+
+        db.Incidences.AddRange(incidences);
+        db.SaveChanges();
+    }
 }
 
 // Configure the HTTP request pipeline.

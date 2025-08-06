@@ -15,5 +15,6 @@ namespace CozyData
         public DbSet<Rental> Rentals { get; set; }
 
         public DbSet<Log> Logs { get; set; }
+        public DbSet<Incidence> Incidences { get; set; }
     }
 }

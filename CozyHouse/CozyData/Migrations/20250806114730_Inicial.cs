@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CozyData.Migrations
 {
     /// <inheritdoc />
-    public partial class Logmigration : Migration
+    public partial class Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,28 @@ namespace CozyData.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Buildings", x => x.BuildingId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Incidences",
+                columns: table => new
+                {
+                    IdIncidence = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Tenant = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Spokesperson = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Direction = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    CompanyIncidence = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ApartmentId = table.Column<int>(type: "int", nullable: false),
+                    RentalId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Incidences", x => x.IdIncidence);
                 });
 
             migrationBuilder.CreateTable(
@@ -117,6 +139,9 @@ namespace CozyData.Migrations
 
             migrationBuilder.DropTable(
                 name: "Buildings");
+
+            migrationBuilder.DropTable(
+                name: "Incidences");
 
             migrationBuilder.DropTable(
                 name: "Logs");
