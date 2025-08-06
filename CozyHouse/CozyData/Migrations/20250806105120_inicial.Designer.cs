@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CozyData.Migrations
 {
     [DbContext(typeof(ContextoAPI))]
-    [Migration("20250806104148_Inicial")]
-    partial class Inicial
+    [Migration("20250806105120_inicial")]
+    partial class inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
