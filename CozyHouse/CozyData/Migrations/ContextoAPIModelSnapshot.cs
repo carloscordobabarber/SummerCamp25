@@ -105,6 +105,45 @@ namespace CozyData.Migrations
                     b.ToTable("Buildings");
                 });
 
+            modelBuilder.Entity("Dominio.Log", b =>
+                {
+                    b.Property<int>("LogID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LogID"));
+
+                    b.Property<string>("ActionPerformed")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TableAffected")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("User")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("LogID");
+
+                    b.ToTable("Logs");
+                });
+
             modelBuilder.Entity("Dominio.Rental", b =>
                 {
                     b.Property<int>("RentalId")

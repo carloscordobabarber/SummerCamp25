@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using DTOS;
+using Log = Dominio.Log;
 
 namespace SistemaAPI.Controllers
 {
@@ -43,7 +44,7 @@ namespace SistemaAPI.Controllers
         {
             incidencias.Add(nuevaIncidencia);
 
-            var log = new Log(
+            var log = new DTOS.Log(
                 DateTime.Now,
                 "Creación de incidencia",
                 "API Post Incidencia", // Puedes cambiar por el usuario real si lo tienes
@@ -62,7 +63,7 @@ namespace SistemaAPI.Controllers
 
             if (incidencia == null)
             {
-                var log = new Log(
+                var log = new DTOS.Log(
                     DateTime.Now,
                     "Actualización de estado",
                     "API",
@@ -76,7 +77,7 @@ namespace SistemaAPI.Controllers
             {
                 incidencia.UpdateStatus(newStatus);
 
-                var log = new Log(
+                var log = new DTOS.Log(
                     DateTime.Now,
                     "Actualización de estado",
                     "API",
@@ -88,7 +89,7 @@ namespace SistemaAPI.Controllers
             }
             catch (ArgumentException ex)
             {
-                var log = new Log(
+                var log = new DTOS.Log(
                     DateTime.Now,
                     "Actualización de estado",
                     "API",
