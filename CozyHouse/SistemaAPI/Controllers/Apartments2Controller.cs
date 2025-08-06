@@ -28,6 +28,17 @@ namespace SistemaAPI.Controllers
             return await _context.Apartments.ToListAsync();
         }
 
+        // GET: api/Apartments2/ordered
+        [HttpGet("ordered")]
+        public async Task<ActionResult<IEnumerable<Apartment>>> GetOrderedApartments()
+        {
+            // Obtiene los apartamentos ordenados por el campo "Name"
+            var orderedApartments = await _context.Apartments
+                                            .OrderBy(apartment => apartment.Area)
+                                            .ToListAsync();
+            return Ok(orderedApartments);
+        }
+
         // GET: api/Apartments2/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Apartment>> GetApartment(int id)
