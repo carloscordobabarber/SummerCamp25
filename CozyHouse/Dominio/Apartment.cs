@@ -4,11 +4,11 @@ namespace Dominio;
 
 public class Apartment {
     
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid ApartmentId { get; set; } = Guid.NewGuid();
 
     [Key]
 
-    public int ApartmentId { get; set; }
+    public int Id { get; set; }
 
     [Required]
     [MaxLength(1)]
@@ -19,8 +19,7 @@ public class Apartment {
     
     [Range(1, 99)]
     public int Floor { get; set; }
-    [Required]
-    [Range(0, double.MaxValue)]
+    [Required, Range(0, double.MaxValue)]
     public double Price { get; set; }
     [Required]
     [Range(1, 2000)]

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CozyData.Migrations
 {
     /// <inheritdoc />
-    public partial class DistrictMigration : Migration
+    public partial class inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,9 +15,9 @@ namespace CozyData.Migrations
                 name: "Apartments",
                 columns: table => new
                 {
-                    ApartmentId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ApartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Door = table.Column<string>(type: "nvarchar(1)", maxLength: 1, nullable: false),
                     Floor = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
@@ -32,7 +32,7 @@ namespace CozyData.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Apartments", x => x.ApartmentId);
+                    table.PrimaryKey("PK_Apartments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(

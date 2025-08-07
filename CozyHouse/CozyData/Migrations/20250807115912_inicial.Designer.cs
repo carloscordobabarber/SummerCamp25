@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CozyData.Migrations
 {
     [DbContext(typeof(ContextoAPI))]
-    [Migration("20250806120449_District-Migration")]
-    partial class DistrictMigration
+    [Migration("20250807115912_inicial")]
+    partial class inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,14 @@ namespace CozyData.Migrations
 
             modelBuilder.Entity("Dominio.Apartment", b =>
                 {
-                    b.Property<int>("ApartmentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ApartmentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("ApartmentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Area")
                         .HasColumnType("float");
@@ -49,9 +52,6 @@ namespace CozyData.Migrations
 
                     b.Property<int>("Floor")
                         .HasColumnType("int");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
@@ -71,7 +71,7 @@ namespace CozyData.Migrations
                     b.Property<int>("rentalId")
                         .HasColumnType("int");
 
-                    b.HasKey("ApartmentId");
+                    b.HasKey("Id");
 
                     b.ToTable("Apartments");
                 });

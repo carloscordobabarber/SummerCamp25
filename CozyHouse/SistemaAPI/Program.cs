@@ -1,6 +1,9 @@
 using CozyData;
-using Microsoft.EntityFrameworkCore;
 using Dominio;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using SistemaAPI.Controllers;
+using SistemaAPI.Servicios;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +12,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+// Configurar AutoMapper
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Agregar el contexto de base de datos
 builder.Services.AddDbContext<ContextoAPI>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -229,7 +233,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[0]),
             Description = "La lavadora no funciona correctamente.",
             CompanyIncidence = "Electrodomésticos S.A.",
-            ApartmentId = apartments[0].ApartmentId,
+            ApartmentId = apartments[0].Id,
             RentalId = rentals[0].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -241,7 +245,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[1]),
             Description = "La calefacción no enciende en el salón.",
             CompanyIncidence = "Clima Hogar",
-            ApartmentId = apartments[1].ApartmentId,
+            ApartmentId = apartments[1].Id,
             RentalId = rentals[1].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -253,7 +257,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[2]),
             Description = "El grifo de la cocina pierde agua.",
             CompanyIncidence = "Fontanería Express",
-            ApartmentId = apartments[2].ApartmentId,
+            ApartmentId = apartments[2].Id,
             RentalId = rentals[2].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -265,7 +269,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[0]),
             Description = "La puerta principal no cierra bien.",
             CompanyIncidence = "Cerrajeros Rápidos",
-            ApartmentId = apartments[0].ApartmentId,
+            ApartmentId = apartments[0].Id,
             RentalId = rentals[3].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -277,7 +281,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[1]),
             Description = "La luz del baño parpadea.",
             CompanyIncidence = "Electricidad Total",
-            ApartmentId = apartments[1].ApartmentId,
+            ApartmentId = apartments[1].Id,
             RentalId = rentals[4].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -289,7 +293,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[2]),
             Description = "El horno no calienta.",
             CompanyIncidence = "Electrodomésticos S.A.",
-            ApartmentId = apartments[2].ApartmentId,
+            ApartmentId = apartments[2].Id,
             RentalId = rentals[5].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -301,7 +305,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[0]),
             Description = "El aire acondicionado no enfría.",
             CompanyIncidence = "Clima Hogar",
-            ApartmentId = apartments[0].ApartmentId,
+            ApartmentId = apartments[0].Id,
             RentalId = rentals[6].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -313,7 +317,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[1]),
             Description = "La ventana del dormitorio no cierra.",
             CompanyIncidence = "Ventanas Seguras",
-            ApartmentId = apartments[1].ApartmentId,
+            ApartmentId = apartments[1].Id,
             RentalId = rentals[7].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -325,7 +329,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[2]),
             Description = "El frigorífico no enfría.",
             CompanyIncidence = "Electrodomésticos S.A.",
-            ApartmentId = apartments[2].ApartmentId,
+            ApartmentId = apartments[2].Id,
             RentalId = rentals[8].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -337,7 +341,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[0]),
             Description = "El timbre no funciona.",
             CompanyIncidence = "Electricidad Total",
-            ApartmentId = apartments[0].ApartmentId,
+            ApartmentId = apartments[0].Id,
             RentalId = rentals[9].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -349,7 +353,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[1]),
             Description = "El extractor de la cocina hace ruido.",
             CompanyIncidence = "Electrodomésticos S.A.",
-            ApartmentId = apartments[1].ApartmentId,
+            ApartmentId = apartments[1].Id,
             RentalId = rentals[10].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -361,7 +365,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[2]),
             Description = "El calentador de agua no enciende.",
             CompanyIncidence = "Clima Hogar",
-            ApartmentId = apartments[2].ApartmentId,
+            ApartmentId = apartments[2].Id,
             RentalId = rentals[11].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -373,7 +377,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[0]),
             Description = "El suelo del baño está levantado.",
             CompanyIncidence = "Reformas Express",
-            ApartmentId = apartments[0].ApartmentId,
+            ApartmentId = apartments[0].Id,
             RentalId = rentals[0].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -385,7 +389,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[1]),
             Description = "La persiana del salón está rota.",
             CompanyIncidence = "Ventanas Seguras",
-            ApartmentId = apartments[1].ApartmentId,
+            ApartmentId = apartments[1].Id,
             RentalId = rentals[1].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -397,7 +401,7 @@ using (var scope = app.Services.CreateScope())
             Direction = GetFullDirection(apartments[2]),
             Description = "El wifi no funciona en el apartamento.",
             CompanyIncidence = "Telecom S.A.",
-            ApartmentId = apartments[2].ApartmentId,
+            ApartmentId = apartments[2].Id,
             RentalId = rentals[2].RentalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow

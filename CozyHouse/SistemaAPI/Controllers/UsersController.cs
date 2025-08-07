@@ -26,7 +26,7 @@ namespace SistemaAPI.Controllers
         public async Task<ActionResult<IEnumerable<object>>> GetUsers()
         {//EJEMPLO DE USOS LINQ
             var lista = await _context.Users
-                .Where(user => user.Name.Contains("a"))
+                .Where(user => user.Name.Contains("Juan"))
                 .OrderBy(user => user.UserId)
                 .Select(user => new {
                     user.UserId,
