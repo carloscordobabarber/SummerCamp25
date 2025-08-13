@@ -1,0 +1,14 @@
+Table Log {
+  id int [pk, increment]
+  createdAt datetime [not null]
+  actionPerformed varchar(50) [not null]
+  usersId int [not null, ref: > Users.id]
+  tableAffected varchar(50) [not null]
+  description varchar(100) [not null]
+
+  Indexes {
+    (createdAt)
+    (tableAffected)
+    (usersId)
+  }
+}

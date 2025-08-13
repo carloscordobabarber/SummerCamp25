@@ -1,0 +1,13 @@
+Table District {
+  id int [pk, not null]
+  name varchar(255) [not null, note: 'UNIQUE']
+  zipcode varchar(255) [not null, note: 'UNIQUE en script']
+  country varchar(255) [not null]
+  city varchar(255) [not null]
+  createdAt datetime [not null, note: 'DEFAULT GETDATE()']
+  updatedAt datetime [note: 'DEFAULT GETDATE()']
+
+  Indexes {
+    (zipcode) [name: 'District_Zipcode', unique]
+  }
+}

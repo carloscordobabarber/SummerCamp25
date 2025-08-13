@@ -1,0 +1,16 @@
+Table Apartments {
+  id int [pk]
+  code varchar(50) [not null, note: 'UNIQUE en script']
+  door varchar(10) [not null, note: 'Letra de la A a la Z']
+  floor int [not null]
+  price float [not null]
+  area int [not null]
+  numberOfRooms int
+  numberOfBathrooms int
+  isAvailable boolean
+  buildingId int [not null, ref: > Buildings.id]
+  hasLift boolean
+  hasGarage boolean
+  createdAt datetime [not null]
+  updatedAt datetime
+}

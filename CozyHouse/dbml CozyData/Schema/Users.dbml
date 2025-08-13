@@ -1,0 +1,12 @@
+Table Users {
+  id int [pk, increment]
+  documentType varchar(3) [not null]
+  documentNumber varchar(9) [not null]
+  name varchar(36) [not null]
+  lastName varchar(36) [not null]
+  email varchar(100) [not null]
+  password varchar(24) [not null]
+  rol varchar(6) [not null]
+  createdAt datetime [not null]
+  updatedAt datetime
+}

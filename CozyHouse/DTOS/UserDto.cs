@@ -1,37 +1,16 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace Dominio
+namespace DTOS
 {
-    public class User
+    public class UserDto
     {
-        [Key]
         public int Id { get; set; }
-
-        [Required, StringLength(3)]
         public string DocumentType { get; set; } = null!;
-
-        [Required, StringLength(9)]
         public string DocumentNumber { get; set; } = null!;
-
-        [Required, StringLength(36)]
         public string Name { get; set; } = null!;
-
-        [Required, StringLength(36)]
         public string LastName { get; set; } = null!;
-
-        [Required, StringLength(100)]
         public string Email { get; set; } = null!;
-
-        [Required, StringLength(24)]
         public string Password { get; set; } = null!;
-
-        [Required, StringLength(6)]
         public string Rol { get; set; } = null!;
-
-        [Required]
         public DateTime CreatedAt { get; set; }
-
         public DateTime? UpdatedAt { get; set; }
     }
 }

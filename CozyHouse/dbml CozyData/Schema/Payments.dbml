@@ -1,0 +1,8 @@
+Table Payments {
+  id int [pk]
+  statusId varchar(1) [not null, ref: > Status.id]
+  amount float [not null]
+  rentalId int [not null, ref: > Rentals.id]
+  paymentDate datetime [not null]
+  bankAccount varchar(24) [not null]
+}

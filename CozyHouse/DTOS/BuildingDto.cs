@@ -1,28 +1,13 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace Dominio
+namespace DTOS
 {
-    public class Building
+    public class BuildingDto
     {
-        [Key]
         public int Id { get; set; }
-
-        [Required, StringLength(30)]
         public string CodeBuilding { get; set; } = null!;
-
-        [Required, StringLength(24)]
         public string CodeStreet { get; set; } = null!;
-
-        [StringLength(255)]
         public string? Name { get; set; }
-
-        [Required, StringLength(36)]
         public string Doorway { get; set; } = null!;
-
-        [Required]
         public DateTime CreatedAt { get; set; }
-
         public DateTime? UpdatedAt { get; set; }
     }
 }

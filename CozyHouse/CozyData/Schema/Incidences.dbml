@@ -1,0 +1,19 @@
+Table Incidences {
+  id int [pk, increment]
+  spokesperson varchar(100) [not null, note: 'Persona de contacto (2-100 chars)']
+  description varchar(500) [not null, note: 'Descripción de la incidencia (máx 1000 chars)']
+  issueType int [not null, note: '0..6']
+  assignedCompany varchar(100)
+  createdAt datetime [not null]
+  updatedAt datetime
+  apartmentId int [ref: > Apartments.id, not null]
+  rentalId int [ref: > Rentals.id, not null]
+  tenantId int [ref: > Users.id, not null]
+  statusId varchar(1) [not null, ref: > Status.id]
+
+  Indexes {
+    (apartmentId)
+    (rentalId)
+    (createdAt)
+  }
+}
