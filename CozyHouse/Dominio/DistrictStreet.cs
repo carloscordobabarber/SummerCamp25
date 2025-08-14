@@ -5,7 +5,9 @@ namespace Dominio
     
     public class DistrictStreet
     {
-        
+        [Key]
+        public int Id { get; set; }
+
         public int DistrictId { get; set; }
 
        
