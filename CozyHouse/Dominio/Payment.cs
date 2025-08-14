@@ -12,6 +12,7 @@ namespace Dominio
         public string StatusId { get; set; } = null!;
 
         [Required]
+        [Range(0, double.MaxValue)]
         public double Amount { get; set; }
 
         [Required]

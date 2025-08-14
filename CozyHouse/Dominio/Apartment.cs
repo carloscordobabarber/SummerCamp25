@@ -9,35 +9,38 @@ namespace Dominio
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(50)]
+        [Required, StringLength(50)]
         public string Code { get; set; } = null!;
 
-        [Required]
-        [StringLength(10)]
+        [Required, StringLength(10)]
         public string Door { get; set; } = null!;
 
-        [Required]
+        [Required, Range(-1, 100)]
         public int Floor { get; set; }
 
-        [Required]
+        [Required, Range(0, double.MaxValue)]
         public double Price { get; set; }
 
-        [Required]
+        [Required, Range(0, int.MaxValue)]
         public int Area { get; set; }
 
-        public int? NumberOfRooms { get; set; }
+        [Required, Range(0, 20)]
+        public int NumberOfRooms { get; set; }
 
-        public int? NumberOfBathrooms { get; set; }
+        [Required, Range(0, 20)]
+        public int NumberOfBathrooms { get; set; }
 
-        public bool? IsAvailable { get; set; }
+        [Required]
+        public bool IsAvailable { get; set; }
 
         [Required]
         public int BuildingId { get; set; }
 
-        public bool? HasLift { get; set; }
+        [Required]
+        public bool HasLift { get; set; }
 
-        public bool? HasGarage { get; set; }
+        [Required]
+        public bool HasGarage { get; set; }
 
         [Required]
         public DateTime CreatedAt { get; set; }

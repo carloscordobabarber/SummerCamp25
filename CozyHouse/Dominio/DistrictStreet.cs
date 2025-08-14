@@ -8,9 +8,10 @@ namespace Dominio
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public int DistrictId { get; set; }
 
-       
+        [Required]
         public int StreetId { get; set; }
     }
 }

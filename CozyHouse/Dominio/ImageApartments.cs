@@ -8,6 +8,7 @@ namespace Dominio
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public int ApartmentId { get; set; }
 
         [Required]
