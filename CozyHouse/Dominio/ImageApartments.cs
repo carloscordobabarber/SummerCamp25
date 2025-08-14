@@ -8,10 +8,12 @@ namespace Dominio
         [Key]
         public int Id { get; set; }
 
-        [Required]
         public int ApartmentId { get; set; }
 
         [Required]
-        public byte[] Photo { get; set; }
+        [StringLength(512)]
+        public string PhotoUrl { get; set; } = null!;
+
+        public string? PhotoDescription { get; set; }
     }
 }

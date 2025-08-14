@@ -4,6 +4,7 @@ namespace DTOS
     {
         public int Id { get; set; }
         public int ApartmentId { get; set; }
-        public byte[] Photo { get; set; } = null!;
+        public string PhotoUrl { get; set; } = null!;
+        public string? PhotoDescription { get; set; }
     }
 }
