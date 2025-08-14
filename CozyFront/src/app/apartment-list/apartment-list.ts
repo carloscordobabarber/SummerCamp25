@@ -1,4 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+export interface Apartment {
+  id: number;
+  title: string;
+  address: string;
+  price: number;
+  rooms: number;
+  bathrooms: number;
+  area: number;
+  image: string;
+  available: boolean;
+}
 
 @Component({
   selector: 'app-apartment-list',
@@ -7,5 +19,5 @@ import { Component } from '@angular/core';
   styleUrl: './apartment-list.css'
 })
 export class ApartmentList {
-
+  @Input() apartments: Apartment[] = [];
 }

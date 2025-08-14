@@ -1,1 +1,29 @@
-<p>apartment-list works!</p>
+<table class="table table-striped align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>#</th>
+      <th>Título</th>
+      <th>Dirección</th>
+      <th>Precio</th>
+      <th>Habitaciones</th>
+      <th>Baños</th>
+      <th>Área (m²)</th>
+      <th>Disponible</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let apt of apartments; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ apt.title }}</td>
+      <td>{{ apt.address }}</td>
+      <td>{{ apt.price | currency:'EUR':'symbol':'1.0-0' }}</td>
+      <td>{{ apt.rooms }}</td>
+      <td>{{ apt.bathrooms }}</td>
+      <td>{{ apt.area }}</td>
+      <td>
+        <span class="badge bg-success" *ngIf="apt.available">Sí</span>
+        <span class="badge bg-secondary" *ngIf="!apt.available">No</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
