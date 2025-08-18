@@ -15,7 +15,8 @@ export class App implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get<Apartment[]>('assets/apartments.json').subscribe(data => {
+    // https://devdemoapi4.azurewebsites.net/api/apartmentclients
+    this.http.get<Apartment[]>('https://devdemoapi4.azurewebsites.net/api/apartmentclients').subscribe(data => {
       this.apartments = data;
     });
   }

@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 export interface Apartment {
   id: number;
@@ -18,6 +19,15 @@ export interface Apartment {
   templateUrl: './cards.html',
   styleUrl: './cards.css'
 })
-export class Cards {
-  @Input() apartments: Apartment[] = [];
+export class Cards implements OnInit {
+  apartments: Apartment[] = [];
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http.get<Apartment[]>('https://devdemoapi4.azurewebsites.net/api/apartmentclients')
+      .subscribe(data => {
+        this.apartments = data;
+      });
+  }
 }
