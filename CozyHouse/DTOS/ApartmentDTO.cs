@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTOS
 {
-    public class ApartmentDto
+    public class ApartmentDTO
     {
         public int Id { get; set; }
         public string Code { get; set; } = null!;
@@ -16,10 +16,10 @@ namespace DTOS
         public int Area { get; set; }
         public int? NumberOfRooms { get; set; }
         public int? NumberOfBathrooms { get; set; }
-        public bool? IsAvailable { get; set; }
+        
         public int BuildingId { get; set; }
-        public bool? HasLift { get; set; }
-        public bool? HasGarage { get; set; }
+        public bool HasLift { get; set; }
+        public bool HasGarage { get; set; }
 
     }
 }

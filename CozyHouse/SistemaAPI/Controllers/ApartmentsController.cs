@@ -20,19 +20,88 @@ namespace SistemaAPI.Controllers
             _mapper = mapper;
         }
 
+        // GET: api/Apartments
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ApartmentWorkerDto>>> GetApartments()
+        {
+            var apartments = await _context.Apartments.ToListAsync();
+            var dto = _mapper.Map<List<ApartmentWorkerDto>>(apartments);
+            return Ok(dto);
+        }
+
+        // GET: api/Apartments/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApartmentWorkerDto>> GetApartment(int id)
+        {
+            var apartment = await _context.Apartments.FindAsync(id);
+            if (apartment == null)
+                return NotFound();
+
+            var dto = _mapper.Map<ApartmentWorkerDto>(apartment);
+            return Ok(dto);
+        }
+
+        // POST: api/Apartments
         [HttpPost]
-        public async Task<IActionResult> PostApartment([FromBody] ApartmentDto apartmentDto)
+        public async Task<IActionResult> PostApartment([FromBody] ApartmentWorkerDto apartmentDto)
         {
             if (apartmentDto == null)
                 return BadRequest();
 
             var apartment = _mapper.Map<Apartment>(apartmentDto);
+            apartment.CreatedAt = DateTime.UtcNow;
+            apartment.UpdatedAt = null;
 
             _context.Apartments.Add(apartment);
             await _context.SaveChangesAsync();
 
-            var resultDto = _mapper.Map<ApartmentDto>(apartment);
-            return CreatedAtAction(nameof(PostApartment), new { id = apartment.Id }, resultDto);
+            var resultDto = _mapper.Map<ApartmentWorkerDto>(apartment);
+            return CreatedAtAction(nameof(GetApartment), new { id = apartment.Id }, resultDto);
+        }
+
+        // PUT: api/Apartments/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutApartment(int id, [FromBody] ApartmentWorkerDto apartmentDto)
+        {
+            if (apartmentDto == null || id != apartmentDto.Id)
+                return BadRequest();
+
+            var apartment = await _context.Apartments.FindAsync(id);
+            if (apartment == null)
+                return NotFound();
+
+            // Map fields except Id, CreatedAt
+            apartment.Code = apartmentDto.Code;
+            apartment.Door = apartmentDto.Door;
+            apartment.Floor = apartmentDto.Floor;
+            apartment.Price = apartmentDto.Price;
+            apartment.Area = apartmentDto.Area;
+            apartment.NumberOfRooms = apartmentDto.NumberOfRooms ?? 0;
+            apartment.NumberOfBathrooms = apartmentDto.NumberOfBathrooms ?? 0;
+            apartment.IsAvailable = apartmentDto.IsAvailable ?? false;
+            apartment.BuildingId = apartmentDto.BuildingId;
+            apartment.HasLift = apartmentDto.HasLift;
+            apartment.HasGarage = apartmentDto.HasGarage;
+            apartment.UpdatedAt = DateTime.UtcNow;
+
+            _context.Entry(apartment).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // DELETE: api/Apartments/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteApartment(int id)
+        {
+            var apartment = await _context.Apartments.FindAsync(id);
+            if (apartment == null)
+                return NotFound();
+
+            _context.Apartments.Remove(apartment);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

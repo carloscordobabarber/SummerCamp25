@@ -8,19 +8,32 @@ namespace SistemaAPI.Servicios
     {
         public MappingProfile()
         {
-            CreateMap<Apartment, ApartmentDto>();
+            CreateMap<Apartment, ApartmentDTO>();
+            CreateMap<Apartment, ApartmentWorkerDto>();
+            CreateMap<Apartment, ApartmentClientDto>();
+
             CreateMap<Building, BuildingDto>();
             CreateMap<District, DistrictDto>();
             CreateMap<DistrictStreet, DistrictStreetDto>();
-            CreateMap<Incidence, IncidenceDto>();
-            CreateMap<Log, LogDto>();
-            CreateMap<Payment, PaymentDto>();
-            CreateMap<Rental, RentalDto>();
-            CreateMap<Status, StatusDto>();
-            CreateMap<Street, StreetDto>();
-            CreateMap<User, UserDto>();
 
-            CreateMap<ApartmentDto, Apartment>()
+            CreateMap<ImageApartment, ImagesDto>();
+
+            CreateMap<Incidence, IncidenceDto>();
+
+            CreateMap<Log, LogDto>();
+
+            CreateMap<Payment, PaymentDto>();
+
+            CreateMap<Rental, RentalDto>();
+
+            CreateMap<Status, StatusDto>();
+
+            CreateMap<Street, StreetDto>();
+
+            CreateMap<User, UserDto>();
+            CreateMap<User, UserWorkerDto>();
+
+            CreateMap<ApartmentDTO, Apartment>()
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.Now));
 
 

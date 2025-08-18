@@ -18,8 +18,10 @@ namespace CozyData
         public DbSet<Building> Buildings { get; set; }
 
         public DbSet<District> Districts { get; set; } 
-        public DbSet<DistrictStreet> DistrictStreets { get; set; } 
-        
+        public DbSet<DistrictStreet> DistrictStreets { get; set; }
+
+        public DbSet<ImageApartment> imageApartments { get; set; }
+
         public DbSet<Incidence> Incidences { get; set; }
 
         public DbSet<Log> Logs { get; set; }
@@ -33,6 +35,10 @@ namespace CozyData
         public DbSet<Street> Streets { get; set; } 
 
         public DbSet<User> Users { get; set; } 
+
+        
+
+
 
     }
 }
