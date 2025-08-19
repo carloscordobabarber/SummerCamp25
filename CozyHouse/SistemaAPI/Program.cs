@@ -15,9 +15,9 @@ builder.Services.AddSwaggerGen();
 // CORS: permite solicitudes desde Angular (localhost:4200)
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngularApp", policy =>
+    options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin() //WithOrigins("http://localhost:4200") // Cambia si usas otra URL
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
