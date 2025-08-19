@@ -5,10 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-import { Header } from './header/header';
-import { Footer } from './footer/footer';
-import { Cards } from './cards/cards';
-import { ApartmentList } from './apartment-list/apartment-list';
+import { Header } from './shared/header/header';
+import { Footer } from './shared/footer/footer';
+import { Cards } from './features/cards/cards';
+import { ApartmentList } from './features/apartment-list/apartment-list';
 
 @NgModule({
   declarations: [

@@ -1,6 +1,6 @@
 import { Component, signal, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Apartment } from './cards/cards';
+import { Apartment } from './models/apartment';
 
 @Component({
   selector: 'app-root',

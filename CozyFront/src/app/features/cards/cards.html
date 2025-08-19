@@ -1,0 +1,19 @@
+<div class="row g-4 d-flex justify-content-center">
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let apt of apartments">
+    <div class="card h-100 shadow-sm border-0" [ngClass]="{'opacity-50': !apt.isAvailable}">
+      <!-- <img [src]="apt.image" class="card-img-top" [alt]="apt.title" style="object-fit:cover; height:180px; border-radius:1rem 1rem 0 0;"> -->
+      <div class="card-body d-flex flex-column">
+        <!-- <h5 class="card-title mb-1">{{ apt.title }}</h5> -->
+        <!-- <p class="card-text mb-2 text-muted" style="font-size:0.95em;">{{ apt.address }}</p> -->
+        <ul class="list-unstyled mb-2" style="font-size:0.95em;">
+          <li><strong>{{ apt.numberOfRooms }}</strong> hab | <strong>{{ apt.numberOfBathrooms }}</strong> baño | <strong>{{ apt.area }}m²</strong></li>
+        </ul>
+        <div class="mt-auto">
+          <span class="badge bg-success" *ngIf="apt.isAvailable">Disponible</span>
+          <span class="badge bg-secondary" *ngIf="!apt.isAvailable">No disponible</span>
+          <div class="fw-bold mt-2" style="color:#B08968; font-size:1.1em;">{{ apt.price | currency:'EUR':'symbol':'1.0-0' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
