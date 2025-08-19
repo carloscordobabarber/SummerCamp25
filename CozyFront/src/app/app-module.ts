@@ -9,6 +9,9 @@ import { Header } from './shared/header/header';
 import { Footer } from './shared/footer/footer';
 import { Cards } from './features/cards/cards';
 import { ApartmentList } from './features/apartment-list/apartment-list';
+import { Incidences } from './features/incidences/incidences';
+import { Clients } from './features/clients/clients';
+import { Contact } from './features/contact/contact';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { ApartmentList } from './features/apartment-list/apartment-list';
     Header,
     Footer,
     Cards,
-    ApartmentList
+    ApartmentList,
+    Incidences,
+    Clients,
+    Contact
   ],
   imports: [
     BrowserModule,
