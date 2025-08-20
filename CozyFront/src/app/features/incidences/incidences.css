@@ -1,0 +1,25 @@
+/* Estilos para las pestañas */
+.tabs {
+	display: flex;
+	justify-content: center;
+	gap: 1.5em;
+	margin-bottom: 2em;
+}
+.tabs button {
+	background: none;
+	border: none;
+	font-size: 1.1em;
+	font-weight: 500;
+	padding: 0.7em 1.5em;
+	border-bottom: 2.5px solid transparent;
+	cursor: pointer;
+	transition: border-color 0.2s, color 0.2s;
+	color: #444;
+}
+.tabs button.active {
+	border-bottom: 2.5px solid #6c63ff;
+	color: #6c63ff;
+}
+.tab-content {
+	min-height: 350px;
+}

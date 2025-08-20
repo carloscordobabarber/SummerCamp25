@@ -13,6 +13,8 @@ import { Incidences } from './features/incidences/incidences';
 import { Clients } from './features/clients/clients';
 import { Contact } from './features/contact/contact';
 import { ReactiveFormsModule } from '@angular/forms';
+import { IncidenceForm } from './features/incidences/components/incidence-form/incidence-form';
+import { IncidenceViewer } from './features/incidences/components/incidence-viewer/incidence-viewer';
 
 @NgModule({
   declarations: [
@@ -21,15 +23,20 @@ import { ReactiveFormsModule } from '@angular/forms';
     Footer,
     Cards,
     ApartmentList,
-    Incidences,
+    
     Clients,
     Contact
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule
+    HttpClientModule,
+    Incidences,
+    IncidenceForm,
+    IncidenceViewer
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

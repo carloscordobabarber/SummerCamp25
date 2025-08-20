@@ -1,1 +1,12 @@
-<p>incidences works!</p>
+<div class="tabs">
+	<button [class.active]="tab === 'nueva'" (click)="tab = 'nueva'">Nueva Incidencia</button>
+	<button [class.active]="tab === 'historial'" (click)="tab = 'historial'">Historial</button>
+</div>
+<div class="tab-content">
+	<ng-container *ngIf="tab === 'nueva'">
+		<app-incidence-form></app-incidence-form>
+	</ng-container>
+	<ng-container *ngIf="tab === 'historial'">
+		<app-incidence-viewer [incidence]="mockIncidence"></app-incidence-viewer>
+	</ng-container>
+</div>
