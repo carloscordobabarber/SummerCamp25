@@ -12,6 +12,8 @@ import { ApartmentList } from './features/apartment-list/apartment-list';
 import { Incidences } from './features/incidences/incidences';
 import { Clients } from './features/clients/clients';
 import { Contact } from './features/contact/contact';
+import { IncidenceForm } from './features/incidences/components/incidence-form/incidence-form';
+import { IncidenceViewer } from './features/incidences/components/incidence-viewer/incidence-viewer';
 
 @NgModule({
   declarations: [
@@ -20,14 +22,18 @@ import { Contact } from './features/contact/contact';
     Footer,
     Cards,
     ApartmentList,
-    Incidences,
+    
     Clients,
     Contact
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    Incidences,
+    IncidenceForm,
+    IncidenceViewer
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
