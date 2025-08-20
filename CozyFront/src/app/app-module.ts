@@ -32,8 +32,7 @@ import { IncidenceViewer } from './features/incidences/components/incidence-view
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
-    HttpClientModule,
+    ReactiveFormsModule,
     Incidences,
     IncidenceForm,
     IncidenceViewer
