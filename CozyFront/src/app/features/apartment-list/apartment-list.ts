@@ -1,17 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-export interface Apartment {
-  id: number;
-  title: string;
-  address: string;
-  price: number;
-  rooms: number;
-  bathrooms: number;
-  area: number;
-  image: string;
-  available: boolean;
-}
+import { Apartment } from '../../models/apartment';
 
 @Component({
   selector: 'app-apartment-list',
