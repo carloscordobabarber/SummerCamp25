@@ -12,6 +12,7 @@ import { ApartmentList } from './features/apartment-list/apartment-list';
 import { Incidences } from './features/incidences/incidences';
 import { Clients } from './features/clients/clients';
 import { Contact } from './features/contact/contact';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { Contact } from './features/contact/contact';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
