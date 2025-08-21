@@ -5,9 +5,10 @@ import { Incidences } from './features/incidences/incidences';
 import { Clients } from './features/clients/clients';
 import { Contact } from './features/contact/contact';
 import { About } from './features/about/about';
+import { CardManager } from './features/card-manager/card-manager';
 
 const routes: Routes = [
-  { path: '', component: Cards },
+  { path: '', component: CardManager },
   { path: 'incidencias', component: Incidences },
   { path: 'datos-personales', component: Clients },
   { path: 'contacto', component: Contact },

@@ -15,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IncidenceForm } from './features/incidences/components/incidence-form/incidence-form';
 import { IncidenceViewer } from './features/incidences/components/incidence-viewer/incidence-viewer';
 import { About } from './features/about/about';
+import { CardManager } from './features/card-manager/card-manager';
+import { Paginador } from './features/paginador/paginador';
 
 @NgModule({
   declarations: [
@@ -23,12 +25,11 @@ import { About } from './features/about/about';
     Footer,
     Cards,
     ApartmentList,
-    
     Clients,
     Contact,
-    About
-    
-  ],
+    About,
+    CardManager
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -36,7 +37,8 @@ import { About } from './features/about/about';
     ReactiveFormsModule,
     Incidences,
     IncidenceForm,
-    IncidenceViewer
+    IncidenceViewer,
+    Paginador
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
