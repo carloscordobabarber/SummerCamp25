@@ -14,6 +14,7 @@ import { Contact } from './features/contact/contact';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IncidenceForm } from './features/incidences/components/incidence-form/incidence-form';
 import { IncidenceViewer } from './features/incidences/components/incidence-viewer/incidence-viewer';
+import { About } from './features/about/about';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { IncidenceViewer } from './features/incidences/components/incidence-view
     ApartmentList,
     
     Clients,
-    Contact
+    Contact,
+    About
     
   ],
   imports: [
