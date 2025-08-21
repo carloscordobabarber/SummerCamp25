@@ -13,6 +13,7 @@ namespace SistemaAPI.Servicios
             CreateMap<Apartment, ApartmentClientDto>();
 
             CreateMap<Building, BuildingDto>();
+            CreateMap<Contact, ContactDto>();
             CreateMap<District, DistrictDto>();
             CreateMap<DistrictStreet, DistrictStreetDto>();
 

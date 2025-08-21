@@ -16,6 +16,7 @@ namespace CozyData
 
         public DbSet<Apartment> Apartments { get; set; }
         public DbSet<Building> Buildings { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
         public DbSet<District> Districts { get; set; } 
         public DbSet<DistrictStreet> DistrictStreets { get; set; }
