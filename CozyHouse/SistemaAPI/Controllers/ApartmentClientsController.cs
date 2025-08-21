@@ -21,14 +21,27 @@ namespace SistemaAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ApartmentClientDto>>> GetAvailableApartments()
+        public async Task<ActionResult<PagedResult<ApartmentClientDto>>> GetAvailableApartments([FromQuery] int pageSize = 10, [FromQuery] int page = 1)
         {
-            var apartments = await _context.Apartments
-                .Where(a => a.IsAvailable)
+            if (pageSize <= 0) pageSize = 10;
+            if (page <= 0) page = 1;
+
+            var query = _context.Apartments.Where(a => a.IsAvailable);
+            var totalCount = await query.CountAsync();
+            var apartments = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             var dto = _mapper.Map<List<ApartmentClientDto>>(apartments);
-            return Ok(dto);
+            var result = new PagedResult<ApartmentClientDto>
+            {
+                Items = dto,
+                TotalCount = totalCount,
+                Page = page,
+                PageSize = pageSize
+            };
+            return Ok(result);
         }
     }
 }
