@@ -47,7 +47,14 @@ export class Clients implements OnInit {
         ]
       ],
       birthDate: ['', [Validators.required, this.birthDateValidator]],
-      email: [''],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(100),
+          Validators.pattern(/^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+        ]
+      ],
       confirmEmail: [''],
       phone: [
         '',
@@ -57,7 +64,14 @@ export class Clients implements OnInit {
           Validators.pattern(/^\+?\d+$/)
         ]
       ],
-      password: [''],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(24),
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/)
+        ]
+      ],
       confirmPassword: [''],
       role: [
         'Client',
