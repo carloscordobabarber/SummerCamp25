@@ -17,6 +17,7 @@ import { IncidenceViewer } from './features/incidences/components/incidence-view
 import { About } from './features/about/about';
 import { CardManager } from './features/card-manager/card-manager';
 import { Paginador } from './features/paginador/paginador';
+import { Login } from './features/login/login';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { Paginador } from './features/paginador/paginador';
     Clients,
     Contact,
     About,
-    CardManager
+    CardManager,
+    Login
     ],
   imports: [
     BrowserModule,
