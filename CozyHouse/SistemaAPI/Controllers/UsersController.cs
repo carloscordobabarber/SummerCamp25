@@ -22,28 +22,28 @@ namespace SistemaAPI.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserWorkerDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
-            var dto = _mapper.Map<List<UserWorkerDto>>(users);
+            var dto = _mapper.Map<List<UserDto>>(users);
             return Ok(dto);
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserWorkerDto>> GetUser(int id)
+        public async Task<ActionResult<UserDto>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)
                 return NotFound();
 
-            var dto = _mapper.Map<UserWorkerDto>(user);
+            var dto = _mapper.Map<UserDto>(user);
             return Ok(dto);
         }
 
         // POST: api/Users
         [HttpPost]
-        public async Task<IActionResult> PostUser([FromBody] UserWorkerDto userDto)
+        public async Task<IActionResult> PostUser([FromBody] UserRegisterDto userDto)
         {
             if (userDto == null)
                 return BadRequest();
@@ -55,7 +55,8 @@ namespace SistemaAPI.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            var resultDto = _mapper.Map<UserWorkerDto>(user);
+            // Devuelve UserDto, que no incluye la contraseña
+            var resultDto = _mapper.Map<UserDto>(user);
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, resultDto);
         }
 

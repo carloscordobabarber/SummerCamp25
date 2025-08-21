@@ -31,8 +31,10 @@ namespace SistemaAPI.Servicios
 
             CreateMap<Street, StreetDto>();
 
-            CreateMap<User, UserDto>();
+            CreateMap<User, UserDto>().ReverseMap();
+
             CreateMap<User, UserWorkerDto>();
+            CreateMap<UserRegisterDto, User>();
 
             CreateMap<ApartmentDTO, Apartment>()
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.Now));
