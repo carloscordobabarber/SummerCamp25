@@ -12,18 +12,18 @@ import { Apartment } from '../../models/apartment';
 export class Cards implements OnInit {
   apartments: Apartment[] = [];
 
-  constructor(private apartmentClient: ApartmentClientsService) {}
+  constructor(private apartmentClientService: ApartmentClientsService) {}
 
   // ngOnInit() {
-  //   this.apartmentClient.getApartments().subscribe(data => {
+  //   this.apartmentClientService.getApartments().subscribe(data => {
   //     this.apartments = data;
   //   });
   // }
 
   ngOnInit(): void {
-    this.apartmentClient.getApartments().subscribe({
-      next: (res) => {
-        this.apartments = res;
+    this.apartmentClientService.getApartments().subscribe({
+      next: (data) => {
+        this.apartments = data;
         console.log('Datos recibidos:', this.apartments);
       },
       error: (err) => {

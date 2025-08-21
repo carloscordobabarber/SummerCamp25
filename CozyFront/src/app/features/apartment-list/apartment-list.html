@@ -1,4 +1,6 @@
-<table class="table table-striped align-middle">
+<div *ngIf="cargando">Cargando apartamentos...</div>
+
+<table *ngIf="!cargando" class="table table-striped align-middle">
   <thead class="table-light">
     <tr>
       <th>#</th>
