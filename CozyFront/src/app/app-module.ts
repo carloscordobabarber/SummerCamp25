@@ -19,6 +19,7 @@ import { Paginador } from './features/paginador/paginador';
 import { Login } from './features/login/login';
 import { Profile } from './features/profile/profile';
 import { ClientList } from './features/client-list/client-list';
+import { IncidenceList } from './features/incidence-list/incidence-list';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ClientList } from './features/client-list/client-list';
     CardManager,
     Login,
     Profile,
-    ClientList
+    ClientList,
+    IncidenceList
     ],
   imports: [
     BrowserModule,
