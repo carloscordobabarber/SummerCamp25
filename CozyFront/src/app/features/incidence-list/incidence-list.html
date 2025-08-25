@@ -1,1 +1,34 @@
-<p>incidence-list works!</p>
+<div *ngIf="cargando">Cargando incidencias...</div>
+
+<table *ngIf="!cargando" class="table table-striped align-middle">
+	<thead class="table-light">
+		<tr>
+			<th>#</th>
+			<th>Portavoz</th>
+			<th>Descripción</th>
+			<th>Tipo de incidencia</th>
+			<th>Empresa asignada</th>
+			<th>Fecha de creación</th>
+			<th>Fecha de actualización</th>
+			<th>Id Apartamento</th>
+			<th>Id Alquiler</th>
+			<th>Id Inquilino</th>
+			<th>Estado</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let inc of incidences; let i = index">
+			<td>{{ i + 1 }}</td>
+			<td>{{ inc.spokesperson }}</td>
+			<td>{{ inc.description }}</td>
+			<td>{{ inc.issueType }}</td>
+			<td>{{ inc.assignedCompany }}</td>
+			<td>{{ inc.createdAt | date:'dd/MM/yyyy' }}</td>
+			<td>{{ inc.updatedAt ? (inc.updatedAt | date:'dd/MM/yyyy') : '-' }}</td>
+			<td>{{ inc.apartmentId }}</td>
+			<td>{{ inc.rentalId }}</td>
+			<td>{{ inc.tenantId }}</td>
+			<td>{{ inc.statusId }}</td>
+		</tr>
+	</tbody>
+</table>
