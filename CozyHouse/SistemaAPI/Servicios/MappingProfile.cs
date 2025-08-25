@@ -39,6 +39,8 @@ namespace SistemaAPI.Servicios
             CreateMap<ApartmentDTO, Apartment>()
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.Now));
 
+            
+
 
 
         }
