@@ -19,7 +19,7 @@ namespace SistemaAPI.Servicios
 
             CreateMap<ImageApartment, ImagesDto>();
 
-            CreateMap<Incidence, IncidenceDto>();
+            CreateMap<Incidence, IncidenceDto>().ReverseMap();
 
             CreateMap<Log, LogDto>();
 
