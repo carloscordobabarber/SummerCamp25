@@ -1,0 +1,23 @@
+﻿
+
+StatusCode        : 200
+StatusDescription : OK
+Content           : [{"createdAt":"2025-08-19T11:26:58.1963993","updatedAt":null,"id":1,"documentType":"dni","documentNumber":"10000001A","name":"Usuario
+                    1","lastName":"Apellido1","email":"usuario1@mail.com","birthDate":"...
+RawContent        : HTTP/1.1 200 OK
+                    Content-Type: application/json; charset=utf-8
+                    Date: Mon, 25 Aug 2025 11:20:03 GMT
+                    Set-Cookie: ARRAffinity=5c3b3eeb308eb53980891741456831fd17b082f53c89f03c9c9dcc2d905209a3;Path=/;Htt...
+Forms             : {}
+Headers           : {[Content-Type, application/json; charset=utf-8], [Date, Mon, 25 Aug 2025 11:20:03 GMT], [Set-Cookie, ARRAffinity=5c3b3eeb308eb539808
+                    91741456831fd17b082f53c89f03c9c9dcc2d905209a3;Path=/;HttpOnly;Secure;Domain=devdemoapi4.azurewebsites.net,ARRAffinitySameSite=5c3b3ee
+                    b308eb53980891741456831fd17b082f53c89f03c9c9dcc2d905209a3;Path=/;HttpOnly;SameSite=None;Secure;Domain=devdemoapi4.azurewebsites.net],
+                     [Server, Microsoft-IIS/10.0]...}
+Images            : {}
+InputFields       : {}
+Links             : {}
+ParsedHtml        : mshtml.HTMLDocumentClass
+RawContentLength  : 4408
+
+
+

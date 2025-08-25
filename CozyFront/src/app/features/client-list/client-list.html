@@ -1,0 +1,30 @@
+<div *ngIf="cargando">Cargando clientes...</div>
+
+<table *ngIf="!cargando" class="table table-striped align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>#</th>
+      <th>Tipo de documento</th>
+      <th>Número de documento</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Fecha de nacimiento</th>
+      <th>Email</th>
+      <th>Teléfono</th>
+      <th>Rol</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cli of clients; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ cli.documentType }}</td>
+      <td>{{ cli.documentNumber }}</td>
+      <td>{{ cli.name }}</td>
+      <td>{{ cli.lastName }}</td>
+    <td>{{ cli.birthDate | date:'dd/MM/yyyy' }}</td>
+      <td>{{ cli.email }}</td>
+      <td>{{ cli.phone }}</td>
+      <td>{{ cli.role }}</td>
+    </tr>
+  </tbody>
+</table>

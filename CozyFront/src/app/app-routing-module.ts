@@ -7,12 +7,16 @@ import { Contact } from './features/contact/contact';
 import { About } from './features/about/about';
 import { CardManager } from './features/card-manager/card-manager';
 import { Profile } from './features/profile/profile';
+import { ApartmentList } from './features/apartment-list/apartment-list';
+import { ClientList } from './features/client-list/client-list';
 
 const routes: Routes = [
   { path: '', component: CardManager },
   { path: 'incidences', component: Incidences },
   { path: 'register', component: Clients },
   { path: 'profile', component: Profile },
+  { path: 'apartment-list', component: ApartmentList },
+  { path: 'client-list', component: ClientList },
   { path: 'contact', component: Contact },
   { path: 'about', component: About },
   { path: '**', redirectTo: '' }
