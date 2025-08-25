@@ -10,7 +10,7 @@ import { ApartmentList } from './features/apartment-list/apartment-list';
 import { Incidences } from './features/incidences/incidences';
 import { Clients } from './features/clients/clients';
 import { Contact } from './features/contact/contact';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { IncidenceForm } from './features/incidences/components/incidence-form/incidence-form';
 import { IncidenceViewer } from './features/incidences/components/incidence-viewer/incidence-viewer';
 import { About } from './features/about/about';
@@ -20,6 +20,8 @@ import { Login } from './features/login/login';
 import { Profile } from './features/profile/profile';
 import { ClientList } from './features/client-list/client-list';
 import { IncidenceList } from './features/incidence-list/incidence-list';
+import { SearchBar } from './shared/search-bar/search-bar';
+import { SliderFilter } from './shared/slider-filter/slider-filter';
 
 @NgModule({
   declarations: [
@@ -35,13 +37,16 @@ import { IncidenceList } from './features/incidence-list/incidence-list';
     Login,
     Profile,
     ClientList,
-    IncidenceList
-    ],
+    IncidenceList,
+    SearchBar,
+    SliderFilter
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
     Incidences,
     IncidenceForm,
     IncidenceViewer,
