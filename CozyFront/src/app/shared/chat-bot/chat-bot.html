@@ -1,0 +1,20 @@
+<!-- Botón flotante minimizado -->
+<div class="chatbot-fab" *ngIf="!isOpen" (click)="openChat()">
+  <span>💬</span>
+</div>
+
+<!-- Ventana de chat -->
+<div class="chatbot-window" *ngIf="isOpen">
+  <div class="chatbot-header">
+    <span>ChatBot</span>
+    <button class="close-btn" (click)="closeChat()">&times;</button>
+  </div>
+  <div class="chatbot-body">
+    <div class="chatbot-message bot">Soy su agente inmobiliario virtual, estoy listo para ayudarle</div>
+    <!-- Aquí irán los mensajes del usuario y del bot -->
+  </div>
+  <div class="chatbot-input-bar">
+    <input type="text" placeholder="Escriba su mensaje..." />
+    <button class="send-btn">Enviar</button>
+  </div>
+</div>

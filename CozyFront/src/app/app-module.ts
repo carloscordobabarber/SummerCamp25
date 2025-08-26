@@ -22,6 +22,7 @@ import { ClientList } from './features/client-list/client-list';
 import { IncidenceList } from './features/incidence-list/incidence-list';
 import { SearchBar } from './shared/search-bar/search-bar';
 import { SliderFilter } from './shared/slider-filter/slider-filter';
+import { ChatBot } from './shared/chat-bot/chat-bot';
 import { ApartmentDetails } from './features/apartment-details/apartment-details';
 
 @NgModule({
@@ -40,6 +41,8 @@ import { ApartmentDetails } from './features/apartment-details/apartment-details
     ClientList,
     IncidenceList,
     SearchBar,
+    SliderFilter,
+    ChatBot
     SliderFilter,
     ApartmentDetails
   ],

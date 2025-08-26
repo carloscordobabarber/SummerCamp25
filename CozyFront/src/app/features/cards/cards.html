@@ -5,17 +5,17 @@
     <button class="carousel-btn right" (click)="nextImage()" *ngIf="images.length > 1">&#10095;</button>
   </div>
   <div class="card-body d-flex flex-column">
-    <h5 class="card-title mb-1">{{ apartment.code }} - Puerta {{ apartment.door }}</h5>
-    <p class="card-text mb-2 text-muted" style="font-size:0.95em;">Planta {{ apartment.floor }} | Edificio #{{ apartment.buildingId }}</p>
+    <h5 class="card-title mb-1">{{ apartment['code'] }} - Puerta {{ apartment['door'] }}</h5>
+    <p class="card-text mb-2 text-muted" style="font-size:0.95em;">Planta {{ apartment['floor'] }} | Edificio #{{ apartment['buildingId'] }}</p>
     <ul class="list-unstyled mb-2" style="font-size:0.95em;">
-      <li><strong>{{ apartment.numberOfRooms }}</strong> hab | <strong>{{ apartment.numberOfBathrooms }}</strong> baño | <strong>{{ apartment.area }}m²</strong></li>
-      <li>Ascensor: <span [ngClass]="{'text-success': apartment.hasLift, 'text-danger': !apartment.hasLift}">{{ apartment.hasLift ? 'Sí' : 'No' }}</span> | Garaje: <span [ngClass]="{'text-success': apartment.hasGarage, 'text-danger': !apartment.hasGarage}">{{ apartment.hasGarage ? 'Sí' : 'No' }}</span></li>
+      <li><strong>{{ apartment['numberOfRooms'] }}</strong> hab | <strong>{{ apartment['numberOfBathrooms'] }}</strong> baño | <strong>{{ apartment['area'] }}m²</strong></li>
+      <li>Ascensor: <span [ngClass]="{'text-success': apartment['hasLift'], 'text-danger': !apartment['hasLift']}">{{ apartment['hasLift'] ? 'Sí' : 'No' }}</span> | Garaje: <span [ngClass]="{'text-success': apartment['hasGarage'], 'text-danger': !apartment['hasGarage']}">{{ apartment['hasGarage'] ? 'Sí' : 'No' }}</span></li>
       <li><strong>Dirección:</strong> {{ direccion }}</li>
     </ul>
     <div class="mt-auto">
       <span class="badge bg-success" *ngIf="apartment.isAvailable !== false">Disponible</span>
       <span class="badge bg-secondary" *ngIf="apartment.isAvailable === false">No disponible</span>
-      <div class="fw-bold mt-2" style="color:#B08968; font-size:1.1em;">{{ apartment.price | currency:'EUR':'symbol':'1.0-0' }}</div>
+      <div class="fw-bold mt-2" style="color:#B08968; font-size:1.1em;">{{ apartment['price'] | currency:'EUR':'symbol':'1.0-0' }}</div>
     </div>
   </div>
 </div>
