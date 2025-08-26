@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+declare var bootstrap: any;
 import { ActivatedRoute } from '@angular/router';
 import { Apartment } from '../../models/apartment';
 import { ApartmentCard } from '../../services/apartment-card/apartment-card';
@@ -11,22 +12,45 @@ import { ApartmentCard } from '../../services/apartment-card/apartment-card';
 })
 export class ApartmentDetails implements OnInit {
   apartment?: Apartment;
+  currentImageIndex: number = 0;
 
-  getImageUrl(): string | null {
-    if (this.apartment && this.apartment.imageUrls && this.apartment.imageUrls.length > 0) {
-      return this.apartment.imageUrls[0];
-    }
-    return null;
+  getImageUrls(): string[] {
+    return this.apartment?.imageUrls ?? [];
   }
 
-  constructor(private route: ActivatedRoute, private apartmentService: ApartmentCard) {}
+  constructor(private route: ActivatedRoute, private apartmentService: ApartmentCard) { }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.apartmentService.getApartments().subscribe(apartments => {
       this.apartment = apartments.find(a => a.id === id);
+      this.currentImageIndex = 0;
     });
-    console.log('Datos apartamento:', this.apartment);
-    console.log('Id apartamento:', this.apartment?.id);
+  }
+
+  nextImage(): void {
+    const images = this.getImageUrls();
+    if (images.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex + 1) % images.length;
+    }
+  }
+
+  prevImage(): void {
+    const images = this.getImageUrls();
+    if (images.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex - 1 + images.length) % images.length;
+    }
+  }
+
+  selectImage(idx: number): void {
+    this.currentImageIndex = idx;
+  }
+
+  // Manejo de error de imagen para el carrusel
+  onImageError(event: Event) {
+    if (event && event.target) {
+      const target = event.target as HTMLImageElement;
+      target.src = 'assets/CHNotFoundImage.png';
+    }
   }
 }
