@@ -1,0 +1,5 @@
+/* Reservar espacio para el paginador y evitar solapamiento con el footer */
+.paginador-footer-space {
+  min-height: 80px;
+  margin-bottom: 2.5em;
+}
