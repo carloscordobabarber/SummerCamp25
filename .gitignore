@@ -361,3 +361,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /cozyfront/.angular/cache/17.3.17
+CozyFront/.angular/cache/20.1.5/CozyFront/.tsbuildinfo
