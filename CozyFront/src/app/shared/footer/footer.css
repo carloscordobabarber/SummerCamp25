@@ -1,3 +1,17 @@
+/* Pegado abajo siempre */
+body, app-root {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
+.simple-footer {
+	flex-shrink: 0;
+}
 /* Footer sencillo y centrado */
 .simple-footer {
 	background: #F5F0E6;

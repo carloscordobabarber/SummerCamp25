@@ -1,10 +1,10 @@
 <!-- Botón flotante minimizado -->
-<div class="chatbot-fab" *ngIf="!isOpen" (click)="openChat()">
+<div class="chatbot-fab" [class.elevated]="elevated" *ngIf="!isOpen" (click)="openChat()">
   <span>💬</span>
 </div>
 
 <!-- Ventana de chat -->
-<div class="chatbot-window" *ngIf="isOpen">
+<div class="chatbot-window" [class.elevated]="elevated" *ngIf="isOpen">
   <div class="chatbot-header">
     <span>ChatBot</span>
     <button class="close-btn" (click)="closeChat()">&times;</button>

@@ -1,4 +1,6 @@
 /* Botón flotante */
+/* Botón flotante con margen para no tapar el footer */
+/* Botón flotante abajo derecha por defecto */
 .chatbot-fab {
   position: fixed;
   bottom: 24px;
@@ -15,13 +17,18 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   cursor: pointer;
   z-index: 1000;
-  transition: background 0.2s;
+  transition: background 0.2s, bottom 0.3s cubic-bezier(.4,2,.3,1);
+}
+.chatbot-fab.elevated {
+  bottom: 150px !important;
 }
 .chatbot-fab:hover {
   background: #A1744C;
 }
 
 /* Ventana de chat */
+/* Ventana de chat con margen para no tapar el footer */
+/* Ventana de chat abajo derecha por defecto */
 .chatbot-window {
   position: fixed;
   bottom: 24px;
@@ -36,6 +43,35 @@
   flex-direction: column;
   overflow: hidden;
   animation: chatbot-pop 0.2s;
+  transition: bottom 0.3s cubic-bezier(.4,2,.3,1);
+}
+.chatbot-window.elevated {
+  bottom: 150px !important;
+}
+/* Responsive: igual que antes pero con bottom reducido */
+@media (max-width: 600px) {
+  .chatbot-fab, .chatbot-window {
+    right: 12px;
+  }
+  .chatbot-fab {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5em;
+  }
+  .chatbot-window {
+    width: 95vw;
+    height: 60vh;
+  }
+}
+@media (max-width: 600px) {
+  .chatbot-fab, .chatbot-window {
+    bottom: 72px;
+    right: 12px;
+  }
+  .chatbot-window {
+    width: 95vw;
+    height: 60vh;
+  }
 }
 @keyframes chatbot-pop {
   0% { transform: scale(0.8); opacity: 0; }
