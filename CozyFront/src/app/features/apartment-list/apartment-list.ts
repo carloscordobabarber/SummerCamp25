@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Apartment } from '../../models/apartment';
-import { ApartmentClientsService } from '../../services/apartment-client/apartment-client';
+import { ApartmentWorker } from '../../services/apartment-worker/apartment-worker';
 
 @Component({
   selector: 'app-apartment-list',
@@ -28,7 +28,7 @@ export class ApartmentList implements OnInit {
   minPrice: number = 0;
   maxPrice: number = 10000;
 
-  constructor(private apartmentClientService: ApartmentClientsService) {}
+  constructor(private apartmentWorker: ApartmentWorker) {}
 
   // ngOnInit() {
   //   this.http.get<Apartment[]>('https://devdemoapi4.azurewebsites.net/api/apartmentworkers')
@@ -39,7 +39,7 @@ export class ApartmentList implements OnInit {
 
   ngOnInit(): void {
     this.cargando = true;
-    this.apartmentClientService.getApartments().subscribe({
+    this.apartmentWorker.getApartments().subscribe({
       next: (data) => {
         this.apartments = data;
         this.filteredApartments = data;
@@ -55,6 +55,9 @@ export class ApartmentList implements OnInit {
       error: (err) => {
         console.log('Error al obtener datos:', err);
         this.cargando = false;
+      },
+      complete: () => {
+        console.log('Datos recibidos:', this.apartments);
       }
     });
   }

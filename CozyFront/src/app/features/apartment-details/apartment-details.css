@@ -1,0 +1,7 @@
+/* Resaltar detalles y estilos para la imagen */
+.img-fluid {
+	border: 2px solid #AFC3B9;
+}
+.list-group-item strong {
+	color: #AFC3B9;
+}

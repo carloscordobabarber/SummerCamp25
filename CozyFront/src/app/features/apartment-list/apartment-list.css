@@ -1,0 +1,8 @@
+/* Resalta la fila al pasar el ratón */
+.apartment-row {
+	transition: background-color 0.2s, color 0.2s;
+}
+.apartment-row:hover td {
+	background-color: #AFC3B9 !important;
+	color: #fff !important;
+}

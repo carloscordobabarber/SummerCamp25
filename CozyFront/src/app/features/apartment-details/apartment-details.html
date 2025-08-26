@@ -1,0 +1,24 @@
+<div class="container py-4" *ngIf="apartment">
+	<div class="row mb-4">
+		<div class="col-md-6">
+			<h2 class="mb-3">{{ apartment.code }}</h2>
+			<ul class="list-group mb-3">
+				<li class="list-group-item"><strong>Dirección: </strong> {{ apartment.door }}</li>
+				<li class="list-group-item"><strong>Distrito: </strong> {{ apartment.districtName }}</li>
+				<li class="list-group-item"><strong>Calle: </strong> {{ apartment.streetName }}</li>
+				<li class="list-group-item"><strong>Planta: </strong> {{ apartment.floor }}</li>
+				<li class="list-group-item"><strong>Área: </strong> {{ apartment.area }} m²</li>
+				<li class="list-group-item"><strong>Habitaciones: </strong> {{ apartment.numberOfRooms }}</li>
+				<li class="list-group-item"><strong>Baños: </strong> {{ apartment.numberOfBathrooms }}</li>
+				<li class="list-group-item"><strong>Precio: </strong> <span class="text-success">{{ apartment.price | currency:'EUR':'symbol':'1.0-0' }}</span></li>
+				<li class="list-group-item"><strong>Ascensor: </strong> <span [class]="apartment.hasLift ? 'badge bg-success' : 'badge bg-secondary'">{{ apartment.hasLift ? 'Sí' : 'No' }}</span></li>
+				<li class="list-group-item"><strong>Garaje: </strong> <span [class]="apartment.hasGarage ? 'badge bg-success' : 'badge bg-secondary'">{{ apartment.hasGarage ? 'Sí' : 'No' }}</span></li>
+				<li class="list-group-item"><strong>Disponible: </strong> <span [class]="apartment.isAvailable ? 'badge bg-success' : 'badge bg-secondary'">{{ apartment.isAvailable ? 'Sí' : 'No' }}</span></li>
+			</ul>
+		</div>
+		<div class="col-md-6 d-flex align-items-center justify-content-center">
+			<img *ngIf="getImageUrl()" [src]="getImageUrl()" class="img-fluid rounded shadow" alt="Imagen apartamento" style="max-height:350px;">
+			<div *ngIf="!apartment.imageUrls?.length" class="text-muted">Sin imagen disponible</div>
+		</div>
+	</div>
+</div>

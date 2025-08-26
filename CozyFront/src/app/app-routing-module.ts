@@ -10,12 +10,14 @@ import { Profile } from './features/profile/profile';
 import { ApartmentList } from './features/apartment-list/apartment-list';
 import { ClientList } from './features/client-list/client-list';
 import { IncidenceList } from './features/incidence-list/incidence-list';
+import { ApartmentDetails } from './features/apartment-details/apartment-details';
 
 const routes: Routes = [
   { path: '', component: CardManager },
   { path: 'incidences', component: Incidences },
   { path: 'register', component: Clients },
   { path: 'profile', component: Profile },
+  { path: 'apartment-details/:id', component: ApartmentDetails },
   { path: 'apartment-list', component: ApartmentList },
   { path: 'client-list', component: ClientList },
   { path: 'incidence-list', component: IncidenceList },

@@ -22,6 +22,7 @@ import { ClientList } from './features/client-list/client-list';
 import { IncidenceList } from './features/incidence-list/incidence-list';
 import { SearchBar } from './shared/search-bar/search-bar';
 import { SliderFilter } from './shared/slider-filter/slider-filter';
+import { ApartmentDetails } from './features/apartment-details/apartment-details';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { SliderFilter } from './shared/slider-filter/slider-filter';
     ClientList,
     IncidenceList,
     SearchBar,
-    SliderFilter
+    SliderFilter,
+    ApartmentDetails
   ],
   imports: [
     BrowserModule,
