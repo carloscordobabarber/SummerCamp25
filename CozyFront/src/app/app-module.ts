@@ -42,7 +42,7 @@ import { ApartmentDetails } from './features/apartment-details/apartment-details
     IncidenceList,
     SearchBar,
     SliderFilter,
-    ChatBot
+    ChatBot,
     SliderFilter,
     ApartmentDetails
   ],

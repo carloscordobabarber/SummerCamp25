@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apartment } from '../../models/apartment';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -12,6 +12,8 @@ export class ApartmentCard {
   constructor(private http: HttpClient) {}
 
   getApartments(): Observable<Apartment[]> {
-    return this.http.get<Apartment[]>(this.apiUrl);
+    return this.http.get<{ items: Apartment[] }>(this.apiUrl).pipe(
+      map(response => response.items)
+    );
   }
 }
