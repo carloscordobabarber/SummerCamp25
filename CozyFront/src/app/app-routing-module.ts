@@ -18,7 +18,6 @@ const routes: Routes = [
   { path: '', component: CardManager },
   { path: 'incidences', component: Incidences },
   { path: 'register', component: Clients },
-  { path: 'profile', component: Profile },
   { path: 'apartment-details/:id', component: ApartmentDetails },
   { path: 'login', component: Login },
   { path: 'profile', component: Profile,
