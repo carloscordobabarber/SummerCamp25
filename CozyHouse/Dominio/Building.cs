@@ -1,26 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace Dominio;
+namespace Dominio
+{
+    public class Building
+    {
+        [Key]
+        public int Id { get; set; }
 
-public class Building {
-  
-    public Guid Id { get; set; } = Guid.NewGuid();
+        [Required, StringLength(30)]
+        public string CodeBuilding { get; set; } = null!;
 
-    
-    [Key]
-    public int BuildingId { get; set; }
-    
-    [Required]
-    [MaxLength(100)]
+        [Required, StringLength(24)]
+        public string CodeStreet { get; set; } = null!;
 
-    public string Name { get; set; } = string.Empty;
-    [Required]
-    [MaxLength(100)]
-    public string Address { get; set; } = string.Empty;
+        [StringLength(255)]
+        public string? Name { get; set; }
 
+        [Required, StringLength(36)]
+        public string Doorway { get; set; } = null!;
 
+        [Required]
+        public DateTime CreatedAt { get; set; }
 
-    
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedAt { get; set; }
+    }
 }

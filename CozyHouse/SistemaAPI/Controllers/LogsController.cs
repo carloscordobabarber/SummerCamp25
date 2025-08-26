@@ -1,87 +1,84 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using AutoMapper;
+using DTOS;
+using Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CozyData;
-using Dominio;
 
 namespace SistemaAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class LogsController : ControllerBase
     {
-        private readonly ContextoAPI _context;
+        private readonly ContextDataBase _context;
+        private readonly IMapper _mapper;
 
-        public LogsController(ContextoAPI context)
+        public LogsController(ContextDataBase context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Logs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Log>>> GetLogs()
+        public async Task<ActionResult<IEnumerable<LogDto>>> GetLogs()
         {
-            return await _context.Logs.ToListAsync();
+            var logs = await _context.Logs.ToListAsync();
+            var dto = _mapper.Map<List<LogDto>>(logs);
+            return Ok(dto);
         }
 
         // GET: api/Logs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Log>> GetLog(int id)
+        public async Task<ActionResult<LogDto>> GetLog(int id)
         {
             var log = await _context.Logs.FindAsync(id);
-
             if (log == null)
-            {
                 return NotFound();
-            }
 
-            return log;
-        }
-
-        // PUT: api/Logs/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutLog(int id, Log log)
-        {
-            if (id != log.LogID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(log).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LogExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var dto = _mapper.Map<LogDto>(log);
+            return Ok(dto);
         }
 
         // POST: api/Logs
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Log>> PostLog(Log log)
+        public async Task<IActionResult> PostLog([FromBody] LogDto logDto)
         {
+            if (logDto == null)
+                return BadRequest();
+
+            var log = _mapper.Map<Log>(logDto);
+            log.CreatedAt = DateTime.UtcNow;
+
             _context.Logs.Add(log);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLog", new { id = log.LogID }, log);
+            var resultDto = _mapper.Map<LogDto>(log);
+            return CreatedAtAction(nameof(GetLog), new { id = log.Id }, resultDto);
+        }
+
+        // PUT: api/Logs/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutLog(int id, [FromBody] LogDto logDto)
+        {
+            if (logDto == null || id != logDto.Id)
+                return BadRequest();
+
+            var log = await _context.Logs.FindAsync(id);
+            if (log == null)
+                return NotFound();
+
+            // Mapear campos excepto Id y CreatedAt
+            log.ActionPerformed = logDto.ActionPerformed;
+            log.UsersId = logDto.UsersId;
+            log.TableAffected = logDto.TableAffected;
+            log.Description = logDto.Description;
+
+            _context.Entry(log).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         // DELETE: api/Logs/5
@@ -90,19 +87,12 @@ namespace SistemaAPI.Controllers
         {
             var log = await _context.Logs.FindAsync(id);
             if (log == null)
-            {
                 return NotFound();
-            }
 
             _context.Logs.Remove(log);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool LogExists(int id)
-        {
-            return _context.Logs.Any(e => e.LogID == id);
         }
     }
 }

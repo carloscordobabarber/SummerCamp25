@@ -1,0 +1,11 @@
+Table Street {
+  id int [pk, not null]
+  code varchar(24) [not null, note: 'UNIQUE en script']
+  name varchar(255) [not null]
+  createdAt datetime [not null, note: 'DEFAULT GETDATE()']
+  updatedAt datetime [note: 'DEFAULT GETDATE()']
+
+  Indexes {
+    (code) [name: 'Street_Code', unique]
+  }
+}

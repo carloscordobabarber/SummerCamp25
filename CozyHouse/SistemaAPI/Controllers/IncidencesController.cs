@@ -1,87 +1,90 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using AutoMapper;
+using DTOS;
+using Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CozyData;
-using Dominio;
 
 namespace SistemaAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class IncidencesController : ControllerBase
     {
-        private readonly ContextoAPI _context;
+        private readonly ContextDataBase _context;
+        private readonly IMapper _mapper;
 
-        public IncidencesController(ContextoAPI context)
+        public IncidencesController(ContextDataBase context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Incidences
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Incidence>>> GetIncidences()
+        public async Task<ActionResult<IEnumerable<IncidenceDto>>> GetIncidences()
         {
-            return await _context.Incidences.ToListAsync();
+            var incidences = await _context.Incidences.ToListAsync();
+            var dto = _mapper.Map<List<IncidenceDto>>(incidences);
+            return Ok(dto);
         }
 
         // GET: api/Incidences/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Incidence>> GetIncidence(int id)
+        public async Task<ActionResult<IncidenceDto>> GetIncidence(int id)
         {
             var incidence = await _context.Incidences.FindAsync(id);
-
             if (incidence == null)
-            {
                 return NotFound();
-            }
 
-            return incidence;
-        }
-
-        // PUT: api/Incidences/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutIncidence(int id, Incidence incidence)
-        {
-            if (id != incidence.IdIncidence)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(incidence).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!IncidenceExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var dto = _mapper.Map<IncidenceDto>(incidence);
+            return Ok(dto);
         }
 
         // POST: api/Incidences
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Incidence>> PostIncidence(Incidence incidence)
+        public async Task<IActionResult> PostIncidence([FromBody] IncidenceDto incidenceDto)
         {
+            if (incidenceDto == null)
+                return BadRequest();
+
+            var incidence = _mapper.Map<Incidence>(incidenceDto);
+            incidence.CreatedAt = DateTime.UtcNow;
+            incidence.UpdatedAt = null;
+
             _context.Incidences.Add(incidence);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetIncidence", new { id = incidence.IdIncidence }, incidence);
+            var resultDto = _mapper.Map<IncidenceDto>(incidence);
+            return CreatedAtAction(nameof(GetIncidence), new { id = incidence.Id }, resultDto);
+        }
+
+        // PUT: api/Incidences/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutIncidence(int id, [FromBody] IncidenceDto incidenceDto)
+        {
+            if (incidenceDto == null || id != incidenceDto.Id)
+                return BadRequest();
+
+            var incidence = await _context.Incidences.FindAsync(id);
+            if (incidence == null)
+                return NotFound();
+
+            // Mapear campos excepto Id y CreatedAt
+            incidence.Spokesperson = incidenceDto.Spokesperson;
+            incidence.Description = incidenceDto.Description;
+            incidence.IssueType = incidenceDto.IssueType;
+            incidence.AssignedCompany = incidenceDto.AssignedCompany;
+            incidence.ApartmentId = incidenceDto.ApartmentId;
+            incidence.RentalId = incidenceDto.RentalId;
+            incidence.TenantId = incidenceDto.TenantId;
+            incidence.StatusId = incidenceDto.StatusId;
+            incidence.UpdatedAt = DateTime.UtcNow;
+
+            _context.Entry(incidence).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         // DELETE: api/Incidences/5
@@ -90,19 +93,12 @@ namespace SistemaAPI.Controllers
         {
             var incidence = await _context.Incidences.FindAsync(id);
             if (incidence == null)
-            {
                 return NotFound();
-            }
 
             _context.Incidences.Remove(incidence);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool IncidenceExists(int id)
-        {
-            return _context.Incidences.Any(e => e.IdIncidence == id);
         }
     }
 }

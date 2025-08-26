@@ -1,28 +1,44 @@
-Ôªøusing System.ComponentModel.DataAnnotations;
+using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace Dominio;
+namespace Dominio
+{
+    public class User
+    {
+        [Key]
+        public int Id { get; set; }
 
-public class User {
-    [Key]
-    public int UserId { get; set; }
-    
-    public Guid Id { get; set; } = Guid.NewGuid();
-    [Required]
-    [MaxLength(100)]
-    [MinLength(2)]
-    // Validaci√≥n: solo letras y espacios (\p{L} representa letras de cualquier idioma)
-    [RegularExpression(@"^[\p{L}\s'-]+$", ErrorMessage = "El nombre tiene caracteres no v√°lidos")]
-    public string Name { get; set; } = string.Empty;
-    [Required]
-    [MaxLength(100)]
-    [RegularExpression(@"^[^\s@]+@[^\s@]+\.[^\s@]+$", ErrorMessage = "El correo electr√≥nico no tiene un formato v√°lido.")]
-    public string Email { get; set; } = string.Empty;
-    [Required]
-    [MaxLength(200)]
-    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d\s]).{8,}$", ErrorMessage = "La contrase√±a debe tener al menos 8 caracteres, una may√∫scula, una min√∫scula, un n√∫mero y un car√°cter especial.")]
-    public string Password { get; set; } = string.Empty;
+        [Required, StringLength(3), RegularExpression("^(?i)(dni|nie)$", ErrorMessage = "El tipo de documento debe ser 'dni' o 'nie'.")]
+        public string DocumentType { get; set; } = null!;
 
-    
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        [Required, StringLength(9), RegularExpression(@"^(\d{8}[A-Z]|[XYZ]\d{7}[A-Z])$", ErrorMessage = "El tipo de documento debe ser un DNI o NIE v·lido.")]
+        public string DocumentNumber { get; set; } = null!;
+
+        [Required, StringLength(36), MinLength(2), RegularExpression(@"^[\p{L} \-'í]+$", ErrorMessage = "El nombre contiene caracteres inv·lidos.")]
+        public string Name { get; set; } = null!;
+
+        [Required, StringLength(36), RegularExpression(@"^[\p{L} \-'í]+$", ErrorMessage = "El nombre contiene caracteres inv·lidos.")]
+        public string LastName { get; set; } = null!;
+
+        [Required]
+        public DateTime BirthDate { get; set; }
+
+        [Required, StringLength(100), RegularExpression(@"^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+    ErrorMessage = "El correo electrÛnico no tiene un formato v·lido.")]
+        public string Email { get; set; } = null!;
+
+        [Required, StringLength(20)]
+        public string Phone { get; set; }
+
+        [Required, StringLength(24), RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':\""\\|,.<>\/?]).{8,}$", ErrorMessage = "La contraseÒa debe tener al menos 8 caracteres, incluyendo may˙sculas, min˙sculas, n˙meros y un car·cter especial.")]
+        public string Password { get; set; } = null!;
+
+        [Required, StringLength(6)]
+        public string Role { get; set; } = null!;
+
+        [Required]
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
+    }
 }

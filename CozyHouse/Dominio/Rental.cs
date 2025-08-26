@@ -1,25 +1,31 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace Dominio;
+namespace Dominio
+{
+    public class Rental
+    {
+        [Key]
+        public int Id { get; set; }
 
-public class Rental {
-    [Key]
-    public int RentalId { get; set; }
+        [Required]
+        public int UserId { get; set; }
 
-  
-    
-    public Guid Id { get; set; } = Guid.NewGuid();
+        [Required]
+        public int ApartmentId { get; set; }
 
-    // Relación con usuario
-    [Required]
-    public int UserId { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
-    public bool IsConfirmed { get; set; }
-    [Required]
-    public int ApartmentId { get; set; }
+        [Required]
+        public DateTime StartDate { get; set; }
 
-  
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        [Required]
+        public DateTime EndDate { get; set; }
+
+        [Required, StringLength(1)]
+        public string StatusId { get; set; } = null!;
+
+        [Required]
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
+    }
 }

@@ -1,0 +1,6 @@
+Table Status {
+  id varchar(1) [pk, not null]
+  name varchar(10) [not null, note: 'UNIQUE']
+  createdAt datetime [not null, note: 'DEFAULT GETDATE()']
+  updatedAt datetime [note: 'DEFAULT GETDATE()']
+}

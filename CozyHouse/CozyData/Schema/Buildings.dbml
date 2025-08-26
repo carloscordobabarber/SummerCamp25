@@ -1,0 +1,9 @@
+Table Buildings {
+  id int [pk, increment]
+  codeBuilding varchar(30) [not null, note: 'UNIQUE en script']
+  codeStreet varchar(24) [not null, ref: > Street.code, note: 'UNIQUE en script']
+  name varchar(255)
+  doorway varchar(36) [not null]
+  createdAt datetime [not null]
+  updatedAt datetime
+}

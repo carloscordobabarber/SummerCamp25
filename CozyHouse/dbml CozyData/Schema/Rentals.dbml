@@ -1,0 +1,10 @@
+Table Rentals {
+  id int [pk, increment]
+  userId int [not null, ref: > Users.id]
+  apartmentId int [not null, ref: > Apartments.id]
+  startDate datetime [not null]
+  endDate datetime [not null]
+  statusId varchar(1) [not null, ref: > Status.id]
+  createdAt datetime [not null]
+  updatedAt datetime
+}

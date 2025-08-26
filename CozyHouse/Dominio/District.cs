@@ -1,35 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dominio
 {
     public class District
     {
-        
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-
         [Key]
-        public int DistrictId { get; set; }
+        public int Id { get; set; }
+
+        [Required, StringLength(255)]
+        public string Name { get; set; } = null!;
+
+        [Required, StringLength(255)]
+        public string Zipcode { get; set; } = null!;
+
+        [Required, StringLength(255)]
+        public string Country { get; set; } = null!;
+
+        [Required, StringLength(255)]
+        public string City { get; set; } = null!;
 
         [Required]
-        [MaxLength(100)]
+        public DateTime CreatedAt { get; set; }
 
-        public string Name { get; set; } = string.Empty;
-        [Required]
-        [MaxLength(100)]
-        public string description { get; set; } = string.Empty;
-
-        public string? Landmark { get; set; } = string.Empty;
-
-
-
-
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedAt { get; set; }
     }
 }

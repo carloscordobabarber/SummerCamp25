@@ -1,0 +1,8 @@
+Table DistrictStreet {
+  districtId int [not null, ref: > District.id]
+  streetId int [not null, ref: > Street.id]
+
+  Indexes {
+    (districtId, streetId) [pk]
+  }
+}

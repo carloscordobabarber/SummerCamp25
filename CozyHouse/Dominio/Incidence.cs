@@ -1,40 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dominio
 {
     public class Incidence
     {
         [Key]
-        public int IdIncidence { get; set; }
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public int Id { get; set; }
+
+        [Required, StringLength(100, MinimumLength = 2)]
+        public string Spokesperson { get; set; } = null!;
+
+        [Required, StringLength(500)]
+        public string Description { get; set; } = null!;
+
         [Required]
-        [MaxLength(100)]
-        [MinLength(2)]
-        [RegularExpression(@"^[\p{L}\s'-]+$", ErrorMessage = "El nombre tiene caracteres no válidos")]
-        public string Tenant { get; set; } = string.Empty;
+        public int IssueType { get; set; }
+
+        [StringLength(100)]
+        public string? AssignedCompany { get; set; }
+
         [Required]
-        [MaxLength(100)]
-        [MinLength(2)]
-        [RegularExpression(@"^[\p{L}\s'-]+$", ErrorMessage = "El nombre tiene caracteres no válidos")]
-        public string Spokesperson { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
+
         [Required]
-        [MaxLength(100)]
-        public string Direction { get; set; } = string.Empty;
-        [Required]
-        [MaxLength(1000)]
-        public string Description { get; set; } = string.Empty;
-        [MaxLength(100)]
-        public string CompanyIncidence { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        // FK y navegación al apartamento
         public int ApartmentId { get; set; }
-        // Relación con el alquiler
+
+        [Required]
         public int RentalId { get; set; }
+
+        [Required]
+        public int TenantId { get; set; }
+
+        [Required, StringLength(1)]
+        public string StatusId { get; set; } = null!;
     }
 }

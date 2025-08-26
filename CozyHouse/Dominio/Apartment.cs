@@ -1,46 +1,50 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dominio;
+namespace Dominio
+{
+    public class Apartment
+    {
+        [Key]
+        public int Id { get; set; }
 
-public class Apartment {
-    
-    public Guid ApartmentId { get; set; } = Guid.NewGuid();
+        [Required, StringLength(50)]
+        public string Code { get; set; } = null!;
 
-    [Key]
+        [Required, StringLength(10)]
+        public string Door { get; set; } = null!;
 
-    public int Id { get; set; }
+        [Required, Range(-1, 100)]
+        public int Floor { get; set; }
 
-    [Required]
-    [MaxLength(1)]
-    [RegularExpression(@"^[A-Z]$", ErrorMessage = "El apartamento debe tener una letra de la A a la Z.")]
-    public string Door { get; set; } = string.Empty;
-    
-    [Required]
-    
-    [Range(1, 99)]
-    public int Floor { get; set; }
-    [Required, Range(0, double.MaxValue)]
-    public double Price { get; set; }
-    [Required]
-    [Range(1, 2000)]
-    public double Area { get; set; }
-    [Required]
-    [Range(1, 50)]
-    public int NumberOfRooms { get; set; }
-    [Required]
-    [Range(1, 50)]
-    public int NumberOfBathrooms { get; set; }
+        [Required, Range(0, double.MaxValue)]
+        public double Price { get; set; }
 
-    public bool IsAvailable { get; set; }
-    // FK y navegación al edificio
-    [Required]
-    public int BuildingId { get; set; }
-    //[Required]
-    //public Building Building { get; set; }
+        [Required, Range(0, int.MaxValue)]
+        public int Area { get; set; }
 
-    // Relación con el alquiler
-    public int rentalId { get; set; }
+        [Required, Range(0, 20)]
+        public int NumberOfRooms { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        [Required, Range(0, 20)]
+        public int NumberOfBathrooms { get; set; }
+
+        [Required]
+        public bool IsAvailable { get; set; }
+
+        [Required]
+        public int BuildingId { get; set; }
+
+        [Required]
+        public bool HasLift { get; set; }
+
+        [Required]
+        public bool HasGarage { get; set; }
+
+        [Required]
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
+    }
 }
