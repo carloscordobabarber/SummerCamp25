@@ -24,7 +24,7 @@ export class ApartmentDetails implements OnInit {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.apartmentService.getApartments().subscribe(apartments => {
-      this.apartment = apartments.find(a => a.id === id);
+      this.apartment = apartments.items.find(a => a.id === id);
     });
     console.log('Datos apartamento:', this.apartment);
     console.log('Id apartamento:', this.apartment?.id);

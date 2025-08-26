@@ -1,25 +1,6 @@
-
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-interface ApartmentCard {
-  id: number;
-  code: string;
-  door: string;
-  floor: number;
-  price: number;
-  area: number;
-  numberOfRooms: number;
-  numberOfBathrooms: number;
-  buildingId: number;
-  hasLift: boolean;
-  hasGarage: boolean;
-  streetName: string;
-  districtId: number;
-  districtName: string;
-  imageUrls: string[];
-  isAvailable?: boolean;
-}
+import { ApartmentCard as ApartmentCardService } from '../../services/apartment-card/apartment-card';
 
 @Component({
   selector: 'app-card-manager',
@@ -28,23 +9,25 @@ interface ApartmentCard {
   styleUrl: './card-manager.css'
 })
 export class CardManager implements OnInit {
-  apartments: ApartmentCard[] = [];
+  apartments: any[] = [];
   totalCount = 0;
   page = 1;
   pageSize = 10;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private apartmentCardService: ApartmentCardService) {}
 
   ngOnInit() {
     this.loadApartments();
   }
 
   loadApartments() {
-    this.http.get<{ totalCount: number, items: ApartmentCard[] }>(
-      `/api/ApartmentCard?page=${this.page}&pageSize=${this.pageSize}`
-    ).subscribe(result => {
-      this.apartments = result.items;
-      this.totalCount = result.totalCount;
+    this.apartmentCardService.getApartments({
+      page: this.page,
+      pageSize: this.pageSize
+      // Puedes añadir más filtros aquí si lo necesitas
+    }).subscribe(result => {
+      this.apartments = result.items ?? [];
+      this.totalCount = result.totalCount ?? this.apartments.length;
     });
   }
 

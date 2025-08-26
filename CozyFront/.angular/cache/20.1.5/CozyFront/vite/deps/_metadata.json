@@ -1,56 +1,56 @@
 {
-  "hash": "0b46ed73",
-  "configHash": "d01f57dc",
-  "lockfileHash": "f1c745a7",
-  "browserHash": "243910dd",
+  "hash": "763bfe71",
+  "configHash": "02725703",
+  "lockfileHash": "b624e87c",
+  "browserHash": "fab6a34e",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "1838ec02",
+      "fileHash": "a26d7a76",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "d9df5a0e",
+      "fileHash": "21ec8548",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "213a8afd",
+      "fileHash": "09920355",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "6d2a5337",
+      "fileHash": "3671c52e",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "d7c6f6c5",
+      "fileHash": "8165cc7b",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "0f50f4d1",
+      "fileHash": "cd1a1f78",
+      "needsInterop": false
+    },
+    "rxjs": {
+      "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
+      "file": "rxjs.js",
+      "fileHash": "cdebccbb",
       "needsInterop": false
     },
     "zone.js": {
       "src": "../../../../../../node_modules/zone.js/fesm2015/zone.js",
       "file": "zone__js.js",
-      "fileHash": "a80fbc19",
+      "fileHash": "1371ef64",
       "needsInterop": true
-    },
-    "rxjs": {
-      "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
-      "file": "rxjs.js",
-      "fileHash": "151222f8",
-      "needsInterop": false
     }
   },
   "chunks": {
