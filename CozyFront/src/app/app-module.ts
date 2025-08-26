@@ -24,6 +24,7 @@ import { SearchBar } from './shared/search-bar/search-bar';
 import { SliderFilter } from './shared/slider-filter/slider-filter';
 import { ChatBot } from './shared/chat-bot/chat-bot';
 import { ApartmentDetails } from './features/apartment-details/apartment-details';
+import { ProfileDetails } from './features/profile/profile-details/profile-details';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ApartmentDetails } from './features/apartment-details/apartment-details
     SliderFilter,
     ChatBot,
     SliderFilter,
-    ApartmentDetails
+    ApartmentDetails,
+    ProfileDetails
   ],
   imports: [
     BrowserModule,

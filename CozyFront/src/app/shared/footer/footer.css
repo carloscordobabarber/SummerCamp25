@@ -19,7 +19,7 @@ main {
 	font-family: 'Inter', Arial, sans-serif;
 	padding: 1.1rem 0 0 0;
 	border-top: 2px solid #AFC3B9;
-	width: 100vw;
+	width: 100%;
 	z-index: 100;
 }
 

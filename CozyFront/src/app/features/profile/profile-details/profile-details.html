@@ -1,0 +1,218 @@
+<!-- <div style="margin: 2rem auto 0 auto; width: 100%; max-width: 600px;">
+    <h2 class="text-center" style="margin-top: 0;">Perfil de Usuario</h2>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate style="width: 100%; margin-top: 0;">
+        <div class="mb-3">
+            <label for="fullName" class="form-label">Nombre Completo</label>
+            <input id="fullName" type="text" class="form-control" formControlName="fullName"
+                [ngClass]="{'is-invalid': fullName?.invalid && fullName?.touched}" />
+            <div *ngIf="fullName?.errors && fullName?.touched" class="invalid-feedback">
+                <div *ngIf="fullName?.errors?.['required']">El nombre es obligatorio.</div>
+                <div *ngIf="fullName?.errors?.['minlength']">Debe tener al menos 3 caracteres.</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input id="email" type="email" class="form-control" formControlName="email"
+                [ngClass]="{'is-invalid': email?.invalid && email?.touched}" />
+            <div *ngIf="email?.errors && email?.touched" class="invalid-feedback">
+                <div *ngIf="email?.errors?.['required']">El correo es obligatorio.</div>
+                <div *ngIf="email?.errors?.['email']">Correo no válido.</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Teléfono</label>
+            <input id="phoneNumber" type="tel" class="form-control" formControlName="phoneNumber"
+                [ngClass]="{'is-invalid': phoneNumber?.invalid && phoneNumber?.touched}" />
+            <div *ngIf="phoneNumber?.errors && phoneNumber?.touched" class="invalid-feedback">
+                <div *ngIf="phoneNumber?.errors?.['pattern']">Número inválido. Usa formato internacional (ej:
+                    +123456789).</div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Actualizar Perfil</button>
+    </form>
+</div> -->
+
+<!-- <div style="margin: 2rem auto 0 auto; width: 100%; max-width: 600px;">
+  <h2 class="text-center" style="margin-top: 0;">Perfil de Usuario</h2>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate style="width: 100%; margin-top: 0;">
+
+
+    <div class="mb-3">
+      <label for="documentType" class="form-label">Tipo de Documento</label>
+      <select id="documentType" class="form-select" formControlName="documentType"
+        [ngClass]="{'is-invalid': documentType?.invalid && documentType?.touched}">
+        <option value="" disabled>Seleccione tipo</option>
+        <option value="DNI">DNI</option>
+        <option value="Pasaporte">Pasaporte</option>
+        <option value="Otro">Otro</option>
+      </select>
+      <div *ngIf="documentType?.errors && documentType?.touched" class="invalid-feedback">
+        <div *ngIf="documentType?.errors?.['required']">El tipo de documento es obligatorio.</div>
+      </div>
+    </div>
+
+ 
+    <div class="mb-3">
+      <label for="documentNumber" class="form-label">Número de Documento</label>
+      <input id="documentNumber" type="text" class="form-control" formControlName="documentNumber"
+        [ngClass]="{'is-invalid': documentNumber?.invalid && documentNumber?.touched}" />
+      <div *ngIf="documentNumber?.errors && documentNumber?.touched" class="invalid-feedback">
+        <div *ngIf="documentNumber?.errors?.['required']">El número de documento es obligatorio.</div>
+        <div *ngIf="documentNumber?.errors?.['minlength']">Debe tener al menos 5 caracteres.</div>
+      </div>
+    </div>
+
+
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input id="name" type="text" class="form-control" formControlName="name"
+        [ngClass]="{'is-invalid': name?.invalid && name?.touched}" />
+      <div *ngIf="name?.errors && name?.touched" class="invalid-feedback">
+        <div *ngIf="name?.errors?.['required']">El nombre es obligatorio.</div>
+        <div *ngIf="name?.errors?.['minlength']">Debe tener al menos 3 caracteres.</div>
+      </div>
+    </div>
+
+  
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Apellido</label>
+      <input id="lastName" type="text" class="form-control" formControlName="lastName"
+        [ngClass]="{'is-invalid': lastName?.invalid && lastName?.touched}" />
+      <div *ngIf="lastName?.errors && lastName?.touched" class="invalid-feedback">
+        <div *ngIf="lastName?.errors?.['required']">El apellido es obligatorio.</div>
+        <div *ngIf="lastName?.errors?.['minlength']">Debe tener al menos 3 caracteres.</div>
+      </div>
+    </div>
+
+  
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo Electrónico</label>
+      <input id="email" type="email" class="form-control" formControlName="email"
+        [ngClass]="{'is-invalid': email?.invalid && email?.touched}" />
+      <div *ngIf="email?.errors && email?.touched" class="invalid-feedback">
+        <div *ngIf="email?.errors?.['required']">El correo es obligatorio.</div>
+        <div *ngIf="email?.errors?.['email']">Correo no válido.</div>
+      </div>
+    </div>
+
+  
+    <div class="mb-3">
+      <label for="birthDate" class="form-label">Fecha de Nacimiento</label>
+      <input id="birthDate" type="date" class="form-control" formControlName="birthDate"
+        [ngClass]="{'is-invalid': birthDate?.invalid && birthDate?.touched}" />
+      <div *ngIf="birthDate?.errors && birthDate?.touched" class="invalid-feedback">
+        <div *ngIf="birthDate?.errors?.['required']">La fecha de nacimiento es obligatoria.</div>
+      </div>
+    </div>
+
+  
+    <div class="mb-3">
+      <label for="phone" class="form-label">Teléfono</label>
+      <input id="phone" type="tel" class="form-control" formControlName="phone"
+        [ngClass]="{'is-invalid': phone?.invalid && phone?.touched}" />
+      <div *ngIf="phone?.errors && phone?.touched" class="invalid-feedback">
+        <div *ngIf="phone?.errors?.['pattern']">Número inválido. Usa formato internacional (ej: +123456789).</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Actualizar Perfil</button>
+  </form>
+</div> -->
+
+<div class="container mt-5">
+  <div class="col-md-8 mx-auto">
+    <h2 class="mb-4">Hola {{ userName }}, </h2>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <!-- Tipo, Número de Documento y Fecha de Nacimiento -->
+      <div class="row g-5 mb-4">
+        <div class="col-md-4">
+          <label for="documentType" class="form-label">Tipo de Documento</label>
+          <select id="documentType" class="form-select form-select-sm" formControlName="documentType"
+            [ngClass]="{ 'is-invalid': documentType?.invalid && documentType?.touched }">
+            <option value="" disabled>Seleccione tipo</option>
+            <option value="DNI">DNI</option>
+            <option value="Pasaporte">Pasaporte</option>
+            <option value="Otro">Otro</option>
+          </select>
+          <div *ngIf="documentType?.errors && documentType?.touched" class="invalid-feedback">
+            <div *ngIf="documentType?.errors?.['required']">El tipo de documento es obligatorio.</div>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <label for="documentNumber" class="form-label">Número de Documento</label>
+          <input type="text" id="documentNumber" class="form-control form-control-sm" formControlName="documentNumber"
+            [ngClass]="{ 'is-invalid': documentNumber?.invalid && documentNumber?.touched }" />
+          <div *ngIf="documentNumber?.errors && documentNumber?.touched" class="invalid-feedback">
+            <div *ngIf="documentNumber?.errors?.['required']">Este campo es obligatorio.</div>
+            <div *ngIf="documentNumber?.errors?.['minlength']">Debe tener al menos 5 caracteres.</div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label for="birthDate" class="form-label">Fecha de Nacimiento</label>
+          <input type="date" id="birthDate" class="form-control form-control-sm" formControlName="birthDate"
+            [ngClass]="{ 'is-invalid': birthDate?.invalid && birthDate?.touched }" />
+          <div *ngIf="birthDate?.errors && birthDate?.touched" class="invalid-feedback">
+            <div *ngIf="birthDate?.errors?.['required']">Este campo es obligatorio.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nombre y Apellido -->
+      <div class="row g-5 mb-4">
+        <div class="col-md-6">
+          <label for="name" class="form-label">Nombre</label>
+          <input type="text" id="name" class="form-control form-control-sm" formControlName="name"
+            [ngClass]="{ 'is-invalid': name?.invalid && name?.touched }" />
+          <div *ngIf="name?.errors && name?.touched" class="invalid-feedback">
+            <div *ngIf="name?.errors?.['required']">Este campo es obligatorio.</div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="lastName" class="form-label">Apellido</label>
+          <input type="text" id="lastName" class="form-control form-control-sm" formControlName="lastName"
+            [ngClass]="{ 'is-invalid': lastName?.invalid && lastName?.touched }" />
+          <div *ngIf="lastName?.errors && lastName?.touched" class="invalid-feedback">
+            <div *ngIf="lastName?.errors?.['required']">Este campo es obligatorio.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email y Teléfono -->
+      <div class="row g-5 mb-5">
+        <div class="col-md-6">
+          <label for="email" class="form-label">Correo Electrónico</label>
+          <input type="email" id="email" class="form-control form-control-sm" formControlName="email"
+            [ngClass]="{ 'is-invalid': email?.invalid && email?.touched }" />
+          <div *ngIf="email?.errors && email?.touched" class="invalid-feedback">
+            <div *ngIf="email?.errors?.['required']">Este campo es obligatorio.</div>
+            <div *ngIf="email?.errors?.['email']">Correo no válido.</div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="phone" class="form-label">Teléfono</label>
+          <input type="tel" id="phone" class="form-control form-control-sm" formControlName="phone"
+            [ngClass]="{ 'is-invalid': phone?.invalid && phone?.touched }" />
+          <div *ngIf="phone?.errors && phone?.touched" class="invalid-feedback">
+            <div *ngIf="phone?.errors?.['pattern']">Número inválido. Usa formato internacional (ej: +123456789).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón -->
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary btn-sm px-4" [disabled]="userForm.invalid">
+          Actualizar Perfil
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
