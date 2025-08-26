@@ -1,0 +1,54 @@
+
+<div class="row mb-3">
+  <div class="col">
+    <input type="text" class="form-control" placeholder="Buscar por título..." [(ngModel)]="searchTitle" (input)="applyFilters()">
+  </div>
+  <div class="col">
+    <input type="text" class="form-control" placeholder="Buscar por dirección..." [(ngModel)]="searchDoor" (input)="applyFilters()">
+  </div>
+  <div class="col">
+    <input type="text" class="form-control" placeholder="Buscar por área..." [(ngModel)]="searchArea" (input)="applyFilters()">
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col">
+    <app-slider-filter label="Habitaciones" [min]="minRooms" [max]="maxRooms" [(value)]="filterRooms" (valueChange)="applyFilters()"></app-slider-filter>
+  </div>
+  <div class="col">
+    <app-slider-filter label="Baños" [min]="minBaths" [max]="maxBaths" [(value)]="filterBaths" (valueChange)="applyFilters()"></app-slider-filter>
+  </div>
+  <div class="col">
+    <app-slider-filter label="Precio" [min]="minPrice" [max]="maxPrice" [step]="100" [(value)]="filterPrice" (valueChange)="applyFilters()"></app-slider-filter>
+  </div>
+</div>
+<div *ngIf="cargando">Cargando apartamentos...</div>
+
+<table *ngIf="!cargando" class="table table-striped align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>#</th>
+      <th>Título</th>
+      <th>Dirección</th>
+      <th>Precio</th>
+      <th>Habitaciones</th>
+      <th>Baños</th>
+      <th>Área (m²)</th>
+      <th>Disponible</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let apt of filteredApartments; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ apt.code }}</td>
+      <td>{{ apt.door }}</td>
+      <td>{{ apt.price | currency:'EUR':'symbol':'1.0-0' }}</td>
+      <td>{{ apt.numberOfRooms }}</td>
+      <td>{{ apt.numberOfBathrooms }}</td>
+      <td>{{ apt.area }}</td>
+      <td>
+        <span class="badge bg-success" *ngIf="apt.isAvailable">Sí</span>
+        <span class="badge bg-secondary" *ngIf="!apt.isAvailable">No</span>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,89 @@
+
+
+/* Paleta: Verde Salvia Oscuro #7A988F, Verde Salvia Claro #AFC3B9, Beige Cremoso #F5F0E6, Marrón Arcilla #B08968, Blanco Suave #FFFFFF */
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  background: linear-gradient(90deg, #AFC3B9 0%, #F5F0E6 100%);
+  color: #7A988F;
+  font-family: 'Inter', Arial, sans-serif;
+  box-shadow: 0 4px 16px 0 rgba(122, 152, 143, 0.10);
+  border-bottom: 3px solid #AFC3B9;
+  position: relative;
+  z-index: 10;
+}
+
+.logo img {
+  width: 80px;
+  height: auto;
+  filter: drop-shadow(0 2px 8px #AFC3B9);
+  border-radius: 12px;
+  background: #FFFFFF;
+  padding: 0.3rem;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2.2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav ul li {
+  display: inline;
+}
+
+.nav ul li a {
+  color: #7A988F;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+}
+.nav ul li a:hover {
+  color: #FFFFFF;
+  background: #B08968;
+}
+
+.cta .cta-button {
+  background-color: #B08968;
+  color: #FFFFFF;
+  padding: 10px 24px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px 0 rgba(176, 137, 104, 0.10);
+  border: none;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.5px;
+}
+.cta .cta-button:hover {
+  background: #7A988F;
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px 0 rgba(122, 152, 143, 0.13);
+}
+
+@media (max-width: 900px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.2rem 1rem;
+  }
+  .nav ul {
+    gap: 1.2rem;
+  }
+  .logo img {
+    width: 60px;
+  }
+}

@@ -1,0 +1,35 @@
+/* Estilos modernos y compactos para el paginador */
+.paginador-container {
+	display: flex;
+	align-items: center;
+	gap: 0.7em;
+	justify-content: center;
+	margin: 2em 0 1em 0;
+}
+.paginador-container button {
+	background: #f4f4fa;
+	border: 1px solid #d1d1e0;
+	border-radius: 0.4em;
+	padding: 0.4em 0.9em;
+	margin: 0 0.1em;
+	font-size: 1em;
+	color: #444;
+	cursor: pointer;
+	transition: background 0.2s, color 0.2s;
+}
+.paginador-container button.active,
+.paginador-container button:hover:not(:disabled) {
+	background: #6c63ff;
+	color: #fff;
+}
+.paginador-container button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+.paginador-container select {
+	margin-left: 1em;
+	padding: 0.3em 0.7em;
+	border-radius: 0.4em;
+	border: 1px solid #d1d1e0;
+	font-size: 1em;
+}

@@ -1,0 +1,134 @@
+<form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="container mt-4 p-4 border rounded bg-light shadow-sm"
+    novalidate>
+    <h3 class="mb-4">Registro de Cliente</h3>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="documentType" class="form-label">Tipo de documento</label>
+            <select id="documentType" formControlName="documentType" class="form-select"
+                [ngClass]="{'is-invalid': submitted && f['documentType'].errors}">
+                <option value="dni">Dni</option>
+                <option value="nie">Nie</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="documentNumber" class="form-label">Número de documento</label>
+            <input id="documentNumber" type="text" formControlName="documentNumber" class="form-control"
+                [ngClass]="{'is-invalid': submitted && f['documentNumber'].errors}" maxlength="9">
+            <div *ngIf="submitted && (f['documentNumber'].errors || documentNumberFormatError)"
+                class="invalid-feedback">
+                <div *ngIf="f['documentNumber'].errors?.['required']">El número de documento es obligatorio.</div>
+                <div *ngIf="documentNumberFormatError">{{ documentNumberFormatError }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="name" class="form-label">Nombre</label>
+            <input id="name" type="text" formControlName="name" class="form-control"
+                [ngClass]="{'is-invalid': submitted && f['name'].errors}" maxlength="36">
+            <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                <div *ngIf="f['name'].errors?.['required']">El nombre es obligatorio.</div>
+                <div *ngIf="f['name'].errors?.['pattern']">El nombre contiene caracteres inválidos.</div>
+                <div *ngIf="f['name'].errors?.['maxlength']">Máximo 36 caracteres.</div>
+                <div *ngIf="f['name'].errors?.['minlength']">Mínimo 2 caracteres.</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="lastName" class="form-label">Apellido</label>
+            <input id="lastName" type="text" formControlName="lastName" class="form-control"
+                [ngClass]="{'is-invalid': submitted && f['lastName'].errors}" maxlength="36">
+            <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+                <div *ngIf="f['lastName'].errors?.['required']">El apellido es obligatorio.</div>
+                <div *ngIf="f['lastName'].errors?.['pattern']">El apellido contiene caracteres inválidos.</div>
+                <div *ngIf="f['lastName'].errors?.['maxlength']">Máximo 36 caracteres.</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="phone" class="form-label">Teléfono</label>
+            <input id="phone" type="text" formControlName="phone" class="form-control"
+                [ngClass]="{'is-invalid': submitted && f['phone'].errors}" maxlength="20">
+            <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
+                <div *ngIf="f['phone'].errors?.['required']">El teléfono es obligatorio.</div>
+                <div *ngIf="f['phone'].errors?.['maxlength']">Máximo 20 caracteres.</div>
+                <div *ngIf="f['phone'].errors?.['pattern']">Solo números o un + para el prefijo.</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="birthDate" class="form-label">Fecha de nacimiento</label>
+            <input id="birthDate" type="date" formControlName="birthDate" class="form-control"
+                [ngClass]="{'is-invalid': submitted && f['birthDate'].errors}">
+            <div *ngIf="submitted && f['birthDate'].errors" class="invalid-feedback">
+                <div *ngIf="f['birthDate'].errors?.['required']">La fecha de nacimiento es obligatoria.</div>
+                <div *ngIf="birthDateError">{{ birthDateError }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input id="email" type="email" formControlName="email" class="form-control"
+                [ngClass]="{'is-invalid': submitted && (f['email'].errors || emailMismatch)}" maxlength="100">
+            <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                <div *ngIf="f['email'].errors?.['required']">El correo electrónico es obligatorio.</div>
+                <div *ngIf="f['email'].errors?.['pattern']">El correo electrónico no tiene un formato válido.</div>
+                <div *ngIf="f['email'].errors?.['maxlength']">Máximo 100 caracteres.</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="confirmEmail" class="form-label mt-2">Repite el correo electrónico</label>
+            <input id="confirmEmail" type="email" formControlName="confirmEmail" class="form-control"
+                [ngClass]="{'is-invalid': submitted && (f['confirmEmail'].errors || emailMismatch)}" maxlength="100">
+            <div *ngIf="submitted && (f['confirmEmail'].errors || emailMismatch)" class="invalid-feedback">
+                <div *ngIf="f['confirmEmail'].errors?.['required']">Repite el correo electrónico.</div>
+                <div *ngIf="f['confirmEmail'].errors?.['pattern']">El correo electrónico no tiene un formato válido.
+                </div>
+                <div *ngIf="f['confirmEmail'].errors?.['maxlength']">Máximo 100 caracteres.</div>
+                <div *ngIf="emailMismatch">Los correos electrónicos no coinciden.</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="password" class="form-label">Contraseña</label>
+            <input id="password" type="password" formControlName="password" class="form-control"
+                [ngClass]="{'is-invalid': submitted && (f['password'].errors || passwordMismatch)}" maxlength="24">
+            <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                <div *ngIf="f['password'].errors?.['required']">La contraseña es obligatoria.</div>
+                <div *ngIf="f['password'].errors?.['pattern']">Debe tener al menos 8 caracteres, incluyendo mayúsculas,
+                    minúsculas, números y un carácter especial.</div>
+                <div *ngIf="f['password'].errors?.['maxlength']">Máximo 24 caracteres.</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="confirmPassword" class="form-label mt-2">Repite la contraseña</label>
+            <input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-control"
+                [ngClass]="{'is-invalid': submitted && (f['confirmPassword'].errors || passwordMismatch)}"
+                maxlength="24">
+            <div *ngIf="submitted && (f['confirmPassword'].errors || passwordMismatch)" class="invalid-feedback">
+                <div *ngIf="f['confirmPassword'].errors?.['required']">Repite la contraseña.</div>
+                <div *ngIf="f['confirmPassword'].errors?.['pattern']">Debe tener al menos 8 caracteres, incluyendo
+                    mayúsculas, minúsculas, números y un carácter especial.</div>
+                <div *ngIf="f['confirmPassword'].errors?.['maxlength']">Máximo 24 caracteres.</div>
+                <div *ngIf="passwordMismatch">Las contraseñas no coinciden.</div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="role" class="form-label">Rol</label>
+                <select id="role" formControlName="role" class="form-select"
+                    [ngClass]="{'is-invalid': submitted && f['role'].errors}">
+                    <option value="Client">Cliente</option>
+                    <option value="Admin">Administrador</option>
+                </select>
+                <div *ngIf="submitted && f['role'].errors" class="invalid-feedback">
+                    <div *ngIf="f['role'].errors?.['required']">El rol es obligatorio.</div>
+                    <div *ngIf="f['role'].errors?.['maxlength']">Máximo 6 caracteres.</div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="apiError" class="alert alert-danger mt-2">{{ apiError }}</div>
+        <button type="submit" class="btn btn-primary mt-3">Registrar</button>
+    </div>
+</form>

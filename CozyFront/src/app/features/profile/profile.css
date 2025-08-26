@@ -1,0 +1,15 @@
+h2 {
+    text-align: center;
+}
+
+.sidebar {
+    /* El layout y el fondo ya se definen inline y con Bootstrap */
+    /* Se mantiene solo si se quiere personalizar más */
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+}
+
+.main-content {
+    overflow-y: auto;
+    padding-bottom: 2rem;
+}

@@ -1,3 +1,4 @@
+
 using AutoMapper;
 using DTOS;
 using Dominio;
@@ -117,13 +118,13 @@ namespace SistemaAPI.Controllers
                 apartmentDtos.Add(dto);
             }
 
-            // Filtro por districtId (requiere haber resuelto la relaci�n)
+            // Filtro por districtId (requiere haber resuelto la relaciï¿½n)
             if (districtId.HasValue)
                 apartmentDtos = apartmentDtos.Where(a => a.DistrictId == districtId.Value).ToList();
 
             var totalCount = apartmentDtos.Count;
 
-            // Paginaci�n
+            // Paginaciï¿½n
             var pagedResult = apartmentDtos
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
