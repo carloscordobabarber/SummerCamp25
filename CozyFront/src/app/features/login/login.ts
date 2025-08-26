@@ -31,14 +31,26 @@ export class Login implements OnInit {
 
     const { email, password } = this.loginForm.value;
 
-     this.http.post<any>('https://tuapi.com/api/auth/login', { email, password }).subscribe({
+    // this.http.post<any>('https://devdemoapi4.azurewebsites.net/api/Login/login', { Email: email, Password: password }).subscribe({
+    //   next: res => {
+    //     alert('Login exitoso');
+    //     this.errorMessage = '';
+    //     // Guardar token o redirigir
+    //   },
+    //   error: err => {
+    //     if (err.status === 404) this.errorMessage = 'Error al conectarse al servidor';
+    //     if (err.status === 401) this.errorMessage = 'Email o contraseña incorrectos';
+    //   }
+    // });
+
+    this.http.post('https://devdemoapi4.azurewebsites.net/api/Login/login', { Email: email, Password: password }, { responseType: 'text' }).subscribe({
       next: res => {
-        alert('Login exitoso');
+        alert(res); // aquí res es string: "Login exitoso."
         this.errorMessage = '';
-        // Guardar token o redirigir
       },
       error: err => {
-        this.errorMessage = err.error || 'Email o contraseña incorrectos';
+        if (err.status === 404) this.errorMessage = 'Error al conectarse al servidor';
+        if (err.status === 401) this.errorMessage = 'Email o contraseña incorrectos';
       }
     });
   }

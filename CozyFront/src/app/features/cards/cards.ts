@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Apartment } from '../../models/apartment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cards',
@@ -10,6 +10,8 @@ import { Apartment } from '../../models/apartment';
 export class Cards {
   @Input() apartment!: { isAvailable?: boolean, [key: string]: any };
   currentImageIndex = 0;
+
+  constructor(private router: Router) {}
 
   get images(): string[] {
     if (this.apartment?.['imageUrls'] && this.apartment['imageUrls'].length > 0) {
@@ -38,5 +40,9 @@ export class Cards {
   get disponible(): boolean {
     // Si isAvailable es undefined, consideramos true (disponible)
     return this.apartment.isAvailable !== false;
+  }
+
+  verDetalles() {
+    this.router.navigate(['/apartment-details', this.apartment['id']]);
   }
 }

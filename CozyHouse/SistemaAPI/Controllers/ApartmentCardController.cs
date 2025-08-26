@@ -124,7 +124,7 @@ namespace SistemaAPI.Controllers
 
             var totalCount = apartmentDtos.Count;
 
-            // Paginaciï¿½n
+            
             var pagedResult = apartmentDtos
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -162,7 +162,8 @@ namespace SistemaAPI.Controllers
                 NumberOfBathrooms = apartment.NumberOfBathrooms,
                 BuildingId = apartment.BuildingId,
                 HasLift = apartment.HasLift,
-                HasGarage = apartment.HasGarage
+                HasGarage = apartment.HasGarage,
+                IsAvailable= apartment.IsAvailable
             };
 
             string streetName = string.Empty;

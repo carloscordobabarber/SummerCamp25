@@ -11,6 +11,8 @@ import { ApartmentList } from './features/apartment-list/apartment-list';
 import { ClientList } from './features/client-list/client-list';
 import { IncidenceList } from './features/incidence-list/incidence-list';
 import { ApartmentDetails } from './features/apartment-details/apartment-details';
+import { Login } from './features/login/login';
+import { ProfileDetails } from './features/profile/profile-details/profile-details';
 
 const routes: Routes = [
   { path: '', component: CardManager },
@@ -18,6 +20,13 @@ const routes: Routes = [
   { path: 'register', component: Clients },
   { path: 'profile', component: Profile },
   { path: 'apartment-details/:id', component: ApartmentDetails },
+  { path: 'login', component: Login },
+  { path: 'profile', component: Profile,
+      children: [
+      { path: '', component: ProfileDetails }, 
+      { path: 'incidences', component: Incidences }
+    ]
+   },
   { path: 'apartment-list', component: ApartmentList },
   { path: 'client-list', component: ClientList },
   { path: 'incidence-list', component: IncidenceList },
