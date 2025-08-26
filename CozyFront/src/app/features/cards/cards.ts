@@ -8,12 +8,12 @@ import { Apartment } from '../../models/apartment';
   styleUrl: './cards.css'
 })
 export class Cards {
-  @Input() apartment!: Apartment;
+  @Input() apartment!: { isAvailable?: boolean, [key: string]: any };
   currentImageIndex = 0;
 
   get images(): string[] {
-    if (this.apartment?.imageUrls && this.apartment.imageUrls.length > 0) {
-      return this.apartment.imageUrls;
+    if (this.apartment?.['imageUrls'] && this.apartment['imageUrls'].length > 0) {
+      return this.apartment['imageUrls'];
     }
     return ['assets/CHNotFoundImage.png'];
   }
@@ -32,6 +32,11 @@ export class Cards {
 
   get direccion(): string {
     const d = this.apartment;
-    return `${d.districtName || ''} ${d.streetName || ''} Planta ${d.floor}`.trim();
+    return `${d['districtName'] || ''} ${d['streetName'] || ''} Planta ${d['floor']}`.trim();
+  }
+
+  get disponible(): boolean {
+    // Si isAvailable es undefined, consideramos true (disponible)
+    return this.apartment.isAvailable !== false;
   }
 }

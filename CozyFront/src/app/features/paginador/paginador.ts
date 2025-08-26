@@ -26,6 +26,11 @@ export class Paginador {
   }
 
   changePageSize(size: number) {
-    this.pageSizeChange.emit(size);
+    this.pageSizeChange.emit(Number(size));
+  }
+
+  onPageSizeSelect(event: Event) {
+    const value = +(event.target as HTMLSelectElement).value;
+    this.changePageSize(value);
   }
 }
