@@ -11,8 +11,12 @@ export class IncidencesService {
 
   constructor(private http: HttpClient) {}
 
-  getIncidences(): Observable<Incidence[]> {
-    return this.http.get<Incidence[]>(this.apiUrl);
+  getIncidences(page?: number, pageSize?: number): Observable<any> {
+    let url = this.apiUrl;
+    if (page !== undefined && pageSize !== undefined) {
+      url += `?page=${page}&pageSize=${pageSize}`;
+    }
+    return this.http.get<any>(url);
   }
 
   createIncidence(incidence: Incidence): Observable<Incidence> {

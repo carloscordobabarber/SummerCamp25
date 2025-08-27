@@ -22,11 +22,18 @@ namespace SistemaAPI.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        public async Task<ActionResult<object>> GetUsers(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10)
         {
-            var users = await _context.Users.ToListAsync();
+            var query = _context.Users.AsQueryable();
+            var totalCount = await query.CountAsync();
+            var users = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
             var dto = _mapper.Map<List<UserDto>>(users);
-            return Ok(dto);
+            return Ok(new { totalCount, items = dto });
         }
 
         // GET: api/Users/5

@@ -42,6 +42,11 @@ export class ApartmentList implements OnInit {
   minPrice: number = 0;
   maxPrice: number = 10000;
 
+  // Paginación
+  page = 1;
+  pageSize = 10;
+  totalCount = 0;
+
   constructor(private apartmentWorker: ApartmentWorker) { }
 
   // ngOnInit() {
@@ -53,29 +58,43 @@ export class ApartmentList implements OnInit {
 
   ngOnInit(): void {
     this.cargando = true;
-    this.apartmentWorker.getApartments().subscribe({
-      next: (data) => {
-        this.apartments = data;
-        this.filteredApartments = data;
-        // Calcular valores máximos para sliders y área
-  this.maxRooms = Math.max(...data.map(a => a.numberOfRooms ?? 0));
-  this.maxBaths = Math.max(...data.map(a => a.numberOfBathrooms ?? 0));
-  this.maxPrice = Math.max(...data.map(a => a.price ?? 0)) + 100;
-  this.maxArea = Math.max(...data.map(a => a.area ?? 0));
-  this.filterRooms = null;
-  this.filterBaths = null;
-        this.filterPrice = this.minPrice;
-        this.filterArea = this.minArea;
-        this.cargando = false;
-      },
-      error: (err) => {
-        console.log('Error al obtener datos:', err);
-        this.cargando = false;
-      },
-      complete: () => {
-        console.log('Datos recibidos:', this.apartments);
+    this.loadApartments();
+  }
+
+  loadApartments() {
+    this.apartmentWorker.getApartments(this.page, this.pageSize).subscribe((result: any) => {
+      if (result.items && result.totalCount !== undefined) {
+        this.apartments = result.items;
+        this.totalCount = result.totalCount;
+      } else {
+        this.apartments = result;
+        this.totalCount = result.length;
       }
+      this.filteredApartments = this.apartments;
+      this.maxRooms = Math.max(...this.apartments.map(a => a.numberOfRooms ?? 0));
+      this.maxBaths = Math.max(...this.apartments.map(a => a.numberOfBathrooms ?? 0));
+      this.maxPrice = Math.max(...this.apartments.map(a => a.price ?? 0)) + 100;
+      this.maxArea = Math.max(...this.apartments.map(a => a.area ?? 0));
+      this.filterRooms = null;
+      this.filterBaths = null;
+      this.filterPrice = this.minPrice;
+      this.filterArea = this.minArea;
+      this.cargando = false;
+    }, (err: any) => {
+      console.log('Error al obtener datos:', err);
+      this.cargando = false;
     });
+  }
+
+  onPageChange(newPage: number) {
+    this.page = newPage;
+    this.loadApartments();
+  }
+
+  onPageSizeChange(newSize: number) {
+    this.pageSize = +newSize;
+    this.page = 1;
+    this.loadApartments();
   }
 
   applyFilters() {

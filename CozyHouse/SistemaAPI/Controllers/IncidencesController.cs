@@ -22,11 +22,18 @@ namespace SistemaAPI.Controllers
 
         // GET: api/Incidences
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IncidenceDto>>> GetIncidences()
+        public async Task<ActionResult<object>> GetIncidences(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10)
         {
-            var incidences = await _context.Incidences.ToListAsync();
+            var query = _context.Incidences.AsQueryable();
+            var totalCount = await query.CountAsync();
+            var incidences = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
             var dto = _mapper.Map<List<IncidenceDto>>(incidences);
-            return Ok(dto);
+            return Ok(new { totalCount, items = dto });
         }
 
         // GET: api/Incidences/5
