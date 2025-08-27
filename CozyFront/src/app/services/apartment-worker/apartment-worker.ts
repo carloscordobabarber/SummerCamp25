@@ -18,4 +18,19 @@ export class ApartmentWorker {
     }
     return this.http.get<any>(url);
   }
+
+  getApartmentsWithFilters(filters: any): Observable<any> {
+    let params = [];
+    if (filters.page) params.push(`page=${filters.page}`);
+    if (filters.pageSize) params.push(`pageSize=${filters.pageSize}`);
+    if (filters.title) params.push(`title=${encodeURIComponent(filters.title)}`);
+    if (filters.door) params.push(`door=${encodeURIComponent(filters.door)}`);
+    if (filters.area) params.push(`area=${filters.area}`);
+    if (filters.rooms) params.push(`rooms=${filters.rooms}`);
+    if (filters.baths) params.push(`baths=${filters.baths}`);
+    if (filters.priceMin !== undefined) params.push(`priceMin=${filters.priceMin}`);
+    if (filters.priceMax !== undefined) params.push(`priceMax=${filters.priceMax}`);
+    const url = this.apiUrl + (params.length ? '?' + params.join('&') : '');
+    return this.http.get<any>(url);
+  }
 }
