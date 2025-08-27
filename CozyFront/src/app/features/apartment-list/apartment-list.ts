@@ -49,13 +49,6 @@ export class ApartmentList implements OnInit {
 
   constructor(private apartmentWorker: ApartmentWorker) { }
 
-  // ngOnInit() {
-  //   this.http.get<Apartment[]>('https://devdemoapi4.azurewebsites.net/api/apartmentworkers')
-  //     .subscribe(data => {
-  //       this.apartments = data;
-  //     });
-  // }
-
   ngOnInit(): void {
     this.cargando = true;
     this.loadApartments();
