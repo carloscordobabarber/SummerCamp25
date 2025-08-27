@@ -1,4 +1,3 @@
-
 using AutoMapper;
 using DTOS;
 using Dominio;
@@ -29,7 +28,8 @@ namespace SistemaAPI.Controllers
             [FromQuery] int? districtId = null,
             [FromQuery] int? area = null,
             [FromQuery] bool? hasLift = null,
-            [FromQuery] double? price = null,
+            [FromQuery] double? minPrice = null,
+            [FromQuery] double? maxPrice = null,
             [FromQuery] bool? hasGarage = null,
             [FromQuery] int? numberOfRooms = null,
             [FromQuery] int? numberOfBathrooms = null
@@ -41,13 +41,15 @@ namespace SistemaAPI.Controllers
 
             // Filtros directos sobre Apartment
             if (area.HasValue)
-                apartmentsQuery = apartmentsQuery.Where(a => a.Area == area.Value);
+                apartmentsQuery = apartmentsQuery.Where(a => a.Area <= area.Value);
 
             if (hasLift.HasValue)
                 apartmentsQuery = apartmentsQuery.Where(a => a.HasLift == hasLift.Value);
 
-            if (price.HasValue)
-                apartmentsQuery = apartmentsQuery.Where(a => a.Price == price.Value);
+            if (minPrice.HasValue)
+                apartmentsQuery = apartmentsQuery.Where(a => a.Price >= minPrice.Value);
+            if (maxPrice.HasValue)
+                apartmentsQuery = apartmentsQuery.Where(a => a.Price <= maxPrice.Value);
 
             if (hasGarage.HasValue)
                 apartmentsQuery = apartmentsQuery.Where(a => a.HasGarage == hasGarage.Value);

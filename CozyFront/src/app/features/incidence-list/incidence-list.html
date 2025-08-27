@@ -32,3 +32,16 @@
 		</tr>
 	</tbody>
 </table>
+
+<!-- Espacio reservado para el paginador -->
+<div class="paginador-footer-space">
+	<div class="d-flex justify-content-center mt-4">
+		<app-paginador
+			[page]="page"
+			[pageSize]="pageSize"
+			[totalItems]="totalCount"
+			(pageChange)="onPageChange($event)"
+			(pageSizeChange)="onPageSizeChange($event)">
+		</app-paginador>
+	</div>
+</div>

@@ -11,7 +11,11 @@ export class ApartmentWorker {
 
   constructor(private http: HttpClient) {}
 
-  getApartments(): Observable<Apartment[]> {
-    return this.http.get<Apartment[]>(this.apiUrl);
+  getApartments(page?: number, pageSize?: number): Observable<any> {
+    let url = this.apiUrl;
+    if (page !== undefined && pageSize !== undefined) {
+      url += `?page=${page}&pageSize=${pageSize}`;
+    }
+    return this.http.get<any>(url);
   }
 }

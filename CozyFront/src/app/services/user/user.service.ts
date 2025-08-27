@@ -11,8 +11,12 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getUsers(page?: number, pageSize?: number): Observable<any> {
+    let url = this.apiUrl;
+    if (page !== undefined && pageSize !== undefined) {
+      url += `?page=${page}&pageSize=${pageSize}`;
+    }
+    return this.http.get<any>(url);
   }
 
   getUser(id: number): Observable<UserProfile> {
