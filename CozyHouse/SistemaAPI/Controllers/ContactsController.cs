@@ -22,11 +22,29 @@ namespace SistemaAPI.Controllers
 
         // GET: api/Contacts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ContactDto>>> GetContacts()
+        public async Task<ActionResult<object>> GetContacts(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] string? contactReason = null)
         {
-            var contacts = await _context.Set<Contact>().ToListAsync();
+            var contactsQuery = _context.Set<Contact>().AsQueryable();
+
+            if (!string.IsNullOrEmpty(contactReason))
+                contactsQuery = contactsQuery.Where(c => c.ContactReason == contactReason);
+
+            var totalCount = await contactsQuery.CountAsync();
+
+            var contacts = await contactsQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
             var dto = _mapper.Map<List<ContactDto>>(contacts);
-            return Ok(dto);
+            return Ok(new
+            {
+                totalCount,
+                items = dto
+            });
         }
 
         // GET: api/Contacts/5
@@ -51,35 +69,6 @@ namespace SistemaAPI.Controllers
             await _context.SaveChangesAsync();
             var resultDto = _mapper.Map<ContactDto>(contact);
             return CreatedAtAction(nameof(GetContact), new { id = contact.Id }, resultDto);
-        }
-
-        // PUT: api/Contacts/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutContact(int id, [FromBody] ContactDto contactDto)
-        {
-            if (contactDto == null || id != contactDto.Id)
-                return BadRequest();
-            var contact = await _context.Set<Contact>().FindAsync(id);
-            if (contact == null)
-                return NotFound();
-            contact.Email = contactDto.Email;
-            contact.ContactReason = contactDto.ContactReason;
-            contact.Message = contactDto.Message;
-            _context.Entry(contact).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
-
-        // DELETE: api/Contacts/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteContact(int id)
-        {
-            var contact = await _context.Set<Contact>().FindAsync(id);
-            if (contact == null)
-                return NotFound();
-            _context.Set<Contact>().Remove(contact);
-            await _context.SaveChangesAsync();
-            return NoContent();
         }
     }
 }
