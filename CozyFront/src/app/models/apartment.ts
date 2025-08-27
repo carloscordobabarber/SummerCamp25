@@ -12,6 +12,6 @@ export interface Apartment {
     hasGarage: boolean,
     isAvailable: boolean,
     imageUrls?: string[],
-    districtName?: string,
-    streetName?: string
+    districtName: string,
+    streetName: string
 }

@@ -78,11 +78,12 @@ namespace SistemaAPI.Controllers
                     Floor = apartment.Floor,
                     Price = apartment.Price,
                     Area = apartment.Area,
-                    NumberOfRooms = apartment.NumberOfRooms,    
+                    NumberOfRooms = apartment.NumberOfRooms,
                     NumberOfBathrooms = apartment.NumberOfBathrooms,
                     BuildingId = apartment.BuildingId,
                     HasLift = apartment.HasLift,
-                    HasGarage = apartment.HasGarage
+                    HasGarage = apartment.HasGarage,
+                    IsAvailable = apartment.IsAvailable
                 };
 
                 var building = buildings.FirstOrDefault(b => b.Id == apartment.BuildingId);
@@ -126,7 +127,7 @@ namespace SistemaAPI.Controllers
 
             var totalCount = apartmentDtos.Count;
 
-            
+
             var pagedResult = apartmentDtos
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)

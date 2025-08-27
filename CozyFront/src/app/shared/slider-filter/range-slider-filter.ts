@@ -1,3 +1,5 @@
+// ...existing code...
+
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
@@ -7,6 +9,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
   standalone: false
 })
 export class RangeSliderFilter {
+  activeThumb: 'min' | 'max' = 'min';
   @Input() min = 0;
   @Input() max = 100;
   @Input() step = 1;
