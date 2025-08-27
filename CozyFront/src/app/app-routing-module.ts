@@ -16,7 +16,6 @@ import { ProfileDetails } from './features/profile/profile-details/profile-detai
 
 const routes: Routes = [
   { path: '', component: CardManager },
-  { path: 'incidences', component: Incidences },
   { path: 'register', component: Clients },
   { path: 'apartment-details/:id', component: ApartmentDetails },
   { path: 'login', component: Login },
