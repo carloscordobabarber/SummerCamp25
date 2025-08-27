@@ -26,10 +26,8 @@ namespace SistemaAPI.Controllers
             [FromQuery] int pageSize = 10,
             [FromQuery] int? districtId = null,
             [FromQuery] int? area = null,
-            [FromQuery] bool? hasLift = null,
             [FromQuery] double? minPrice = null,
             [FromQuery] double? maxPrice = null,
-            [FromQuery] bool? hasGarage = null,
             [FromQuery] int? numberOfRooms = null,
             [FromQuery] int? numberOfBathrooms = null,
             [FromQuery] string? door = null
@@ -41,16 +39,10 @@ namespace SistemaAPI.Controllers
             if (area.HasValue)
                 apartmentsQuery = apartmentsQuery.Where(a => a.Area <= area.Value);
 
-            if (hasLift.HasValue)
-                apartmentsQuery = apartmentsQuery.Where(a => a.HasLift == hasLift.Value);
-
             if (minPrice.HasValue)
                 apartmentsQuery = apartmentsQuery.Where(a => a.Price >= minPrice.Value);
             if (maxPrice.HasValue)
                 apartmentsQuery = apartmentsQuery.Where(a => a.Price <= maxPrice.Value);
-
-            if (hasGarage.HasValue)
-                apartmentsQuery = apartmentsQuery.Where(a => a.HasGarage == hasGarage.Value);
 
             if (numberOfRooms.HasValue)
                 apartmentsQuery = apartmentsQuery.Where(a => a.NumberOfRooms == numberOfRooms.Value);
