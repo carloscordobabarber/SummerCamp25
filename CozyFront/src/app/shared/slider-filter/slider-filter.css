@@ -1,3 +1,21 @@
 .mb-3 { margin-bottom: 1rem; }
 label { display: block; margin-bottom: 0.5rem; }
-input[type=range] { width: 100%; }
+input[type=range] { width: 100%; position: absolute; pointer-events: none; background: transparent; }
+input[type=range]:focus { outline: none; }
+input[type=range].active { pointer-events: auto; z-index: 2; }
+input[type=range]::-webkit-slider-thumb {
+	pointer-events: auto;
+	position: relative;
+	z-index: 3;
+}
+input[type=range]::-moz-range-thumb {
+	pointer-events: auto;
+	position: relative;
+	z-index: 3;
+}
+input[type=range]::-ms-thumb {
+	pointer-events: auto;
+	position: relative;
+	z-index: 3;
+}
+.range-slider-wrapper { position: relative; height: 40px; }

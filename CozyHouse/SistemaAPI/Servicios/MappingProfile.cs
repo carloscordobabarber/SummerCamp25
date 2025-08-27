@@ -13,7 +13,7 @@ namespace SistemaAPI.Servicios
             CreateMap<Apartment, ApartmentClientDto>();
 
             CreateMap<Building, BuildingDto>();
-            CreateMap<Contact, ContactDto>();
+            CreateMap<Contact, ContactDto>().ReverseMap();
             CreateMap<District, DistrictDto>();
             CreateMap<DistrictStreet, DistrictStreetDto>();
 
@@ -39,7 +39,9 @@ namespace SistemaAPI.Servicios
             CreateMap<ApartmentDTO, Apartment>()
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.Now));
 
-            
+            CreateMap<ApartmentPostDto, Apartment>();
+
+
 
 
 

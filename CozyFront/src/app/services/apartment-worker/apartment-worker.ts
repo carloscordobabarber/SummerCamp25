@@ -11,7 +11,26 @@ export class ApartmentWorker {
 
   constructor(private http: HttpClient) {}
 
-  getApartments(): Observable<Apartment[]> {
-    return this.http.get<Apartment[]>(this.apiUrl);
+  getApartments(page?: number, pageSize?: number): Observable<any> {
+    let url = this.apiUrl;
+    if (page !== undefined && pageSize !== undefined) {
+      url += `?page=${page}&pageSize=${pageSize}`;
+    }
+    return this.http.get<any>(url);
+  }
+
+  getApartmentsWithFilters(filters: any): Observable<any> {
+    let params = [];
+    if (filters.page) params.push(`page=${filters.page}`);
+    if (filters.pageSize) params.push(`pageSize=${filters.pageSize}`);
+    if (filters.minPrice !== undefined) params.push(`minPrice=${filters.minPrice}`);
+    if (filters.maxPrice !== undefined) params.push(`maxPrice=${filters.maxPrice}`);
+    if (filters.area !== undefined) params.push(`area=${filters.area}`);
+    if (filters.numberOfRooms !== undefined) params.push(`numberOfRooms=${filters.numberOfRooms}`);
+    if (filters.numberOfBathrooms !== undefined) params.push(`numberOfBathrooms=${filters.numberOfBathrooms}`);
+  if (filters.door) params.push(`door=${encodeURIComponent(filters.door)}`);
+  if (filters.code) params.push(`code=${encodeURIComponent(filters.code)}`);
+    const url = this.apiUrl + (params.length ? '?' + params.join('&') : '');
+    return this.http.get<any>(url);
   }
 }

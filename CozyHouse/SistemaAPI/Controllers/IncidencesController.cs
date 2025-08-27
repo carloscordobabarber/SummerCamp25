@@ -22,11 +22,38 @@ namespace SistemaAPI.Controllers
 
         // GET: api/Incidences
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IncidenceDto>>> GetIncidences()
+        public async Task<ActionResult<object>> GetIncidences(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] int? issueType = null,
+            [FromQuery] string? assignedCompany = null,
+            [FromQuery] int? apartmentId = null,
+            [FromQuery] int? rentalId = null,
+            [FromQuery] int? tenantId = null,
+            [FromQuery] string? statusId = null)
         {
-            var incidences = await _context.Incidences.ToListAsync();
+            var query = _context.Incidences.AsQueryable();
+
+            if (issueType.HasValue)
+                query = query.Where(i => i.IssueType == issueType.Value);
+            if (!string.IsNullOrEmpty(assignedCompany))
+                query = query.Where(i => i.AssignedCompany == assignedCompany);
+            if (apartmentId.HasValue)
+                query = query.Where(i => i.ApartmentId == apartmentId.Value);
+            if (rentalId.HasValue)
+                query = query.Where(i => i.RentalId == rentalId.Value);
+            if (tenantId.HasValue)
+                query = query.Where(i => i.TenantId == tenantId.Value);
+            if (!string.IsNullOrEmpty(statusId))
+                query = query.Where(i => i.StatusId == statusId);
+
+            var totalCount = await query.CountAsync();
+            var incidences = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
             var dto = _mapper.Map<List<IncidenceDto>>(incidences);
-            return Ok(dto);
+            return Ok(new { totalCount, items = dto });
         }
 
         // GET: api/Incidences/5

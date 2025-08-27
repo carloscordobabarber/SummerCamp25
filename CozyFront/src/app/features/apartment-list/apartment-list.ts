@@ -31,62 +31,75 @@ export class ApartmentList implements OnInit {
   filteredApartments: Apartment[] = [];
   cargando: boolean = false;
 
-  searchTitle: string = '';
   searchDoor: string = '';
+  searchCode: string = '';
   minArea: number = 0;
   maxArea: number = 1000;
   filterArea: number = 0;
   filterRooms: number | null = null;
   filterBaths: number | null = null;
-  filterPrice: number = 0;
   minPrice: number = 0;
   maxPrice: number = 10000;
+  filterPriceMin: number = 0;
+  filterPriceMax: number = 10000;
+
+  // Paginación
+  page = 1;
+  pageSize = 10;
+  totalCount = 0;
 
   constructor(private apartmentWorker: ApartmentWorker) { }
 
-  // ngOnInit() {
-  //   this.http.get<Apartment[]>('https://devdemoapi4.azurewebsites.net/api/apartmentworkers')
-  //     .subscribe(data => {
-  //       this.apartments = data;
-  //     });
-  // }
-
   ngOnInit(): void {
     this.cargando = true;
-    this.apartmentWorker.getApartments().subscribe({
-      next: (data) => {
-        this.apartments = data;
-        this.filteredApartments = data;
-        // Calcular valores máximos para sliders y área
-  this.maxRooms = Math.max(...data.map(a => a.numberOfRooms ?? 0));
-  this.maxBaths = Math.max(...data.map(a => a.numberOfBathrooms ?? 0));
-  this.maxPrice = Math.max(...data.map(a => a.price ?? 0)) + 100;
-  this.maxArea = Math.max(...data.map(a => a.area ?? 0));
-  this.filterRooms = null;
-  this.filterBaths = null;
-        this.filterPrice = this.minPrice;
-        this.filterArea = this.minArea;
-        this.cargando = false;
-      },
-      error: (err) => {
-        console.log('Error al obtener datos:', err);
-        this.cargando = false;
-      },
-      complete: () => {
-        console.log('Datos recibidos:', this.apartments);
+    this.loadApartments();
+  }
+
+  loadApartments() {
+    const filters: any = {
+      page: this.page,
+      pageSize: this.pageSize,
+      minPrice: this.filterPriceMin,
+      maxPrice: this.filterPriceMax,
+      area: this.filterArea || undefined,
+      numberOfRooms: this.filterRooms || undefined,
+      numberOfBathrooms: this.filterBaths || undefined,
+      door: this.searchDoor || undefined,
+      code: this.searchCode || undefined
+    };
+    this.apartmentWorker.getApartmentsWithFilters(filters).subscribe((result: any) => {
+      if (result.items && result.totalCount !== undefined) {
+        this.apartments = result.items;
+        this.totalCount = result.totalCount;
+      } else {
+        this.apartments = result;
+        this.totalCount = result.length;
       }
+      this.filteredApartments = this.apartments;
+      this.maxRooms = Math.max(...this.apartments.map(a => a.numberOfRooms ?? 0), 1);
+      this.maxBaths = Math.max(...this.apartments.map(a => a.numberOfBathrooms ?? 0), 1);
+      this.maxPrice = Math.max(...this.apartments.map(a => a.price ?? 0), 10000) + 100;
+      this.maxArea = Math.max(...this.apartments.map(a => a.area ?? 0), 1000);
+      this.cargando = false;
+    }, (err: any) => {
+      console.log('Error al obtener datos:', err);
+      this.cargando = false;
     });
   }
 
+  onPageChange(newPage: number) {
+    this.page = newPage;
+    this.loadApartments();
+  }
+
+  onPageSizeChange(newSize: number) {
+    this.pageSize = +newSize;
+    this.page = 1;
+    this.loadApartments();
+  }
+
   applyFilters() {
-    this.filteredApartments = this.apartments.filter(apt => {
-      const matchTitle = !this.searchTitle || apt.code?.toLowerCase().includes(this.searchTitle.toLowerCase());
-      const matchDoor = !this.searchDoor || apt.door?.toLowerCase().includes(this.searchDoor.toLowerCase());
-      const matchArea = !this.filterArea || apt.area >= this.filterArea;
-      const matchRooms = this.filterRooms == null || apt.numberOfRooms === this.filterRooms;
-      const matchBaths = this.filterBaths == null || apt.numberOfBathrooms === this.filterBaths;
-      const matchPrice = !this.filterPrice || apt.price <= this.filterPrice;
-      return matchTitle && matchDoor && matchArea && matchRooms && matchBaths && matchPrice;
-    });
+    this.page = 1;
+    this.loadApartments();
   }
 }

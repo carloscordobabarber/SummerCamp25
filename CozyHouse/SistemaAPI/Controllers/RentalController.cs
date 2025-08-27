@@ -1,3 +1,6 @@
+// ...existing code...
+
+// ...existing code...
 using AutoMapper;
 using DTOS;
 using Dominio;
@@ -51,8 +54,8 @@ namespace SistemaAPI.Controllers
             var rental = _mapper.Map<Rental>(rentalDto);
             rental.StartDate = rentalDto.StartDate;
             rental.EndDate = rentalDto.EndDate;
-            // rental.CreatedAt = DateTime.UtcNow; // Si tu entidad Rental tiene estos campos, descomenta
-            // rental.UpdatedAt = null;
+             rental.CreatedAt = DateTime.UtcNow;
+            rental.UpdatedAt = null;
 
             _context.Rentals.Add(rental);
             await _context.SaveChangesAsync();
