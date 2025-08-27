@@ -60,7 +60,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let apt of filteredApartments; let i = index" [routerLink]="['/apartment-details', apt.id]" class="apartment-row" style="cursor:pointer">
-      <td>{{ i + 1 }}</td>
+      <td>{{ apt.id }}</td>
       <td>{{ apt.code }}</td>
   <td>{{ apt.streetName }}</td>
   <td>{{ apt.door }}</td>
