@@ -8,6 +8,7 @@ import { UserProfile } from '../../models/user';
 })
 export class UserService {
   private apiUrl = 'https://devdemoapi4.azurewebsites.net/api/users';
+  private loginUrl = 'https://devdemoapi4.azurewebsites.net/api/login/login';
 
   constructor(private http: HttpClient) {}
 
@@ -17,6 +18,13 @@ export class UserService {
       url += `?page=${page}&pageSize=${pageSize}`;
     }
     return this.http.get<any>(url);
+  }
+
+  /**
+   * Realiza login y devuelve un observable con el id y role del usuario
+   */
+  login(email: string, password: string): Observable<{ id: number; role: string }> {
+    return this.http.post<{ id: number; role: string }>(this.loginUrl, { email, password });
   }
 
   getUser(id: number): Observable<UserProfile> {

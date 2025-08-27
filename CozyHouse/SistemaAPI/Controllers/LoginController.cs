@@ -32,7 +32,7 @@ namespace SistemaAPI.Controllers
             if (!loginDto.Password.Equals(user.Password))
                 return Unauthorized("Contraseña incorrecta");
 
-            return Ok("Login exitoso.");
+            return Ok(new { id = user.Id, role = user.Role });
         }
     }
 }
