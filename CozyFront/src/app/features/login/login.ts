@@ -43,7 +43,7 @@ export class Login implements OnInit {
     //   }
     // });
 
-    this.http.post('https://devdemoapi4.azurewebsites.net/api/Login/login', { Email: email, Password: password }, { responseType: 'text' }).subscribe({
+    this.http.post<{ id: number, role: string }>('https://devdemoapi4.azurewebsites.net/api/Login/login', { Email: email, Password: password }).subscribe({
       next: res => {
         alert(res); // aquí res es string: "Login exitoso."
         this.errorMessage = '';

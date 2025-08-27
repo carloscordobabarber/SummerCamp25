@@ -25,6 +25,8 @@ import { SliderFilter } from './shared/slider-filter/slider-filter';
 import { ChatBot } from './shared/chat-bot/chat-bot';
 import { ApartmentDetails } from './features/apartment-details/apartment-details';
 import { ProfileDetails } from './features/profile/profile-details/profile-details';
+import { MyRentals } from './features/profile/my-rentals/my-rentals';
+import { MyContracts } from './features/profile/my-contracts/my-contracts';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { ProfileDetails } from './features/profile/profile-details/profile-detai
     ChatBot,
     SliderFilter,
     ApartmentDetails,
-    ProfileDetails
+    ProfileDetails,
+    MyRentals,
+    MyContracts
   ],
   imports: [
     BrowserModule,

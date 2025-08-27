@@ -13,6 +13,8 @@ import { IncidenceList } from './features/incidence-list/incidence-list';
 import { ApartmentDetails } from './features/apartment-details/apartment-details';
 import { Login } from './features/login/login';
 import { ProfileDetails } from './features/profile/profile-details/profile-details';
+import { MyRentals } from './features/profile/my-rentals/my-rentals';
+import { MyContracts } from './features/profile/my-contracts/my-contracts';
 
 const routes: Routes = [
   { path: '', component: CardManager },
@@ -22,6 +24,8 @@ const routes: Routes = [
   { path: 'profile', component: Profile,
       children: [
       { path: '', component: ProfileDetails }, 
+      { path: 'my-rentals', component: MyRentals },
+      { path: 'my-contracts', component: MyContracts },
       { path: 'incidences', component: Incidences }
     ]
    },

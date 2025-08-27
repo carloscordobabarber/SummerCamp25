@@ -1,0 +1,71 @@
+<p>my-rentals works!</p>
+
+
+<div class="container mt-5 ">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Mis Alquileres</h2>
+    <div class="btn-group">
+      <button class="btn btn-outline-primary" [class.active]="vista === 'lista'" (click)="toggleVista('lista')">
+        <i class="bi bi-list"></i> 
+      </button>
+      <button class="btn btn-outline-primary" [class.active]="vista === 'card'" (click)="toggleVista('card')">
+        <i class="bi bi-grid-3x3-gap"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Vista Lista -->
+  <div *ngIf="vista === 'lista'">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Propiedad</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Monto</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alquiler of alquileres">
+          <td>{{ alquiler.propiedad }}</td>
+          <td>{{ alquiler.fechaInicio }}</td>
+          <td>{{ alquiler.fechaFin }}</td>
+          <td>${{ alquiler.monto | number }}</td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="alquiler.pagado ? 'bg-success' : 'bg-danger'">
+              {{ alquiler.pagado ? 'Pagado' : 'Pendiente' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Vista Cards -->
+  <div *ngIf="vista === 'card'" class="row g-4">
+    <div class="col-md-6 col-lg-4" *ngFor="let alquiler of alquileres">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ alquiler.propiedad }}</h5>
+          <p class="card-text mb-1">
+            <strong>Desde:</strong> {{ alquiler.fechaInicio }}
+          </p>
+          <p class="card-text mb-1">
+            <strong>Hasta:</strong> {{ alquiler.fechaFin }}
+          </p>
+          <p class="card-text mb-2">
+            <strong>Monto:</strong> ${{ alquiler.monto | number }}
+          </p>
+          <span
+            class="badge"
+            [ngClass]="alquiler.pagado ? 'bg-success' : 'bg-danger'">
+            {{ alquiler.pagado ? 'Pagado' : 'Pendiente' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
