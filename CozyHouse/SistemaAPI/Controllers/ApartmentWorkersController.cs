@@ -30,7 +30,8 @@ namespace SistemaAPI.Controllers
             [FromQuery] double? maxPrice = null,
             [FromQuery] int? numberOfRooms = null,
             [FromQuery] int? numberOfBathrooms = null,
-            [FromQuery] string? door = null
+            [FromQuery] string? door = null,
+            [FromQuery] string? code = null
         )
         {
             var apartmentsQuery = _context.Apartments.AsQueryable();
@@ -52,6 +53,9 @@ namespace SistemaAPI.Controllers
 
             if (!string.IsNullOrEmpty(door))
                 apartmentsQuery = apartmentsQuery.Where(a => a.Door.ToLower().Contains(door.ToLower()));
+
+            if (!string.IsNullOrEmpty(code))
+                apartmentsQuery = apartmentsQuery.Where(a => a.Code.ToLower().Contains(code.ToLower()));
 
             var apartments = await apartmentsQuery.ToListAsync();
             var buildings = await _context.Buildings.ToListAsync();

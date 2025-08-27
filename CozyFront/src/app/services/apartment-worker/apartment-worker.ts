@@ -23,13 +23,13 @@ export class ApartmentWorker {
     let params = [];
     if (filters.page) params.push(`page=${filters.page}`);
     if (filters.pageSize) params.push(`pageSize=${filters.pageSize}`);
-    if (filters.title) params.push(`title=${encodeURIComponent(filters.title)}`);
-    if (filters.door) params.push(`door=${encodeURIComponent(filters.door)}`);
-    if (filters.area) params.push(`area=${filters.area}`);
-    if (filters.rooms) params.push(`rooms=${filters.rooms}`);
-    if (filters.baths) params.push(`baths=${filters.baths}`);
-    if (filters.priceMin !== undefined) params.push(`priceMin=${filters.priceMin}`);
-    if (filters.priceMax !== undefined) params.push(`priceMax=${filters.priceMax}`);
+    if (filters.minPrice !== undefined) params.push(`minPrice=${filters.minPrice}`);
+    if (filters.maxPrice !== undefined) params.push(`maxPrice=${filters.maxPrice}`);
+    if (filters.area !== undefined) params.push(`area=${filters.area}`);
+    if (filters.numberOfRooms !== undefined) params.push(`numberOfRooms=${filters.numberOfRooms}`);
+    if (filters.numberOfBathrooms !== undefined) params.push(`numberOfBathrooms=${filters.numberOfBathrooms}`);
+  if (filters.door) params.push(`door=${encodeURIComponent(filters.door)}`);
+  if (filters.code) params.push(`code=${encodeURIComponent(filters.code)}`);
     const url = this.apiUrl + (params.length ? '?' + params.join('&') : '');
     return this.http.get<any>(url);
   }

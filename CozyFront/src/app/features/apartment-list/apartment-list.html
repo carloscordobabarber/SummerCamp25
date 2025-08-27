@@ -1,13 +1,13 @@
 
 <div class="row mb-3">
   <div class="col">
-    <input type="text" class="form-control" placeholder="Buscar por título..." [(ngModel)]="searchTitle" (input)="applyFilters()">
+    <input type="text" class="form-control" placeholder="Buscar por código..." [(ngModel)]="searchCode" (input)="applyFilters()">
   </div>
   <div class="col">
     <input type="text" class="form-control" placeholder="Buscar por dirección..." [(ngModel)]="searchDoor" (input)="applyFilters()">
   </div>
   <div class="col">
-  <app-slider-filter label="Área (m²)" [min]="minArea" [max]="maxArea" [step]="1" [(value)]="filterArea" (valueChange)="applyFilters()"></app-slider-filter>
+    <app-slider-filter label="Área (m²)" [min]="minArea" [max]="maxArea" [step]="1" [(value)]="filterArea" (valueChange)="applyFilters()"></app-slider-filter>
   </div>
 </div>
 <div class="row mb-3">
@@ -46,21 +46,25 @@
 <table *ngIf="!cargando" class="table table-striped align-middle">
   <thead class="table-light">
     <tr>
-      <th>#</th>
-      <th>Título</th>
-      <th>Dirección</th>
-      <th>Precio</th>
-      <th>Habitaciones</th>
-      <th>Baños</th>
-      <th>Área (m²)</th>
-      <th>Disponible</th>
+  <th>#</th>
+  <th>Código</th>
+  <th>Calle</th>
+  <th>Puerta</th>
+  <th>Distrito</th>
+  <th>Precio</th>
+  <th>Habitaciones</th>
+  <th>Baños</th>
+  <th>Área (m²)</th>
+  <th>Disponible</th>
     </tr>
   </thead>
   <tbody>
   <tr *ngFor="let apt of filteredApartments; let i = index" [routerLink]="['/apartment-details', apt.id]" class="apartment-row" style="cursor:pointer">
-      <td>{{ i + 1 }}</td>
+      <td>{{ apt.id }}</td>
       <td>{{ apt.code }}</td>
-      <td>{{ apt.door }}</td>
+  <td>{{ apt.streetName }}</td>
+  <td>{{ apt.door }}</td>
+  <td>{{ apt.districtName }}</td>
       <td>{{ apt.price | currency:'EUR':'symbol':'1.0-0' }}</td>
       <td>{{ apt.numberOfRooms }}</td>
       <td>{{ apt.numberOfBathrooms }}</td>

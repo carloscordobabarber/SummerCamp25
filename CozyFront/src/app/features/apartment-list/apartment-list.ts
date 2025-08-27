@@ -31,8 +31,8 @@ export class ApartmentList implements OnInit {
   filteredApartments: Apartment[] = [];
   cargando: boolean = false;
 
-  searchTitle: string = '';
   searchDoor: string = '';
+  searchCode: string = '';
   minArea: number = 0;
   maxArea: number = 1000;
   filterArea: number = 0;
@@ -59,13 +59,13 @@ export class ApartmentList implements OnInit {
     const filters: any = {
       page: this.page,
       pageSize: this.pageSize,
-      title: this.searchTitle || undefined,
-      door: this.searchDoor || undefined,
+      minPrice: this.filterPriceMin,
+      maxPrice: this.filterPriceMax,
       area: this.filterArea || undefined,
-      rooms: this.filterRooms || undefined,
-      baths: this.filterBaths || undefined,
-      priceMin: this.filterPriceMin,
-      priceMax: this.filterPriceMax
+      numberOfRooms: this.filterRooms || undefined,
+      numberOfBathrooms: this.filterBaths || undefined,
+      door: this.searchDoor || undefined,
+      code: this.searchCode || undefined
     };
     this.apartmentWorker.getApartmentsWithFilters(filters).subscribe((result: any) => {
       if (result.items && result.totalCount !== undefined) {

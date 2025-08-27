@@ -1,8 +1,8 @@
 <div class="mb-3">
   <label>{{ label }}: {{ minValue }} - {{ maxValue }}</label>
-  <div class="d-flex align-items-center">
-    <input type="range" class="form-range me-2" [min]="min" [max]="max" [step]="step" [(ngModel)]="minValue" (input)="onMinInput($event)">
-    <input type="range" class="form-range ms-2" [min]="min" [max]="max" [step]="step" [(ngModel)]="maxValue" (input)="onMaxInput($event)">
+  <div class="range-slider-wrapper">
+    <input type="range" class="form-range" [class.active]="activeThumb === 'min'" [min]="min" [max]="max" [step]="step" [(ngModel)]="minValue" (input)="onMinInput($event)" (mousedown)="activeThumb = 'min'" (touchstart)="activeThumb = 'min'">
+    <input type="range" class="form-range" [class.active]="activeThumb === 'max'" [min]="min" [max]="max" [step]="step" [(ngModel)]="maxValue" (input)="onMaxInput($event)" (mousedown)="activeThumb = 'max'" (touchstart)="activeThumb = 'max'">
   </div>
   <div class="d-flex justify-content-between">
     <span>{{ min }}</span>
