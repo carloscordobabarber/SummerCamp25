@@ -1,18 +1,50 @@
-<div class="row g-4 d-flex justify-content-center">
+<div class="card-manager-container">
+  <div class="filters-container mb-4">
+    <div class="search-bar-wrapper mb-3">
+      <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    </div>
+    <div class="row mt-2">
+      <div class="col-12 col-md-6 col-lg-3 mb-2">
+        <app-slider-filter label="Área (m²)" [min]="20" [max]="300" [step]="5" [(value)]="area" (valueChange)="onFilterChange()"></app-slider-filter>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 mb-2">
+        <app-slider-filter label="Precio (€)" [min]="200" [max]="5000" [step]="50" [(value)]="price" (valueChange)="onFilterChange()"></app-slider-filter>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 mb-2">
+        <app-slider-filter label="Habitaciones" [min]="1" [max]="10" [step]="1" [(value)]="numberOfRooms" (valueChange)="onFilterChange()"></app-slider-filter>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 mb-2">
+        <app-slider-filter label="Baños" [min]="1" [max]="5" [step]="1" [(value)]="numberOfBathrooms" (valueChange)="onFilterChange()"></app-slider-filter>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-6 col-md-3 mb-2">
+        <label><input type="checkbox" [(ngModel)]="hasLift" (change)="onFilterChange()"> Ascensor</label>
+      </div>
+      <div class="col-6 col-md-3 mb-2">
+        <label><input type="checkbox" [(ngModel)]="hasGarage" (change)="onFilterChange()"> Garaje</label>
+      </div>
+      <!-- Puedes agregar más filtros aquí -->
+    </div>
+  </div>
+
+  <div class="row g-4 d-flex justify-content-center">
 	<div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let apt of apartments">
 		<app-cards [apartment]="apt"></app-cards>
 	</div>
-</div>
+  </div>
 
-<!-- Espacio reservado para el paginador -->
-<div class="paginador-footer-space">
-  <div class="d-flex justify-content-center mt-4">
-    <app-paginador
-      [page]="page"
-      [pageSize]="pageSize"
-      [totalItems]="totalCount"
-      (pageChange)="onPageChange($event)"
-      (pageSizeChange)="onPageSizeChange($event)">
-    </app-paginador>
+  <!-- Espacio reservado para el paginador -->
+  <div class="paginador-footer-space">
+    <div class="d-flex justify-content-center mt-4">
+      <app-paginador
+        [page]="page"
+        [pageSize]="pageSize"
+        [totalItems]="totalCount"
+        (pageChange)="onPageChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)">
+      </app-paginador>
+    </div>
   </div>
 </div>
+
