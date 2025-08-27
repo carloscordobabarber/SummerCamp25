@@ -24,38 +24,108 @@ namespace SistemaAPI.Controllers
         public async Task<ActionResult<object>> GetApartments(
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10,
+            [FromQuery] int? districtId = null,
+            [FromQuery] int? area = null,
             [FromQuery] double? minPrice = null,
             [FromQuery] double? maxPrice = null,
-            [FromQuery] int? area = null,
             [FromQuery] int? numberOfRooms = null,
             [FromQuery] int? numberOfBathrooms = null,
-            [FromQuery] bool? hasLift = null,
-            [FromQuery] bool? hasGarage = null)
+            [FromQuery] string? door = null
+        )
         {
-            var query = _context.Apartments.AsQueryable();
+            var apartmentsQuery = _context.Apartments.AsQueryable();
+
+            // Filtros directos sobre Apartment
+            if (area.HasValue)
+                apartmentsQuery = apartmentsQuery.Where(a => a.Area <= area.Value);
 
             if (minPrice.HasValue)
-                query = query.Where(a => a.Price >= minPrice.Value);
+                apartmentsQuery = apartmentsQuery.Where(a => a.Price >= minPrice.Value);
             if (maxPrice.HasValue)
-                query = query.Where(a => a.Price <= maxPrice.Value);
-            if (area.HasValue)
-                query = query.Where(a => a.Area <= area.Value);
-            if (numberOfRooms.HasValue)
-                query = query.Where(a => a.NumberOfRooms == numberOfRooms.Value);
-            if (numberOfBathrooms.HasValue)
-                query = query.Where(a => a.NumberOfBathrooms == numberOfBathrooms.Value);
-            if (hasLift.HasValue)
-                query = query.Where(a => a.HasLift == hasLift.Value);
-            if (hasGarage.HasValue)
-                query = query.Where(a => a.HasGarage == hasGarage.Value);
+                apartmentsQuery = apartmentsQuery.Where(a => a.Price <= maxPrice.Value);
 
-            var totalCount = await query.CountAsync();
-            var apartments = await query
+            if (numberOfRooms.HasValue)
+                apartmentsQuery = apartmentsQuery.Where(a => a.NumberOfRooms == numberOfRooms.Value);
+
+            if (numberOfBathrooms.HasValue)
+                apartmentsQuery = apartmentsQuery.Where(a => a.NumberOfBathrooms == numberOfBathrooms.Value);
+
+            if (!string.IsNullOrEmpty(door))
+                apartmentsQuery = apartmentsQuery.Where(a => a.Door.ToLower().Contains(door.ToLower()));
+
+            var apartments = await apartmentsQuery.ToListAsync();
+            var buildings = await _context.Buildings.ToListAsync();
+            var districtStreets = await _context.DistrictStreets.ToListAsync();
+            var districts = await _context.Districts.ToListAsync();
+            var streets = await _context.Streets.ToListAsync();
+
+            var apartmentDtos = new List<ApartmentWorkerDto>();
+
+            foreach (var apartment in apartments)
+            {
+                var dto = new ApartmentWorkerDto
+                {
+                    Id = apartment.Id,
+                    Code = apartment.Code,
+                    Door = apartment.Door,
+                    Floor = apartment.Floor,
+                    Price = apartment.Price,
+                    Area = apartment.Area,
+                    NumberOfRooms = apartment.NumberOfRooms,
+                    NumberOfBathrooms = apartment.NumberOfBathrooms,
+                    BuildingId = apartment.BuildingId,
+                    HasLift = apartment.HasLift,
+                    HasGarage = apartment.HasGarage,
+                    IsAvailable = apartment.IsAvailable,
+                    CreatedAt = apartment.CreatedAt,
+                    UpdatedAt = apartment.UpdatedAt
+                };
+
+                var building = buildings.FirstOrDefault(b => b.Id == apartment.BuildingId);
+                string streetName = string.Empty;
+                int dtoDistrictId = 0;
+                string districtName = string.Empty;
+
+                if (building != null)
+                {
+                    var street = streets.FirstOrDefault(s => s.Code == building.CodeStreet);
+                    if (street != null)
+                        streetName = street.Name;
+
+                    var streetId = street?.Id ?? 0;
+                    var districtStreet = districtStreets.FirstOrDefault(ds => ds.StreetId == streetId);
+                    if (districtStreet != null)
+                    {
+                        var district = districts.FirstOrDefault(d => d.Id == districtStreet.DistrictId);
+                        if (district != null)
+                        {
+                            dtoDistrictId = district.Id;
+                            districtName = district.Name;
+                        }
+                    }
+                }
+                dto.StreetName = streetName;
+                dto.DistrictId = dtoDistrictId;
+                dto.DistrictName = districtName;
+
+                apartmentDtos.Add(dto);
+            }
+
+            // Filtro por districtId (requiere haber resuelto la relación)
+            if (districtId.HasValue)
+                apartmentDtos = apartmentDtos.Where(a => a.DistrictId == districtId.Value).ToList();
+
+            var totalCount = apartmentDtos.Count;
+            var pagedResult = apartmentDtos
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .ToListAsync();
-            var dto = _mapper.Map<List<ApartmentWorkerDto>>(apartments);
-            return Ok(new { totalCount, items = dto });
+                .ToList();
+
+            return Ok(new
+            {
+                totalCount,
+                items = pagedResult
+            });
         }
     }
 }

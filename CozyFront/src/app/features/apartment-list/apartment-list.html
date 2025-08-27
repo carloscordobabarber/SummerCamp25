@@ -30,7 +30,15 @@
     </select>
   </div>
   <div class="col">
-    <app-slider-filter label="Precio" [min]="minPrice" [max]="maxPrice" [step]="100" [(value)]="filterPrice" (valueChange)="applyFilters()"></app-slider-filter>
+    <app-range-slider-filter
+      label="Precio (€)"
+      [min]="minPrice"
+      [max]="maxPrice"
+      [step]="100"
+      [(minValue)]="filterPriceMin"
+      [(maxValue)]="filterPriceMax"
+      (rangeChange)="applyFilters()">
+    </app-range-slider-filter>
   </div>
 </div>
 <div *ngIf="cargando">Cargando apartamentos...</div>

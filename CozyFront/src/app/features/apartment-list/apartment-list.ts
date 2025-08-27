@@ -38,9 +38,10 @@ export class ApartmentList implements OnInit {
   filterArea: number = 0;
   filterRooms: number | null = null;
   filterBaths: number | null = null;
-  filterPrice: number = 0;
   minPrice: number = 0;
   maxPrice: number = 10000;
+  filterPriceMin: number = 0;
+  filterPriceMax: number = 10000;
 
   // Paginación
   page = 1;
@@ -55,7 +56,18 @@ export class ApartmentList implements OnInit {
   }
 
   loadApartments() {
-    this.apartmentWorker.getApartments(this.page, this.pageSize).subscribe((result: any) => {
+    const filters: any = {
+      page: this.page,
+      pageSize: this.pageSize,
+      title: this.searchTitle || undefined,
+      door: this.searchDoor || undefined,
+      area: this.filterArea || undefined,
+      rooms: this.filterRooms || undefined,
+      baths: this.filterBaths || undefined,
+      priceMin: this.filterPriceMin,
+      priceMax: this.filterPriceMax
+    };
+    this.apartmentWorker.getApartmentsWithFilters(filters).subscribe((result: any) => {
       if (result.items && result.totalCount !== undefined) {
         this.apartments = result.items;
         this.totalCount = result.totalCount;
@@ -64,14 +76,10 @@ export class ApartmentList implements OnInit {
         this.totalCount = result.length;
       }
       this.filteredApartments = this.apartments;
-      this.maxRooms = Math.max(...this.apartments.map(a => a.numberOfRooms ?? 0));
-      this.maxBaths = Math.max(...this.apartments.map(a => a.numberOfBathrooms ?? 0));
-      this.maxPrice = Math.max(...this.apartments.map(a => a.price ?? 0)) + 100;
-      this.maxArea = Math.max(...this.apartments.map(a => a.area ?? 0));
-      this.filterRooms = null;
-      this.filterBaths = null;
-      this.filterPrice = this.minPrice;
-      this.filterArea = this.minArea;
+      this.maxRooms = Math.max(...this.apartments.map(a => a.numberOfRooms ?? 0), 1);
+      this.maxBaths = Math.max(...this.apartments.map(a => a.numberOfBathrooms ?? 0), 1);
+      this.maxPrice = Math.max(...this.apartments.map(a => a.price ?? 0), 10000) + 100;
+      this.maxArea = Math.max(...this.apartments.map(a => a.area ?? 0), 1000);
       this.cargando = false;
     }, (err: any) => {
       console.log('Error al obtener datos:', err);
@@ -91,14 +99,7 @@ export class ApartmentList implements OnInit {
   }
 
   applyFilters() {
-    this.filteredApartments = this.apartments.filter(apt => {
-      const matchTitle = !this.searchTitle || apt.code?.toLowerCase().includes(this.searchTitle.toLowerCase());
-      const matchDoor = !this.searchDoor || apt.door?.toLowerCase().includes(this.searchDoor.toLowerCase());
-      const matchArea = !this.filterArea || apt.area >= this.filterArea;
-      const matchRooms = this.filterRooms == null || apt.numberOfRooms === this.filterRooms;
-      const matchBaths = this.filterBaths == null || apt.numberOfBathrooms === this.filterBaths;
-      const matchPrice = !this.filterPrice || apt.price <= this.filterPrice;
-      return matchTitle && matchDoor && matchArea && matchRooms && matchBaths && matchPrice;
-    });
+    this.page = 1;
+    this.loadApartments();
   }
 }
