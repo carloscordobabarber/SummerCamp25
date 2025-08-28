@@ -14,14 +14,21 @@ export class CardManager implements OnInit {
   page = 1;
   pageSize = 10;
 
-  // Filtros
+  // Filtros de rango para área y precio
   area: number = 20;
-  price: number = 200;
-  numberOfRooms: number = 1;
-  numberOfBathrooms: number = 1;
+  minPrice: number = 200;
+  maxPrice: number = 5000;
+
+
+  // Ya no se actualizan los rangos según los resultados, siempre se consulta a la API con los filtros actuales
+
+  // Filtros de habitaciones y baños (usados por search-bar)
+  numberOfRooms: number | null = null;
+  numberOfBathrooms: number | null = null;
+  name: string = '';
+
   hasLift?: boolean;
   hasGarage?: boolean;
-  searchTerm: string = '';
 
   constructor(private http: HttpClient, private apartmentCardService: ApartmentCardService) {}
 
@@ -30,19 +37,23 @@ export class CardManager implements OnInit {
   }
 
   loadApartments() {
-    // Solo enviar los filtros si el usuario los ha cambiado respecto al default
     const params: any = {
       page: this.page,
       pageSize: this.pageSize
     };
+    // Filtro de área (valor único)
     if (this.area !== 20) params.area = this.area;
-    if (this.price !== 200) params.price = this.price;
-    if (this.numberOfRooms !== 1) params.numberOfRooms = this.numberOfRooms;
-    if (this.numberOfBathrooms !== 1) params.numberOfBathrooms = this.numberOfBathrooms;
+    // Filtros de rango para precio
+    if (this.minPrice !== 200) params.minPrice = this.minPrice;
+    if (this.maxPrice !== 5000) params.maxPrice = this.maxPrice;
+    // Filtros de habitaciones y baños
+    if (this.numberOfRooms !== null) params.numberOfRooms = this.numberOfRooms;
+    if (this.numberOfBathrooms !== null) params.numberOfBathrooms = this.numberOfBathrooms;
+    // Filtro de nombre
+    if (this.name && this.name.trim().length > 0) params.name = this.name.trim();
+    // Otros filtros
     if (this.hasLift !== undefined) params.hasLift = this.hasLift;
     if (this.hasGarage !== undefined) params.hasGarage = this.hasGarage;
-    // Puedes agregar más filtros aquí
-    // if (this.searchTerm) params.searchTerm = this.searchTerm;
 
     this.apartmentCardService.getApartments(params).subscribe(result => {
       this.apartments = result.items ?? [];
@@ -61,15 +72,42 @@ export class CardManager implements OnInit {
     this.loadApartments();
   }
 
-  onFilterChange() {
+  onAreaChange(val: number) {
+    this.area = val;
     this.page = 1;
     this.loadApartments();
   }
 
-  onSearch(term: string) {
-    this.searchTerm = term;
+  onPriceRangeChange(range: {min: number, max: number}) {
+    this.minPrice = range.min;
+    this.maxPrice = range.max;
     this.page = 1;
-    // Si la API soporta búsqueda por texto, descomenta la línea en loadApartments
     this.loadApartments();
   }
+
+  onRoomsSearch(term: string) {
+    const value = parseInt(term, 10);
+    this.numberOfRooms = isNaN(value) ? null : value;
+    this.page = 1;
+    this.loadApartments();
+  }
+
+  onBathroomsSearch(term: string) {
+    const value = parseInt(term, 10);
+    this.numberOfBathrooms = isNaN(value) ? null : value;
+    this.page = 1;
+    this.loadApartments();
+  }
+
+  onNameSearch(term: string) {
+    this.name = term;
+    this.page = 1;
+    this.loadApartments();
+  }
+
+  // onSearch(term: string) {
+  //   this.searchTerm = term;
+  //   this.page = 1;
+  //   this.loadApartments();
+  // }
 }

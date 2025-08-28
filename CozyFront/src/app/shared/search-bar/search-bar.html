@@ -1,6 +1,6 @@
 <form (submit)="$event.preventDefault()">
 	<div class="input-group mb-3">
-		<input type="text" class="form-control" placeholder="Buscar apartamentos..." [(ngModel)]="searchTerm" name="searchTerm" (input)="onSearch()">
+		<input type="text" class="form-control" [placeholder]="placeholder" [(ngModel)]="searchTerm" name="searchTerm">
 		<button class="btn btn-outline-secondary" type="button" (click)="onSearch()">Buscar</button>
 	</div>
 </form>

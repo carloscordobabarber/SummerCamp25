@@ -14,6 +14,7 @@ export class ApartmentDetails implements OnInit {
   apartment?: Apartment;
   currentImageIndex: number = 0;
   userId: number | null = null;
+  userRole: string | null = null;
   rentMessage: string = '';
   isRenting: boolean = false;
   startDate: string = '';
@@ -35,20 +36,20 @@ export class ApartmentDetails implements OnInit {
     this.todayString = today.toISOString().split('T')[0];
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.apartmentService.getApartments().subscribe(apartments => {
-      this.apartment = apartments.items.find(a => a.id === id);
-    });
-    // Detectar usuario en localStorage
-    const user = localStorage.getItem('user');
-    if (user) {
-      try {
-        const userObj = JSON.parse(user);
-        this.userId = userObj.id || null;
-      } catch {
-        this.userId = null;
+      const found = apartments.items.find(a => a.id === id);
+      if (found) {
+        // Mapear ApartmentCardDto a Apartment (floor debe ser number)
+        this.apartment = {
+          ...found,
+          floor: typeof found.floor === 'string' ? parseInt(found.floor, 10) : found.floor
+        };
       }
-    } else {
-      this.userId = null;
-    }
+    });
+    // Detectar usuario en localStorage (nuevo formato)
+    const userIdStr = localStorage.getItem('userId');
+    const userRoleStr = localStorage.getItem('userRole');
+    this.userId = userIdStr ? Number(userIdStr) : null;
+    this.userRole = userRoleStr ?? null;
   }
   onRentNow(): void {
     if (!this.userId || !this.apartment) {

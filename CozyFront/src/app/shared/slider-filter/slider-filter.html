@@ -1,4 +1,4 @@
 <div class="mb-3">
   <label>{{ label }}: {{ value }}</label>
-  <input type="range" class="form-range" [min]="min" [max]="max" [step]="step" [(ngModel)]="value" (input)="onInput($event)">
+  <input type="range" class="form-range" [min]="min" [max]="max" [step]="step" [(ngModel)]="value" (input)="onInput($event)" [style.maxWidth]="'250px'" style="width:100%;display:block;margin:0 auto;">
 </div>
