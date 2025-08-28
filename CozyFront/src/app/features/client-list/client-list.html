@@ -1,3 +1,26 @@
+
+<!-- Filtros -->
+<div class="row mb-3">
+  <div class="col-md-2 mb-2">
+    <app-search-bar (search)="onDocumentNumberSearch($event)" placeholder="Buscar nº documento..."></app-search-bar>
+  </div>
+  <div class="col-md-2 mb-2">
+    <app-search-bar (search)="onNameSearch($event)" placeholder="Buscar nombre..."></app-search-bar>
+  </div>
+  <div class="col-md-2 mb-2">
+    <app-search-bar (search)="onLastNameSearch($event)" placeholder="Buscar apellido..."></app-search-bar>
+  </div>
+  <div class="col-md-2 mb-2">
+    <app-search-bar (search)="onEmailSearch($event)" placeholder="Buscar email..."></app-search-bar>
+  </div>
+  <div class="col-md-2 mb-2">
+    <app-search-bar (search)="onPhoneSearch($event)" placeholder="Buscar teléfono..."></app-search-bar>
+  </div>
+  <div class="col-md-2 mb-2">
+    <app-search-bar (search)="onRoleSearch($event)" placeholder="Buscar rol..."></app-search-bar>
+  </div>
+</div>
+
 <div *ngIf="cargando">Cargando clientes...</div>
 
 <table *ngIf="!cargando" class="table table-striped align-middle">
