@@ -1,52 +1,50 @@
+
 <div class="card-manager-container">
-  <div class="filters-container mb-4">
-    <div class="filters-col">
-      <div class="filter-item">
-        <div class="slider-area-limit">
-    <app-slider-filter label="Área (m²)" [min]="20" [max]="250" [step]="5" [(value)]="area" (valueChange)="onAreaChange($event)"></app-slider-filter>
+  <div class="card-manager-layout">
+    <aside class="sidebar">
+      <div class="filters-col">
+        <div class="filter-item">
+          <div class="slider-area-limit">
+            <app-slider-filter label="Área (m²)" [min]="20" [max]="250" [step]="5" [(value)]="area" (valueChange)="onAreaChange($event)"></app-slider-filter>
+          </div>
+        </div>
+        <div class="filter-item">
+          <app-range-slider-filter label="Precio (€)" [min]="200" [max]="5000" [step]="50" [minValue]="minPrice" [maxValue]="maxPrice" (rangeChange)="onPriceRangeChange($event)"></app-range-slider-filter>
+        </div>
+        <div class="filter-item">
+          <app-search-bar (search)="onNameSearch($event)" placeholder="Buscar por nombre de apartamento o edificio..."></app-search-bar>
+        </div>
+        <div class="filter-item">
+          <app-search-bar (search)="onRoomsSearch($event)" placeholder="Buscar por número de habitaciones..."></app-search-bar>
+        </div>
+        <div class="filter-item">
+          <app-search-bar (search)="onBathroomsSearch($event)" placeholder="Buscar por número de baños..."></app-search-bar>
+        </div>
+        <div class="filter-item">
+          <label><input type="checkbox" [(ngModel)]="hasLift" (change)="loadApartments()"> Ascensor</label>
+        </div>
+        <div class="filter-item">
+          <label><input type="checkbox" [(ngModel)]="hasGarage" (change)="loadApartments()"> Garaje</label>
+        </div>
+        <!-- Puedes agregar más filtros aquí -->
+      </div>
+    </aside>
+    <main class="main-content">
+      <div class="cards">
+        <div class="card-item" *ngFor="let apt of apartments">
+          <app-cards [apartment]="apt"></app-cards>
         </div>
       </div>
-      <div class="filter-item">
-        <app-range-slider-filter label="Precio (€)" [min]="200" [max]="5000" [step]="50" [minValue]="minPrice" [maxValue]="maxPrice" (rangeChange)="onPriceRangeChange($event)"></app-range-slider-filter>
+      <div class="paginator">
+        <app-paginador
+          [page]="page"
+          [pageSize]="pageSize"
+          [totalItems]="totalCount"
+          (pageChange)="onPageChange($event)"
+          (pageSizeChange)="onPageSizeChange($event)">
+        </app-paginador>
       </div>
-      <div class="filter-item">
-  <app-search-bar (search)="onNameSearch($event)" placeholder="Buscar por nombre de apartamento o edificio..."></app-search-bar>
-      </div>
-      <div class="filter-item">
-  <app-search-bar (search)="onRoomsSearch($event)" placeholder="Buscar por número de habitaciones..."></app-search-bar>
-      </div>
-      <div class="filter-item">
-  <app-search-bar (search)="onBathroomsSearch($event)" placeholder="Buscar por número de baños..."></app-search-bar>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col-6 col-md-3 mb-2">
-  <label><input type="checkbox" [(ngModel)]="hasLift" (change)="loadApartments()"> Ascensor</label>
-      </div>
-      <div class="col-6 col-md-3 mb-2">
-  <label><input type="checkbox" [(ngModel)]="hasGarage" (change)="loadApartments()"> Garaje</label>
-      </div>
-      <!-- Puedes agregar más filtros aquí -->
-    </div>
-  </div>
-
-  <div class="row g-4 d-flex justify-content-center">
-	<div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let apt of apartments">
-		<app-cards [apartment]="apt"></app-cards>
-	</div>
-  </div>
-
-  <!-- Espacio reservado para el paginador -->
-  <div class="paginador-footer-space">
-    <div class="d-flex justify-content-center mt-4">
-      <app-paginador
-        [page]="page"
-        [pageSize]="pageSize"
-        [totalItems]="totalCount"
-        (pageChange)="onPageChange($event)"
-        (pageSizeChange)="onPageSizeChange($event)">
-      </app-paginador>
-    </div>
+    </main>
   </div>
 </div>
 
