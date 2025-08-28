@@ -7,7 +7,7 @@
     <input type="text" class="form-control" placeholder="Buscar por dirección..." [(ngModel)]="searchDoor" (input)="applyFilters()">
   </div>
   <div class="col">
-    <app-slider-filter label="Área (m²) < " [min]="minArea" [max]="maxArea" [step]="10" [(value)]="filterArea" (valueChange)="applyFilters()"></app-slider-filter>
+  <app-slider-filter class="slider-uniform-width" label="Área (m²) < " [min]="minArea" [max]="maxArea" [step]="10" [(value)]="filterArea" (valueChange)="applyFilters()"></app-slider-filter>
   </div>
 </div>
 <div class="row mb-3">
@@ -33,6 +33,7 @@
   </div>
   <div class="col">
     <app-range-slider-filter
+      class="slider-uniform-width"
       label="Precio (€)"
       [min]="minPrice"
       [max]="maxPrice"

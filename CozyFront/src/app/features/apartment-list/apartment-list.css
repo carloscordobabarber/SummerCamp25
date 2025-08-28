@@ -1,3 +1,19 @@
+.slider-uniform-width,
+.slider-uniform-width .range-slider-wrapper {
+	max-width: 250px;
+	width: 100%;
+	display: block;
+	box-sizing: border-box;
+	overflow-x: hidden;
+}
+/* Igualar el ancho de los sliders simples y de rango en esta vista */
+.slider-uniform-width {
+	max-width: 250px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
 /* Resalta la fila al pasar el ratón */
 .apartment-row {
 	transition: background-color 0.2s, color 0.2s;

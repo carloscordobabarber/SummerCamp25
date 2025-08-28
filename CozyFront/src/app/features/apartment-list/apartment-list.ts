@@ -28,14 +28,14 @@ export class ApartmentList implements OnInit {
   searchDoor: string = '';
   searchCode: string = '';
   minArea: number = 0;
-  maxArea: number = 1000;
+  maxArea: number = 250;
   filterArea: number = 0;
   filterRooms: number | null = null;
   filterBaths: number | null = null;
   minPrice: number = 0;
-  maxPrice: number = 10000;
+  maxPrice: number = 5000;
   filterPriceMin: number = 0;
-  filterPriceMax: number = 10000;
+  filterPriceMax: number = 5000;
 
   // Paginación
   page = 1;
@@ -79,8 +79,8 @@ export class ApartmentList implements OnInit {
       }
       this.filteredApartments = this.apartments;
       // Las opciones de los filtros ya se calculan en ngOnInit con todos los apartamentos
-      this.maxPrice = Math.max(...this.apartments.map(a => a.price ?? 0), 10000);
-      this.maxArea = Math.max(...this.apartments.map(a => a.area ?? 0), 1000);
+      this.maxPrice = Math.max(...this.apartments.map(a => a.price ?? 0), 5000);
+      this.maxArea = Math.max(...this.apartments.map(a => a.area ?? 0), 250);
       this.cargando = false;
     }, (err: any) => {
       console.log('Error al obtener datos:', err);
