@@ -23,6 +23,33 @@ namespace SistemaAPI.Controllers
             _mapper = mapper;
         }
 
+        // GET: api/Rental/CheckDate?apartmentId=1&date=2025-08-28T00:00:00.000Z
+        [HttpGet("CheckDate")]
+        public async Task<IActionResult> CheckDate([FromQuery] int apartmentId, [FromQuery] string date)
+        {
+            if (string.IsNullOrEmpty(date))
+                return BadRequest(new { exists = false, message = "Fecha no proporcionada." });
+
+            if (!DateTime.TryParse(date, out var startDate))
+                return BadRequest(new { exists = false, message = "Formato de fecha inválido." });
+
+            // Buscar si existe un alquiler para ese apartamento que solape con la fecha
+            var exists = await _context.Rentals.AnyAsync(r =>
+                r.ApartmentId == apartmentId &&
+                r.StartDate <= startDate &&
+                r.EndDate > startDate
+            );
+
+            if (exists)
+            {
+                return Ok(new { exists = true, message = "Ya existe un alquiler para este apartamento en la fecha seleccionada." });
+            }
+            else
+            {
+                return Ok(new { exists = false });
+            }
+        }
+
         // GET: api/Rental
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RentalDto>>> GetRentals()

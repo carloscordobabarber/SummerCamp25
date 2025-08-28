@@ -34,6 +34,7 @@ export class CardManager implements OnInit {
 
   ngOnInit() {
     this.loadApartments();
+    
   }
 
   loadApartments() {
@@ -59,11 +60,13 @@ export class CardManager implements OnInit {
       this.apartments = result.items ?? [];
       this.totalCount = result.totalCount ?? this.apartments.length;
     });
+   
   }
 
   onPageChange(newPage: number) {
     this.page = newPage;
     this.loadApartments();
+     console.log(this.apartments);
   }
 
   onPageSizeChange(newSize: number) {
