@@ -9,6 +9,36 @@ import { UserProfile } from '../../models/user';
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
-export class Profile {
+export class Profile implements OnInit {
+  loggedUser: UserProfile | null = null;
+  selectedSection: string = 'details'; // Por defecto muestra 'Mi Perfil'
 
+  constructor(private userService: UserService) { }
+
+  ngOnInit(): void {
+    const localUser = localStorage.getItem('user');
+    if (localUser) {
+      this.loggedUser = JSON.parse(localUser);
+    }
+
+    // 2. Llamar a la API para datos actualizados
+    const userId = this.loggedUser?.id || localStorage.getItem('userId');
+    if (userId) {
+      this.userService.getUser(+userId).subscribe({
+        next: (user) => {
+          this.loggedUser = user;
+
+          // Actualizar el localStorage con la versión más reciente
+          localStorage.setItem('user', JSON.stringify(user));
+        },
+        error: (err) => {
+          console.error('Error actualizando el usuario desde API:', err);
+        }
+      });
+    }
+  }
+
+  selectSection(section: string): void {
+    this.selectedSection = section;
+  }
 }

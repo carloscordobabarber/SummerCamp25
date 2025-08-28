@@ -2,37 +2,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface RentalDto {
-  id: number;
-  userId: number;
-  apartmentId: number;
-  startDate: string;
-  endDate: string;
-  statusId: number;
-}
+import { Rental } from '../../models/rental';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class RentalsService {
   private apiUrl = '/api/Rental';
 
   constructor(private http: HttpClient) {}
 
-  getRentals(): Observable<RentalDto[]> {
-    return this.http.get<RentalDto[]>(this.apiUrl);
+  getRentals(): Observable<Rental[]> {
+    return this.http.get<Rental[]>(this.apiUrl);
   }
 
-  getRental(id: number): Observable<RentalDto> {
-    return this.http.get<RentalDto>(`${this.apiUrl}/${id}`);
+  getRental(id: number): Observable<Rental> {
+    return this.http.get<Rental>(`${this.apiUrl}/${id}`);
   }
 
-  createRental(rental: RentalDto): Observable<RentalDto> {
-    return this.http.post<RentalDto>(this.apiUrl, rental);
+  getRentalsByUserId(userId: number) {
+    return this.http.get<any[]>(`${this.apiUrl}/${userId}`);
   }
 
-  updateRental(id: number, rental: RentalDto): Observable<void> {
+  createRental(rental: Rental): Observable<Rental> {
+    return this.http.post<Rental>(this.apiUrl, rental);
+  }
+
+  updateRental(id: number, rental: Rental): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}`, rental);
   }
 

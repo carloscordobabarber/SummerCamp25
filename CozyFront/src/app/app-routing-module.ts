@@ -22,12 +22,12 @@ const routes: Routes = [
   { path: 'apartment-details/:id', component: ApartmentDetails },
   { path: 'login', component: Login },
   { path: 'profile', component: Profile,
-      children: [
-      { path: '', component: ProfileDetails }, 
-      { path: 'my-rentals', component: MyRentals },
-      { path: 'my-contracts', component: MyContracts },
-      { path: 'incidences', component: Incidences }
-    ]
+    //   children: [
+    //   { path: '', component: ProfileDetails }, 
+    //   { path: 'my-rentals', component: MyRentals },
+    //   { path: 'my-contracts', component: MyContracts },
+    //   { path: 'incidences', component: Incidences }
+    // ]
    },
   { path: 'apartment-list', component: ApartmentList },
   { path: 'client-list', component: ClientList },

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 declare var bootstrap: any;
 
@@ -17,6 +17,7 @@ interface Contrato {
   styleUrl: './my-contracts.css'
 })
 export class MyContracts implements AfterViewInit {
+ @Input() user: any;
  
   contratos: Contrato[] = [
     { id: 1, nombre: 'Contrato de Alquiler - Piso 1', fechaInicio: '2023-01-01', fechaFin: '2024-01-01', estado: 'activo' },

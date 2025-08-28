@@ -68,6 +68,21 @@ namespace SistemaAPI.Controllers
             return Ok(dto);
         }
 
+        // GET: api/Users/{id}/rentals
+        [HttpGet("{id}/rentals")]
+        public async Task<ActionResult<IEnumerable<RentalDto>>> GetRentalsByUserId(int id)
+        {
+            var rentals = await _context.Rentals
+                .Where(r => r.UserId == id)
+                .ToListAsync();
+
+            if (rentals == null || rentals.Count == 0)
+                return NotFound();
+
+            var dto = _mapper.Map<List<RentalDto>>(rentals);
+            return Ok(dto);
+        }
+
         // POST: api/Users
         [HttpPost]
         public async Task<IActionResult> PostUser([FromBody] UserRegisterDto userDto)

@@ -1,23 +1,26 @@
 <div class="container-fluid">
-  <div class="row min-vh-100">
-    <nav class="sidebar col-12 col-md-2 d-flex flex-column align-items-stretch bg-light px-0"
-      style="height: 100vh; border-right: 1px solid #dee2e6;">
-      <div class="list-group list-group-flush flex-grow-1">
-        <a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="list-group-item list-group-item-action"><i class="bi bi-person-fill"></i> Mi
-          Perfil</a>
-        <a routerLink="/profile/my-rentals" routerLinkActive="active" class="list-group-item list-group-item-action"><i class="bi bi-house-door"></i> Mis
-          Alquileres</a>
-        <a routerLink="/profile/my-contracts" routerLinkActive="active" class="list-group-item list-group-item-action"><i
-            class="bi bi-file-earmark-text"></i> Mis Contratos</a>
-        <a routerLink="/profile/incidences" class="list-group-item list-group-item-action"><i
-            class="bi bi-exclamation-circle"></i> Mis Incidencias</a>
-        <a routerLink="/delete-account" class="list-group-item list-group-item-action list-group-item-danger"><i
-            class="bi bi-trash"></i> Eliminar cuenta</a>
-      </div>
-    </nav>
-    <main class="main-content col-12 col-md-10 justify-content-start align-items-center"
-      style="min-height: 100vh;">
-        <router-outlet></router-outlet>
-    </main>
-  </div>
+    <div class="row min-vh-100">
+        <nav class="sidebar col-12 col-md-2 d-flex flex-column align-items-stretch bg-light px-0"
+            style="height: 100vh; border-right: 1px solid #dee2e6;">
+            <div class="list-group list-group-flush flex-grow-1">
+                <a class="list-group-item list-group-item-action" (click)="selectedSection = 'details'">
+                    <i class="bi bi-person-fill"></i> Mi Perfil</a>
+                <a class="list-group-item list-group-item-action" (click)="selectedSection = 'my-rentals'">
+                    <i class="bi bi-house-door"></i> Mis Alquileres</a>
+                <a class="list-group-item list-group-item-action" (click)="selectedSection = 'my-contracts'">
+                    <i class="bi bi-file-earmark-text"></i> Mis Contratos</a>
+                <a class="list-group-item list-group-item-action" (click)="selectedSection = 'incidences'">
+                    <i class="bi bi-exclamation-circle"></i> Mis Incidencias</a>
+                <a class="list-group-item list-group-item-action list-group-item-danger"
+                    (click)="selectedSection = 'delete-account'">
+                    <i class="bi bi-trash"></i> Eliminar cuenta</a>
+            </div>
+        </nav>
+        <main class="main-content col-12 col-md-10 justify-content-start align-items-center" style="min-height: 100vh;">
+            <app-profile-details *ngIf="selectedSection === 'details'" [user]="loggedUser"></app-profile-details>
+            <app-my-rentals *ngIf="selectedSection === 'my-rentals' && loggedUser" [user]="loggedUser"></app-my-rentals>
+            <app-my-contracts *ngIf="selectedSection === 'my-contracts'" [user]="loggedUser"></app-my-contracts>
+            <!-- <app-incidences *ngIf="selectedSection === 'incidences'" [user]="loggedUser"></app-incidences> -->
+        </main>
+    </div>
 </div>

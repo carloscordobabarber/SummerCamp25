@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Apartment } from '../../models/apartment';
 import { ApartmentCard } from '../../services/apartment-card/apartment-card';
-import { RentalsService, RentalDto } from '../../services/rentals/rentals.service';
+import { RentalsService } from '../../services/rentals/rentals.service';
+import { Rental } from '../../models/rental';
 
 @Component({
   selector: 'app-apartment-details',
@@ -71,14 +72,14 @@ export class ApartmentDetails implements OnInit {
         this.isRenting = false;
         return;
       }
-      const rental: Partial<RentalDto> = {
+      const rental: Partial<Rental> = {
         userId: this.userId!,
         apartmentId: this.apartment!.id,
         startDate: start.toISOString(),
         endDate: end.toISOString(),
         statusId: 1
       };
-      this.rentalsService.createRental(rental as RentalDto).subscribe({
+      this.rentalsService.createRental(rental as Rental).subscribe({
         next: () => {
           this.rentMessage = '¡Alquiler realizado con éxito!';
           this.isRenting = false;
