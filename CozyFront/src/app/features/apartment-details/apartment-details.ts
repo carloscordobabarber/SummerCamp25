@@ -35,8 +35,8 @@ export class ApartmentDetails implements OnInit {
     const today = new Date();
     this.todayString = today.toISOString().split('T')[0];
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.apartmentService.getApartments().subscribe(apartments => {
-      const found = apartments.items.find(a => a.id === id);
+    // Usar getApartment(id) para obtener solo el apartamento necesario
+    this.apartmentService.getApartment(id).subscribe(found => {
       if (found) {
         // Mapear ApartmentCardDto a Apartment (floor debe ser number)
         this.apartment = {
