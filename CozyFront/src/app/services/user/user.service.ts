@@ -13,12 +13,20 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(page?: number, pageSize?: number): Observable<any> {
-    let url = this.userApiUrl;
+  getUsers(page?: number, pageSize?: number, filters?: any): Observable<any> {
+    let params: any = {};
     if (page !== undefined && pageSize !== undefined) {
-      url += `?page=${page}&pageSize=${pageSize}`;
+      params.page = page;
+      params.pageSize = pageSize;
     }
-    return this.http.get<any>(url);
+    if (filters) {
+      Object.keys(filters).forEach(key => {
+        if (filters[key] !== undefined && filters[key] !== '') {
+          params[key] = filters[key];
+        }
+      });
+    }
+    return this.http.get<any>(this.userApiUrl, { params });
   }
 
   /**
