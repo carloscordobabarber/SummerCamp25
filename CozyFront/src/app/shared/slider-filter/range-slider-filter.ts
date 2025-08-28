@@ -1,5 +1,3 @@
-// ...existing code...
-
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({

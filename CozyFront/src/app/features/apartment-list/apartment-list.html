@@ -7,27 +7,29 @@
     <input type="text" class="form-control" placeholder="Buscar por dirección..." [(ngModel)]="searchDoor" (input)="applyFilters()">
   </div>
   <div class="col">
-    <app-slider-filter label="Área (m²)" [min]="minArea" [max]="maxArea" [step]="1" [(value)]="filterArea" (valueChange)="applyFilters()"></app-slider-filter>
+    <app-slider-filter label="Área (m²) < " [min]="minArea" [max]="maxArea" [step]="10" [(value)]="filterArea" (valueChange)="applyFilters()"></app-slider-filter>
   </div>
 </div>
 <div class="row mb-3">
   <div class="col">
-    <label for="roomsSelect">Habitaciones</label>
-    <select id="roomsSelect" class="form-select" [(ngModel)]="filterRooms" (change)="applyFilters()">
-      <option [ngValue]="null">-</option>
-      <ng-container *ngFor="let i of getRoomsOptions()">
-        <option [ngValue]="i">{{ i }}</option>
-      </ng-container>
-    </select>
+    <app-select-filter
+      label="Habitaciones"
+      [options]="getRoomsOptions()"
+      [(value)]="filterRooms"
+      placeholder="-"
+      selectId="roomsSelect"
+      (valueChange)="applyFilters()">
+    </app-select-filter>
   </div>
   <div class="col">
-    <label for="bathsSelect">Baños</label>
-    <select id="bathsSelect" class="form-select" [(ngModel)]="filterBaths" (change)="applyFilters()">
-      <option [ngValue]="null">-</option>
-      <ng-container *ngFor="let i of getBathsOptions()">
-        <option [ngValue]="i">{{ i }}</option>
-      </ng-container>
-    </select>
+    <app-select-filter
+      label="Baños"
+      [options]="getBathsOptions()"
+      [(value)]="filterBaths"
+      placeholder="-"
+      selectId="bathsSelect"
+      (valueChange)="applyFilters()">
+    </app-select-filter>
   </div>
   <div class="col">
     <app-range-slider-filter

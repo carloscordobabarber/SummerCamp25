@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Apartment } from '../../models/apartment';
 import { ApartmentWorker } from '../../services/apartment-worker/apartment-worker';
 
@@ -11,21 +10,16 @@ import { ApartmentWorker } from '../../services/apartment-worker/apartment-worke
 })
 
 export class ApartmentList implements OnInit {
-  maxRooms: number = 10;
-  maxBaths: number = 10;
-  minRooms: number = 1;
-  minBaths: number = 1;
+  roomsOptions: number[] = [];
+  bathsOptions: number[] = [];
+  allApartments: Apartment[] = [];
 
   getRoomsOptions(): number[] {
-    const min = this.minRooms;
-    const max = this.maxRooms;
-    return Array.from({ length: max - min + 1 }, (_, i) => i + min);
+    return this.roomsOptions;
   }
 
   getBathsOptions(): number[] {
-    const min = this.minBaths;
-    const max = this.maxBaths;
-    return Array.from({ length: max - min + 1 }, (_, i) => i + min);
+    return this.bathsOptions;
   }
   apartments: Apartment[] = [];
   filteredApartments: Apartment[] = [];
@@ -52,7 +46,15 @@ export class ApartmentList implements OnInit {
 
   ngOnInit(): void {
     this.cargando = true;
-    this.loadApartments();
+    // Cargar todos los apartamentos para los filtros globales
+    this.apartmentWorker.getApartmentsWithFilters({ page: 1, pageSize: 10000 }).subscribe((result: any) => {
+      const all = result.items ? result.items : result;
+      this.allApartments = all;
+      this.roomsOptions = Array.from(new Set((all as Apartment[]).map((a: Apartment) => Number(a.numberOfRooms)).filter((n: number) => !isNaN(n)))).sort((a: number, b: number) => a - b);
+      this.bathsOptions = Array.from(new Set((all as Apartment[]).map((a: Apartment) => Number(a.numberOfBathrooms)).filter((n: number) => !isNaN(n)))).sort((a: number, b: number) => a - b);
+      // Ahora cargar la página actual
+      this.loadApartments();
+    });
   }
 
   loadApartments() {
@@ -76,9 +78,8 @@ export class ApartmentList implements OnInit {
         this.totalCount = result.length;
       }
       this.filteredApartments = this.apartments;
-      this.maxRooms = Math.max(...this.apartments.map(a => a.numberOfRooms ?? 0), 1);
-      this.maxBaths = Math.max(...this.apartments.map(a => a.numberOfBathrooms ?? 0), 1);
-      this.maxPrice = Math.max(...this.apartments.map(a => a.price ?? 0), 10000) + 100;
+      // Las opciones de los filtros ya se calculan en ngOnInit con todos los apartamentos
+      this.maxPrice = Math.max(...this.apartments.map(a => a.price ?? 0), 10000);
       this.maxArea = Math.max(...this.apartments.map(a => a.area ?? 0), 1000);
       this.cargando = false;
     }, (err: any) => {

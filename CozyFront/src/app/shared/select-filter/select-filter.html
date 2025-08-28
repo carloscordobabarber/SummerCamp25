@@ -1,0 +1,9 @@
+<div class="mb-2">
+  <label *ngIf="label" [for]="selectId">{{ label }}</label>
+  <select [id]="selectId" class="form-select" [(ngModel)]="value" (change)="onChange($event)">
+    <option [ngValue]="null">{{ placeholder || '-' }}</option>
+    <ng-container *ngFor="let opt of options">
+      <option [ngValue]="opt">{{ opt }}</option>
+    </ng-container>
+  </select>
+</div>
