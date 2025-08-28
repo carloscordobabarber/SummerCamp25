@@ -103,4 +103,14 @@ export class ApartmentList implements OnInit {
     this.page = 1;
     this.loadApartments();
   }
+
+  onCodeSearch(term: string) {
+    this.searchCode = term;
+    this.applyFilters();
+  }
+
+  onDoorSearch(term: string) {
+    this.searchDoor = term;
+    this.applyFilters();
+  }
 }

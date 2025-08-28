@@ -16,7 +16,24 @@ export class IncidenceList {
   pageSize = 10;
   totalCount = 0;
 
-  constructor(private incidencesService: IncidencesService) {}
+  // Filtros
+  issueTypeOptions = [
+    'Avería eléctrica',
+    'Fuga de agua',
+    'Problema de calefacción',
+    'Daños estructurales',
+    'Plagas',
+    'Problemas de acceso',
+    'Otros'
+  ];
+  filterIssueType: string = '';
+  filterAssignedCompany: string = '';
+  filterApartmentId: string = '';
+  filterRentalId: string = '';
+  filterTenantId: string = '';
+  filterStatusId: string = '';
+
+  constructor(private incidencesService: IncidencesService) { }
 
   ngOnInit(): void {
     this.cargando = true;
@@ -24,19 +41,28 @@ export class IncidenceList {
   }
 
   loadIncidences() {
-    this.incidencesService.getIncidences(this.page, this.pageSize).subscribe((result: any) => {
-      if (result.items && result.totalCount !== undefined) {
-        this.incidences = result.items;
-        this.totalCount = result.totalCount;
-      } else {
-        this.incidences = result;
-        this.totalCount = result.length;
-      }
+    const filters: any = {
+      issueType: this.filterIssueType && this.filterIssueType !== '-' ? this.issueTypeOptions.indexOf(this.filterIssueType) + 1 : undefined,
+      assignedCompany: this.filterAssignedCompany ? this.filterAssignedCompany : undefined,
+      apartmentId: this.filterApartmentId ? this.filterApartmentId : undefined,
+      rentalId: this.filterRentalId ? this.filterRentalId : undefined,
+      tenantId: this.filterTenantId ? this.filterTenantId : undefined,
+      statusId: this.filterStatusId ? this.filterStatusId : undefined
+    };
+    this.incidencesService.getIncidences(this.page, this.pageSize, filters).subscribe((result: any) => {
+      let items = result.items && result.totalCount !== undefined ? result.items : result;
+      this.incidences = items;
+      this.totalCount = result.totalCount !== undefined ? result.totalCount : items.length;
       this.cargando = false;
     }, (err: any) => {
       console.log('Error al obtener incidencias:', err);
       this.cargando = false;
     });
+  }
+
+  applyFilters() {
+    this.page = 1;
+    this.loadIncidences();
   }
 
   onPageChange(newPage: number) {
@@ -48,5 +74,38 @@ export class IncidenceList {
     this.pageSize = +newSize;
     this.page = 1;
     this.loadIncidences();
+  }
+
+  onAssignedCompanySearch(term: string) {
+    this.filterAssignedCompany = term;
+    this.applyFilters();
+  }
+  onApartmentIdSearch(term: string) {
+    this.filterApartmentId = term;
+    this.applyFilters();
+  }
+  onRentalIdSearch(term: string) {
+    this.filterRentalId = term;
+    this.applyFilters();
+  }
+  onTenantIdSearch(term: string) {
+    this.filterTenantId = term;
+    this.applyFilters();
+  }
+  onStatusIdSearch(term: string) {
+    this.filterStatusId = term;
+    this.applyFilters();
+  }
+
+  getIssueTypeText(issueType: number): string {
+    switch (issueType) {
+      case 1: return 'Avería eléctrica';
+      case 2: return 'Fuga de agua';
+      case 3: return 'Problema de calefacción';
+      case 4: return 'Daños estructurales';
+      case 5: return 'Plagas';
+      case 6: return 'Problemas de acceso';
+      default: return 'Otros';
+    }
   }
 }

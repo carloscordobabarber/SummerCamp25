@@ -1,10 +1,10 @@
 
 <div class="row mb-3">
   <div class="col">
-    <input type="text" class="form-control" placeholder="Buscar por código..." [(ngModel)]="searchCode" (input)="applyFilters()">
+    <app-search-bar (search)="onCodeSearch($event)" placeholder="Buscar por código..."></app-search-bar>
   </div>
   <div class="col">
-    <input type="text" class="form-control" placeholder="Buscar por dirección..." [(ngModel)]="searchDoor" (input)="applyFilters()">
+    <app-search-bar (search)="onDoorSearch($event)" placeholder="Buscar por dirección..."></app-search-bar>
   </div>
   <div class="col">
   <app-slider-filter class="slider-uniform-width" label="Área (m²) < " [min]="minArea" [max]="maxArea" [step]="10" [(value)]="filterArea" (valueChange)="applyFilters()"></app-slider-filter>

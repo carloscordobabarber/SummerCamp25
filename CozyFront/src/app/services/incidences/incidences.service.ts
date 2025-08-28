@@ -11,11 +11,19 @@ export class IncidencesService {
 
   constructor(private http: HttpClient) {}
 
-  getIncidences(page?: number, pageSize?: number): Observable<any> {
-    let url = this.apiUrl;
-    if (page !== undefined && pageSize !== undefined) {
-      url += `?page=${page}&pageSize=${pageSize}`;
+  getIncidences(page?: number, pageSize?: number, filters?: any): Observable<any> {
+    let params = [];
+    if (page !== undefined) params.push(`page=${page}`);
+    if (pageSize !== undefined) params.push(`pageSize=${pageSize}`);
+    if (filters) {
+      if (filters.issueType) params.push(`issueType=${filters.issueType}`);
+      if (filters.assignedCompany) params.push(`assignedCompany=${encodeURIComponent(filters.assignedCompany)}`);
+      if (filters.apartmentId) params.push(`apartmentId=${encodeURIComponent(filters.apartmentId)}`);
+      if (filters.rentalId) params.push(`rentalId=${encodeURIComponent(filters.rentalId)}`);
+      if (filters.tenantId) params.push(`tenantId=${encodeURIComponent(filters.tenantId)}`);
+      if (filters.statusId) params.push(`statusId=${encodeURIComponent(filters.statusId)}`);
     }
+    const url = this.apiUrl + (params.length ? '?' + params.join('&') : '');
     return this.http.get<any>(url);
   }
 

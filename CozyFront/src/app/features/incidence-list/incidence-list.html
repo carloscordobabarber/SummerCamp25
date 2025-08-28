@@ -1,3 +1,31 @@
+
+<!-- Filtros -->
+<div class="row mb-3">
+	<div class="col-md-3 mb-2">
+		<app-select-filter
+			label="Tipo de incidencia"
+			[options]="issueTypeOptions"
+			[(value)]="filterIssueType"
+			selectId="issueTypeSelect"
+			(valueChange)="applyFilters()">
+		</app-select-filter>
+	</div>
+	<div class="col-md-3 mb-2">
+		<app-search-bar (search)="onAssignedCompanySearch($event)" placeholder="Buscar empresa asignada..."></app-search-bar>
+	</div>
+	<div class="col-md-2 mb-2">
+		<app-search-bar (search)="onApartmentIdSearch($event)" placeholder="Buscar id apartamento..."></app-search-bar>
+	</div>
+	<div class="col-md-2 mb-2">
+		<app-search-bar (search)="onRentalIdSearch($event)" placeholder="Buscar id alquiler..."></app-search-bar>
+	</div>
+	<div class="col-md-2 mb-2">
+		<app-search-bar (search)="onTenantIdSearch($event)" placeholder="Buscar id inquilino..."></app-search-bar>
+	</div>
+	<div class="col-md-2 mb-2">
+		<app-search-bar (search)="onStatusIdSearch($event)" placeholder="Buscar estado..."></app-search-bar>
+	</div>
+</div>
 <div *ngIf="cargando">Cargando incidencias...</div>
 
 <table *ngIf="!cargando" class="table table-striped align-middle">
@@ -21,7 +49,7 @@
 			<td>{{ i + 1 }}</td>
 			<td>{{ inc.spokesperson }}</td>
 			<td>{{ inc.description }}</td>
-			<td>{{ inc.issueType }}</td>
+			<td>{{ getIssueTypeText(inc.issueType) }}</td>
 			<td>{{ inc.assignedCompany }}</td>
 			<td>{{ inc.createdAt | date:'dd/MM/yyyy' }}</td>
 			<td>{{ inc.updatedAt ? (inc.updatedAt | date:'dd/MM/yyyy') : '-' }}</td>
