@@ -11,6 +11,18 @@ namespace SistemaAPI.Servicios
             CreateMap<Apartment, ApartmentDTO>();
             CreateMap<Apartment, ApartmentWorkerDto>();
             CreateMap<Apartment, ApartmentClientDto>();
+            CreateMap<Apartment, ApartmentELDto>()
+                .ForMember(dest => dest.ApartmentId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.ApartmentCode, opt => opt.MapFrom(src => src.Code))
+                .ForMember(dest => dest.ApartmentDoor, opt => opt.MapFrom(src => src.Door))
+                .ForMember(dest => dest.ApartmentFloor, opt => opt.MapFrom(src => src.Floor.ToString()))
+                .ForMember(dest => dest.ApartmentPrice, opt => opt.MapFrom(src => Math.Round((decimal)src.Price, 2)))
+                .ForMember(dest => dest.NumberOfRooms, opt => opt.MapFrom(src => src.NumberOfRooms))
+                .ForMember(dest => dest.NumberOfBathrooms, opt => opt.MapFrom(src => src.NumberOfBathrooms))
+                .ForMember(dest => dest.BuildingId, opt => opt.MapFrom(src => src.BuildingId))
+                .ForMember(dest => dest.HasLift, opt => opt.MapFrom(src => src.HasLift))
+                .ForMember(dest => dest.HasGarage, opt => opt.MapFrom(src => src.HasGarage))
+                .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedAt));
 
             CreateMap<Building, BuildingDto>();
             CreateMap<Contact, ContactDto>().ReverseMap();
@@ -40,10 +52,6 @@ namespace SistemaAPI.Servicios
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.Now));
 
             CreateMap<ApartmentPostDto, Apartment>();
-
-
-
-
 
         }
     }
