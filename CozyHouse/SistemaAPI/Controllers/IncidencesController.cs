@@ -32,7 +32,7 @@ namespace SistemaAPI.Controllers
             [FromQuery] int? tenantId = null,
             [FromQuery] string? statusId = null)
         {
-            var query = _context.Incidences.AsQueryable();
+            var query = _context.Incidences.AsNoTracking().AsQueryable();
 
             if (issueType.HasValue)
                 query = query.Where(i => i.IssueType == issueType.Value);
@@ -80,7 +80,14 @@ namespace SistemaAPI.Controllers
             incidence.UpdatedAt = null;
 
             _context.Incidences.Add(incidence);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar la incidencia: {ex.Message}");
+            }
 
             var resultDto = _mapper.Map<IncidenceDto>(incidence);
             return CreatedAtAction(nameof(GetIncidence), new { id = incidence.Id }, resultDto);
@@ -109,7 +116,14 @@ namespace SistemaAPI.Controllers
             incidence.UpdatedAt = DateTime.UtcNow;
 
             _context.Entry(incidence).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar la incidencia: {ex.Message}");
+            }
 
             return NoContent();
         }
@@ -123,7 +137,14 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             _context.Incidences.Remove(incidence);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar la incidencia: {ex.Message}");
+            }
 
             return NoContent();
         }

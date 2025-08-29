@@ -27,7 +27,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApartmentELDto>>> GetAll()
         {
-            var apartments = await _context.Apartments.ToListAsync();
+            var apartments = await _context.Apartments.AsNoTracking().ToListAsync();
             var result = _mapper.Map<List<ApartmentELDto>>(apartments);
             return Ok(result);
         }
@@ -36,7 +36,7 @@ namespace SistemaAPI.Controllers
         [HttpGet("{apartmentCode}")]
         public async Task<ActionResult<ApartmentELDto>> GetByCode(string apartmentCode)
         {
-            var apartment = await _context.Apartments.FirstOrDefaultAsync(a => a.Code == apartmentCode);
+            var apartment = await _context.Apartments.AsNoTracking().FirstOrDefaultAsync(a => a.Code == apartmentCode);
             if (apartment == null)
                 return NotFound();
             var result = _mapper.Map<ApartmentELDto>(apartment);

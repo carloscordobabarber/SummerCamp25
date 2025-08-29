@@ -24,7 +24,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BuildingDto>>> GetBuildings()
         {
-            var buildings = await _context.Buildings.ToListAsync();
+            var buildings = await _context.Buildings.AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<BuildingDto>>(buildings);
             return Ok(dto);
         }
@@ -50,7 +50,14 @@ namespace SistemaAPI.Controllers
             building.CreatedAt = DateTime.UtcNow;
             building.UpdatedAt = null;
             _context.Buildings.Add(building);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar el edificio: {ex.Message}");
+            }
             var resultDto = _mapper.Map<BuildingDto>(building);
             return CreatedAtAction(nameof(GetBuilding), new { id = building.Id }, resultDto);
         }
@@ -70,7 +77,14 @@ namespace SistemaAPI.Controllers
             building.Doorway = buildingDto.Doorway;
             building.UpdatedAt = DateTime.UtcNow;
             _context.Entry(building).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el edificio: {ex.Message}");
+            }
             return NoContent();
         }
 
@@ -82,7 +96,14 @@ namespace SistemaAPI.Controllers
             if (building == null)
                 return NotFound();
             _context.Buildings.Remove(building);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar el edificio: {ex.Message}");
+            }
             return NoContent();
         }
     }

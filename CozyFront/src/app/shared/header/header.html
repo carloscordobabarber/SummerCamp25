@@ -13,7 +13,8 @@
     </ul>
   </nav>
   <div class="cta">
-    <a routerLink="/login" class="cta-button">Iniciar Sesión</a>
-    <a routerLink="/register" class="cta-button ms-2">Regístrate</a>
+    <a *ngIf="!isLoggedIn" routerLink="/login" class="cta-button">Iniciar Sesión</a>
+    <a *ngIf="!isLoggedIn" routerLink="/register" class="cta-button ms-2">Regístrate</a>
+    <button *ngIf="isLoggedIn" (click)="logout()" routerLink="/" class="cta-button">Cerrar Sesión</button>
   </div>
 </header>

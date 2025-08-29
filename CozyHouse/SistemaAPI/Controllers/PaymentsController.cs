@@ -24,7 +24,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PaymentDto>>> GetPayments()
         {
-            var payments = await _context.Payments.ToListAsync();
+            var payments = await _context.Payments.AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<PaymentDto>>(payments);
             return Ok(dto);
         }
@@ -53,7 +53,14 @@ namespace SistemaAPI.Controllers
             // payment.CreatedAt = DateTime.UtcNow;
 
             _context.Payments.Add(payment);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar el pago: {ex.Message}");
+            }
 
             var resultDto = _mapper.Map<PaymentDto>(payment);
             return CreatedAtAction(nameof(GetPayment), new { id = payment.Id }, resultDto);
@@ -79,7 +86,14 @@ namespace SistemaAPI.Controllers
             // payment.UpdatedAt = DateTime.UtcNow; // Si tienes este campo
 
             _context.Entry(payment).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el pago: {ex.Message}");
+            }
 
             return NoContent();
         }
@@ -93,7 +107,14 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             _context.Payments.Remove(payment);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar el pago: {ex.Message}");
+            }
 
             return NoContent();
         }

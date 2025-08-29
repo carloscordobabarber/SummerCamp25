@@ -1,6 +1,3 @@
-// ...existing code...
-
-// ...existing code...
 using AutoMapper;
 using DTOS;
 using Dominio;
@@ -23,6 +20,7 @@ namespace SistemaAPI.Controllers
             _mapper = mapper;
         }
 
+
         // GET: api/Rental/CheckDate?apartmentId=1&date=2025-08-28T00:00:00.000Z
         [HttpGet("CheckDate")]
         public async Task<IActionResult> CheckDate([FromQuery] int apartmentId, [FromQuery] string date)
@@ -34,7 +32,7 @@ namespace SistemaAPI.Controllers
                 return BadRequest(new { exists = false, message = "Formato de fecha inválido." });
 
             // Buscar si existe un alquiler para ese apartamento que solape con la fecha
-            var exists = await _context.Rentals.AnyAsync(r =>
+            var exists = await _context.Rentals.AsNoTracking().AnyAsync(r =>
                 r.ApartmentId == apartmentId &&
                 r.StartDate <= startDate &&
                 r.EndDate > startDate
@@ -50,15 +48,6 @@ namespace SistemaAPI.Controllers
             }
         }
 
-        // GET: api/Rental
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<RentalDto>>> GetRentals()
-        {
-            var rentals = await _context.Rentals.ToListAsync();
-            var dto = _mapper.Map<List<RentalDto>>(rentals);
-            return Ok(dto);
-        }
-
         // GET: api/Rental/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RentalDto>> GetRental(int id)
@@ -68,6 +57,15 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             var dto = _mapper.Map<RentalDto>(rental);
+            return Ok(dto);
+        }
+
+        // GET: api/Rental
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<RentalDto>>> GetRentals()
+        {
+            var rentals = await _context.Rentals.AsNoTracking().ToListAsync();
+            var dto = _mapper.Map<List<RentalDto>>(rentals);
             return Ok(dto);
         }
 
@@ -81,11 +79,18 @@ namespace SistemaAPI.Controllers
             var rental = _mapper.Map<Rental>(rentalDto);
             rental.StartDate = rentalDto.StartDate;
             rental.EndDate = rentalDto.EndDate;
-             rental.CreatedAt = DateTime.UtcNow;
+            rental.CreatedAt = DateTime.UtcNow;
             rental.UpdatedAt = null;
 
             _context.Rentals.Add(rental);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar el alquiler: {ex.Message}");
+            }
 
             var resultDto = _mapper.Map<RentalDto>(rental);
             return CreatedAtAction(nameof(GetRental), new { id = rental.Id }, resultDto);
@@ -110,7 +115,14 @@ namespace SistemaAPI.Controllers
             // rental.UpdatedAt = DateTime.UtcNow;
 
             _context.Entry(rental).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el alquiler: {ex.Message}");
+            }
 
             return NoContent();
         }
@@ -124,7 +136,14 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             _context.Rentals.Remove(rental);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar el alquiler: {ex.Message}");
+            }
 
             return NoContent();
         }

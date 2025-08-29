@@ -26,7 +26,7 @@ namespace SistemaAPI.Controllers
             if (pageSize <= 0) pageSize = 10;
             if (page <= 0) page = 1;
 
-            var query = _context.Apartments.Where(a => a.IsAvailable);
+            var query = _context.Apartments.AsNoTracking().Where(a => a.IsAvailable);
             var totalCount = await query.CountAsync();
             var apartments = await query
                 .Skip((page - 1) * pageSize)

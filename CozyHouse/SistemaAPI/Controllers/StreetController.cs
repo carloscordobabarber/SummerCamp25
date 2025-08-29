@@ -24,7 +24,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StreetDto>>> GetStreets()
         {
-            var streets = await _context.Streets.ToListAsync();
+            var streets = await _context.Streets.AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<StreetDto>>(streets);
             return Ok(dto);
         }
@@ -53,7 +53,14 @@ namespace SistemaAPI.Controllers
             street.UpdatedAt = null;
 
             _context.Streets.Add(street);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar la calle: {ex.Message}");
+            }
 
             var resultDto = _mapper.Map<StreetDto>(street);
             return CreatedAtAction(nameof(GetStreet), new { id = street.Id }, resultDto);
@@ -75,7 +82,14 @@ namespace SistemaAPI.Controllers
             street.UpdatedAt = DateTime.UtcNow;
 
             _context.Entry(street).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar la calle: {ex.Message}");
+            }
 
             return NoContent();
         }
@@ -89,9 +103,16 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             _context.Streets.Remove(street);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar la calle: {ex.Message}");
+            }
 
             return NoContent();
         }
     }
-} 
+}

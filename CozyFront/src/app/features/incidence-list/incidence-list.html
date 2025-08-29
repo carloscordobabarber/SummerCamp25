@@ -1,75 +1,79 @@
 
-<!-- Filtros -->
-<div class="row mb-3">
-	<div class="col-md-3 mb-2">
-		<app-select-filter
-			label="Tipo de incidencia"
-			[options]="issueTypeOptions"
-			[(value)]="filterIssueType"
-			selectId="issueTypeSelect"
-			(valueChange)="applyFilters()">
-		</app-select-filter>
-	</div>
-	<div class="col-md-3 mb-2">
-		<app-search-bar (search)="onAssignedCompanySearch($event)" placeholder="Buscar empresa asignada..."></app-search-bar>
-	</div>
-	<div class="col-md-2 mb-2">
-		<app-search-bar (search)="onApartmentIdSearch($event)" placeholder="Buscar id apartamento..."></app-search-bar>
-	</div>
-	<div class="col-md-2 mb-2">
-		<app-search-bar (search)="onRentalIdSearch($event)" placeholder="Buscar id alquiler..."></app-search-bar>
-	</div>
-	<div class="col-md-2 mb-2">
-		<app-search-bar (search)="onTenantIdSearch($event)" placeholder="Buscar id inquilino..."></app-search-bar>
-	</div>
-	<div class="col-md-2 mb-2">
-		<app-search-bar (search)="onStatusIdSearch($event)" placeholder="Buscar estado..."></app-search-bar>
-	</div>
-</div>
-<div *ngIf="cargando">Cargando incidencias...</div>
-
-<table *ngIf="!cargando" class="table table-striped align-middle">
-	<thead class="table-light">
-		<tr>
-			<th>#</th>
-			<th>Portavoz</th>
-			<th>Descripción</th>
-			<th>Tipo de incidencia</th>
-			<th>Empresa asignada</th>
-			<th>Fecha de creación</th>
-			<th>Fecha de actualización</th>
-			<th>Id Apartamento</th>
-			<th>Id Alquiler</th>
-			<th>Id Inquilino</th>
-			<th>Estado</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let inc of incidences; let i = index">
-			<td>{{ i + 1 }}</td>
-			<td>{{ inc.spokesperson }}</td>
-			<td>{{ inc.description }}</td>
-			<td>{{ getIssueTypeText(inc.issueType) }}</td>
-			<td>{{ inc.assignedCompany }}</td>
-			<td>{{ inc.createdAt | date:'dd/MM/yyyy' }}</td>
-			<td>{{ inc.updatedAt ? (inc.updatedAt | date:'dd/MM/yyyy') : '-' }}</td>
-			<td>{{ inc.apartmentId }}</td>
-			<td>{{ inc.rentalId }}</td>
-			<td>{{ inc.tenantId }}</td>
-			<td>{{ inc.statusId }}</td>
-		</tr>
-	</tbody>
-</table>
-
-<!-- Espacio reservado para el paginador -->
-<div class="paginador-footer-space">
-	<div class="d-flex justify-content-center mt-4">
-		<app-paginador
-			[page]="page"
-			[pageSize]="pageSize"
-			[totalItems]="totalCount"
-			(pageChange)="onPageChange($event)"
-			(pageSizeChange)="onPageSizeChange($event)">
-		</app-paginador>
+<div class="card-manager-container">
+	<div class="card-manager-layout">
+		<aside class="sidebar">
+			<div class="filters-col">
+				<div class="filter-item">
+					<app-select-filter
+						label="Tipo de incidencia"
+						[options]="issueTypeOptions"
+						[(value)]="filterIssueType"
+						selectId="issueTypeSelect"
+						(valueChange)="applyFilters()">
+					</app-select-filter>
+				</div>
+				<div class="filter-item">
+					<app-search-bar (search)="onAssignedCompanySearch($event)" placeholder="Buscar empresa asignada..."></app-search-bar>
+				</div>
+				<div class="filter-item">
+					<app-search-bar (search)="onApartmentIdSearch($event)" placeholder="Buscar id apartamento..."></app-search-bar>
+				</div>
+				<div class="filter-item">
+					<app-search-bar (search)="onRentalIdSearch($event)" placeholder="Buscar id alquiler..."></app-search-bar>
+				</div>
+				<div class="filter-item">
+					<app-search-bar (search)="onTenantIdSearch($event)" placeholder="Buscar id inquilino..."></app-search-bar>
+				</div>
+				<div class="filter-item">
+					<app-search-bar (search)="onStatusIdSearch($event)" placeholder="Buscar estado..."></app-search-bar>
+				</div>
+			</div>
+		</aside>
+		<main class="main-content">
+			<div *ngIf="cargando">Cargando incidencias...</div>
+			<table *ngIf="!cargando" class="table table-striped align-middle">
+				<thead class="table-light">
+					<tr>
+						<th>#</th>
+						<th>Portavoz</th>
+						<th>Descripción</th>
+						<th>Tipo de incidencia</th>
+						<th>Empresa asignada</th>
+						<th>Fecha de creación</th>
+						<th>Fecha de actualización</th>
+						<th>Id Apartamento</th>
+						<th>Id Alquiler</th>
+						<th>Id Inquilino</th>
+						<th>Estado</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let inc of incidences; let i = index">
+						<td>{{ i + 1 }}</td>
+						<td>{{ inc.spokesperson }}</td>
+						<td>{{ inc.description }}</td>
+						<td>{{ getIssueTypeText(inc.issueType) }}</td>
+						<td>{{ inc.assignedCompany }}</td>
+						<td>{{ inc.createdAt | date:'dd/MM/yyyy' }}</td>
+						<td>{{ inc.updatedAt ? (inc.updatedAt | date:'dd/MM/yyyy') : '-' }}</td>
+						<td>{{ inc.apartmentId }}</td>
+						<td>{{ inc.rentalId }}</td>
+						<td>{{ inc.tenantId }}</td>
+						<td>{{ inc.statusId }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="paginador-footer-space">
+				<div class="d-flex justify-content-center mt-4">
+					<app-paginador
+						[page]="page"
+						[pageSize]="pageSize"
+						[totalItems]="totalCount"
+						(pageChange)="onPageChange($event)"
+						(pageSizeChange)="onPageSizeChange($event)">
+					</app-paginador>
+				</div>
+			</div>
+		</main>
 	</div>
 </div>

@@ -35,7 +35,7 @@ namespace SistemaAPI.Controllers
             [FromQuery] string? streetName = null
         )
         {
-            var apartmentsQuery = _context.Apartments.AsQueryable();
+            var apartmentsQuery = _context.Apartments.AsNoTracking().AsQueryable();
 
             // Filtros directos sobre Apartment
             if (area.HasValue)
@@ -59,10 +59,10 @@ namespace SistemaAPI.Controllers
                 apartmentsQuery = apartmentsQuery.Where(a => a.Code.ToLower().Contains(code.ToLower()));
 
             var apartments = await apartmentsQuery.ToListAsync();
-            var buildings = await _context.Buildings.ToListAsync();
-            var districtStreets = await _context.DistrictStreets.ToListAsync();
-            var districts = await _context.Districts.ToListAsync();
-            var streets = await _context.Streets.ToListAsync();
+            var buildings = await _context.Buildings.AsNoTracking().ToListAsync();
+            var districtStreets = await _context.DistrictStreets.AsNoTracking().ToListAsync();
+            var districts = await _context.Districts.AsNoTracking().ToListAsync();
+            var streets = await _context.Streets.AsNoTracking().ToListAsync();
 
             var apartmentDtos = new List<ApartmentWorkerDto>();
 
