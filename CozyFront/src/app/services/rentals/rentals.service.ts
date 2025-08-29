@@ -9,7 +9,7 @@ import { Rental } from '../../models/rental';
 })
 
 export class RentalsService {
-  private apiUrl = '/api/Rental';
+  private apiUrl = 'https://devdemoapi4.azurewebsites.net/api/Rental';
 
   constructor(private http: HttpClient) {}
 
