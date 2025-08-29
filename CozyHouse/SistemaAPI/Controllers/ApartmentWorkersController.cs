@@ -31,7 +31,8 @@ namespace SistemaAPI.Controllers
             [FromQuery] int? numberOfRooms = null,
             [FromQuery] int? numberOfBathrooms = null,
             [FromQuery] string? door = null,
-            [FromQuery] string? code = null
+            [FromQuery] string? code = null,
+            [FromQuery] string? streetName = null
         )
         {
             var apartmentsQuery = _context.Apartments.AsQueryable();
@@ -86,7 +87,7 @@ namespace SistemaAPI.Controllers
                 };
 
                 var building = buildings.FirstOrDefault(b => b.Id == apartment.BuildingId);
-                string streetName = string.Empty;
+                string streetNameValue = string.Empty;
                 int dtoDistrictId = 0;
                 string districtName = string.Empty;
 
@@ -94,7 +95,7 @@ namespace SistemaAPI.Controllers
                 {
                     var street = streets.FirstOrDefault(s => s.Code == building.CodeStreet);
                     if (street != null)
-                        streetName = street.Name;
+                        streetNameValue = street.Name;
 
                     var streetId = street?.Id ?? 0;
                     var districtStreet = districtStreets.FirstOrDefault(ds => ds.StreetId == streetId);
@@ -108,7 +109,7 @@ namespace SistemaAPI.Controllers
                         }
                     }
                 }
-                dto.StreetName = streetName;
+                dto.StreetName = streetNameValue;
                 dto.DistrictId = dtoDistrictId;
                 dto.DistrictName = districtName;
 
@@ -118,6 +119,10 @@ namespace SistemaAPI.Controllers
             // Filtro por districtId (requiere haber resuelto la relación)
             if (districtId.HasValue)
                 apartmentDtos = apartmentDtos.Where(a => a.DistrictId == districtId.Value).ToList();
+
+            // Filtro por streetName (case-insensitive, contiene)
+            if (!string.IsNullOrEmpty(streetName))
+                apartmentDtos = apartmentDtos.Where(a => !string.IsNullOrEmpty(a.StreetName) && a.StreetName.ToLower().Contains(streetName.ToLower())).ToList();
 
             var totalCount = apartmentDtos.Count;
             var pagedResult = apartmentDtos

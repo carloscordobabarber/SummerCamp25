@@ -25,7 +25,7 @@ export class ApartmentList implements OnInit {
   filteredApartments: Apartment[] = [];
   cargando: boolean = false;
 
-  searchDoor: string = '';
+  searchStreet: string = '';
   searchCode: string = '';
   minArea: number = 0;
   maxArea: number = 250;
@@ -66,7 +66,7 @@ export class ApartmentList implements OnInit {
       area: this.filterArea || undefined,
       numberOfRooms: this.filterRooms || undefined,
       numberOfBathrooms: this.filterBaths || undefined,
-      door: this.searchDoor || undefined,
+      street: this.searchStreet || undefined,
       code: this.searchCode || undefined
     };
     this.apartmentWorker.getApartmentsWithFilters(filters).subscribe((result: any) => {
@@ -109,8 +109,8 @@ export class ApartmentList implements OnInit {
     this.applyFilters();
   }
 
-  onDoorSearch(term: string) {
-    this.searchDoor = term;
+  onStreetSearch(term: string) {
+    this.searchStreet = term;
     this.applyFilters();
   }
 }

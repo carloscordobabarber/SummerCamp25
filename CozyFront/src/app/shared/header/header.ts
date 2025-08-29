@@ -10,12 +10,17 @@ export class Header {
   get isAdmin(): boolean {
     try {
       const user = localStorage.getItem('userRole');
-      console.log('Retrieved user from localStorage:', user);
       if (!user) return false;
-      const parsed = JSON.parse(user);
-      var adminBoolean = Boolean(parsed.userRole);
-      console.log('User role isAdmin check:', parsed.userRole, adminBoolean);
-      return parsed.userRole === 'Admin';
+      return user === 'Admin';
+    } catch {
+      return false;
+    }
+  }
+  get isLoggedIn(): boolean {
+    try {
+      const user = localStorage.getItem('userId');
+      if (!user) return false;
+      return true;
     } catch {
       return false;
     }

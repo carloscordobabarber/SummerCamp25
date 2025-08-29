@@ -37,7 +37,7 @@ namespace SistemaAPI.Controllers
             if (issueType.HasValue)
                 query = query.Where(i => i.IssueType == issueType.Value);
             if (!string.IsNullOrEmpty(assignedCompany))
-                query = query.Where(i => i.AssignedCompany == assignedCompany);
+                query = query.Where(i => i.AssignedCompany.ToLower().Contains(assignedCompany.ToLower()));
             if (apartmentId.HasValue)
                 query = query.Where(i => i.ApartmentId == apartmentId.Value);
             if (rentalId.HasValue)

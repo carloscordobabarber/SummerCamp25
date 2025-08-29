@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class ApartmentWorker {
   private apiUrl = 'https://devdemoapi4.azurewebsites.net/api/apartmentworkers';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getApartments(page?: number, pageSize?: number): Observable<any> {
     let url = this.apiUrl;
@@ -28,8 +28,9 @@ export class ApartmentWorker {
     if (filters.area !== undefined) params.push(`area=${filters.area}`);
     if (filters.numberOfRooms !== undefined) params.push(`numberOfRooms=${filters.numberOfRooms}`);
     if (filters.numberOfBathrooms !== undefined) params.push(`numberOfBathrooms=${filters.numberOfBathrooms}`);
-  if (filters.door) params.push(`door=${encodeURIComponent(filters.door)}`);
-  if (filters.code) params.push(`code=${encodeURIComponent(filters.code)}`);
+    if (filters.street) params.push(`street=${encodeURIComponent(filters.street)}`);
+    if (filters.door) params.push(`door=${encodeURIComponent(filters.door)}`);
+    if (filters.code) params.push(`code=${encodeURIComponent(filters.code)}`);
     const url = this.apiUrl + (params.length ? '?' + params.join('&') : '');
     return this.http.get<any>(url);
   }

@@ -35,17 +35,17 @@ namespace SistemaAPI.Controllers
             var query = _context.Users.AsQueryable();
 
             if (!string.IsNullOrEmpty(documentNumber))
-                query = query.Where(u => u.DocumentNumber.Contains(documentNumber));
+                query = query.Where(u => u.DocumentNumber.ToLower().Contains(documentNumber.ToLower()));
             if (!string.IsNullOrEmpty(name))
-                query = query.Where(u => u.Name.Contains(name));
+                query = query.Where(u => u.Name.ToLower().Contains(name.ToLower()));
             if (!string.IsNullOrEmpty(lastName))
-                query = query.Where(u => u.LastName.Contains(lastName));
+                query = query.Where(u => u.LastName.ToLower().Contains(lastName.ToLower()));
             if (!string.IsNullOrEmpty(email))
-                query = query.Where(u => u.Email.Contains(email));
+                query = query.Where(u => u.Email.ToLower().Contains(email.ToLower()));
             if (!string.IsNullOrEmpty(phone))
                 query = query.Where(u => u.Phone.Contains(phone));
             if (!string.IsNullOrEmpty(role))
-                query = query.Where(u => u.Role == role);
+                query = query.Where(u => u.Role.ToLower().Contains(role.ToLower()));
 
             var totalCount = await query.CountAsync();
             var users = await query
