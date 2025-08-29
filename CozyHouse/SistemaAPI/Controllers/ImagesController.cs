@@ -48,7 +48,14 @@ namespace SistemaAPI.Controllers
                 return BadRequest();
             var image = _mapper.Map<ImageApartment>(imagesDto);
             _context.imageApartments.Add(image);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar la imagen: {ex.Message}");
+            }
             var resultDto = _mapper.Map<ImagesDto>(image);
             return CreatedAtAction(nameof(GetImage), new { id = image.Id }, resultDto);
         }
@@ -66,7 +73,14 @@ namespace SistemaAPI.Controllers
             image.PhotoUrl = imagesDto.PhotoUrl;
             image.PhotoDescription = imagesDto.PhotoDescription;
             _context.Entry(image).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar la imagen: {ex.Message}");
+            }
             return NoContent();
         }
 
@@ -78,7 +92,14 @@ namespace SistemaAPI.Controllers
             if (image == null)
                 return NotFound();
             _context.imageApartments.Remove(image);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar la imagen: {ex.Message}");
+            }
             return NoContent();
         }
     }

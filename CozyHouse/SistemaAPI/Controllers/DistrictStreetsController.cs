@@ -48,7 +48,14 @@ namespace SistemaAPI.Controllers
                 return BadRequest();
             var districtStreet = _mapper.Map<DistrictStreet>(districtStreetDto);
             _context.DistrictStreets.Add(districtStreet);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar la relación distrito-calle: {ex.Message}");
+            }
             var resultDto = _mapper.Map<DistrictStreetDto>(districtStreet);
             return CreatedAtAction(nameof(GetDistrictStreet), new { id = districtStreet.Id }, resultDto);
         }
@@ -65,7 +72,14 @@ namespace SistemaAPI.Controllers
             districtStreet.DistrictId = districtStreetDto.DistrictId;
             districtStreet.StreetId = districtStreetDto.StreetId;
             _context.Entry(districtStreet).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar la relación distrito-calle: {ex.Message}");
+            }
             return NoContent();
         }
 
@@ -77,7 +91,14 @@ namespace SistemaAPI.Controllers
             if (districtStreet == null)
                 return NotFound();
             _context.DistrictStreets.Remove(districtStreet);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar la relación distrito-calle: {ex.Message}");
+            }
             return NoContent();
         }
     }

@@ -52,7 +52,14 @@ namespace SistemaAPI.Controllers
             log.CreatedAt = DateTime.UtcNow;
 
             _context.Logs.Add(log);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar el log: {ex.Message}");
+            }
 
             var resultDto = _mapper.Map<LogDto>(log);
             return CreatedAtAction(nameof(GetLog), new { id = log.Id }, resultDto);
@@ -76,7 +83,14 @@ namespace SistemaAPI.Controllers
             log.Description = logDto.Description;
 
             _context.Entry(log).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el log: {ex.Message}");
+            }
 
             return NoContent();
         }
@@ -90,7 +104,14 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             _context.Logs.Remove(log);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar el log: {ex.Message}");
+            }
 
             return NoContent();
         }

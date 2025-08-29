@@ -66,7 +66,14 @@ namespace SistemaAPI.Controllers
                 return BadRequest();
             var contact = _mapper.Map<Contact>(contactDto);
             _context.Set<Contact>().Add(contact);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar el contacto: {ex.Message}");
+            }
             var resultDto = _mapper.Map<ContactDto>(contact);
             return CreatedAtAction(nameof(GetContact), new { id = contact.Id }, resultDto);
         }

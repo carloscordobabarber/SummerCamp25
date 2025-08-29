@@ -53,7 +53,14 @@ namespace SistemaAPI.Controllers
             status.UpdatedAt = null;
 
             _context.Statuses.Add(status);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar el estado: {ex.Message}");
+            }
 
             var resultDto = _mapper.Map<StatusDto>(status);
             return CreatedAtAction(nameof(GetStatus), new { id = status.Id }, resultDto);
@@ -74,7 +81,14 @@ namespace SistemaAPI.Controllers
             status.UpdatedAt = DateTime.UtcNow;
 
             _context.Entry(status).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el estado: {ex.Message}");
+            }
 
             return NoContent();
         }
@@ -88,7 +102,14 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             _context.Statuses.Remove(status);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar el estado: {ex.Message}");
+            }
 
             return NoContent();
         }

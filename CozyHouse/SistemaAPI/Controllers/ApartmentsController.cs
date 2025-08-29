@@ -53,7 +53,14 @@ namespace SistemaAPI.Controllers
             apartment.UpdatedAt = null;
 
             _context.Apartments.Add(apartment);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar el apartamento: {ex.Message}");
+            }
 
             var resultDto = _mapper.Map<ApartmentWorkerDto>(apartment);
             return CreatedAtAction(nameof(GetApartment), new { id = apartment.Id }, resultDto);
@@ -85,7 +92,14 @@ namespace SistemaAPI.Controllers
             apartment.UpdatedAt = DateTime.UtcNow;
 
             _context.Entry(apartment).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el apartamento: {ex.Message}");
+            }
 
             return NoContent();
         }
@@ -99,7 +113,14 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             _context.Apartments.Remove(apartment);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar el apartamento: {ex.Message}");
+            }
 
             return NoContent();
         }

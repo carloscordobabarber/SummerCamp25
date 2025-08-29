@@ -50,7 +50,14 @@ namespace SistemaAPI.Controllers
             district.CreatedAt = DateTime.UtcNow;
             district.UpdatedAt = null;
             _context.Districts.Add(district);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar el distrito: {ex.Message}");
+            }
             var resultDto = _mapper.Map<DistrictDto>(district);
             return CreatedAtAction(nameof(GetDistrict), new { id = district.Id }, resultDto);
         }
@@ -70,7 +77,14 @@ namespace SistemaAPI.Controllers
             district.City = districtDto.City;
             district.UpdatedAt = DateTime.UtcNow;
             _context.Entry(district).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el distrito: {ex.Message}");
+            }
             return NoContent();
         }
 
@@ -82,7 +96,14 @@ namespace SistemaAPI.Controllers
             if (district == null)
                 return NotFound();
             _context.Districts.Remove(district);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar el distrito: {ex.Message}");
+            }
             return NoContent();
         }
     }

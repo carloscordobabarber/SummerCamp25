@@ -96,7 +96,14 @@ namespace SistemaAPI.Controllers
             user.UpdatedAt = null;
 
             _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar el usuario: {ex.Message}");
+            }
 
             // Devuelve UserDto, que no incluye la contraseña
             var resultDto = _mapper.Map<UserDto>(user);
@@ -139,7 +146,14 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar el usuario: {ex.Message}");
+            }
 
             return NoContent();
         }

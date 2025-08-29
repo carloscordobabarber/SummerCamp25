@@ -1,6 +1,3 @@
-// ...existing code...
-
-// ...existing code...
 using AutoMapper;
 using DTOS;
 using Dominio;
@@ -82,11 +79,18 @@ namespace SistemaAPI.Controllers
             var rental = _mapper.Map<Rental>(rentalDto);
             rental.StartDate = rentalDto.StartDate;
             rental.EndDate = rentalDto.EndDate;
-             rental.CreatedAt = DateTime.UtcNow;
+            rental.CreatedAt = DateTime.UtcNow;
             rental.UpdatedAt = null;
 
             _context.Rentals.Add(rental);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar el alquiler: {ex.Message}");
+            }
 
             var resultDto = _mapper.Map<RentalDto>(rental);
             return CreatedAtAction(nameof(GetRental), new { id = rental.Id }, resultDto);
@@ -111,7 +115,14 @@ namespace SistemaAPI.Controllers
             // rental.UpdatedAt = DateTime.UtcNow;
 
             _context.Entry(rental).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el alquiler: {ex.Message}");
+            }
 
             return NoContent();
         }
@@ -125,7 +136,14 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             _context.Rentals.Remove(rental);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar el alquiler: {ex.Message}");
+            }
 
             return NoContent();
         }
