@@ -28,7 +28,7 @@ export class ApartmentWorker {
     if (filters.area !== undefined) params.push(`area=${filters.area}`);
     if (filters.numberOfRooms !== undefined) params.push(`numberOfRooms=${filters.numberOfRooms}`);
     if (filters.numberOfBathrooms !== undefined) params.push(`numberOfBathrooms=${filters.numberOfBathrooms}`);
-    if (filters.street) params.push(`street=${encodeURIComponent(filters.street)}`);
+    if (filters.street) params.push(`streetName=${encodeURIComponent(filters.street)}`);
     if (filters.door) params.push(`door=${encodeURIComponent(filters.door)}`);
     if (filters.code) params.push(`code=${encodeURIComponent(filters.code)}`);
     const url = this.apiUrl + (params.length ? '?' + params.join('&') : '');
