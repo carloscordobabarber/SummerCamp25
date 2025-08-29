@@ -23,6 +23,7 @@ namespace SistemaAPI.Controllers
             _mapper = mapper;
         }
 
+
         // GET: api/Rental/CheckDate?apartmentId=1&date=2025-08-28T00:00:00.000Z
         [HttpGet("CheckDate")]
         public async Task<IActionResult> CheckDate([FromQuery] int apartmentId, [FromQuery] string date)
@@ -50,15 +51,6 @@ namespace SistemaAPI.Controllers
             }
         }
 
-        // GET: api/Rental
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<RentalDto>>> GetRentals()
-        {
-            var rentals = await _context.Rentals.ToListAsync();
-            var dto = _mapper.Map<List<RentalDto>>(rentals);
-            return Ok(dto);
-        }
-
         // GET: api/Rental/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RentalDto>> GetRental(int id)
@@ -68,6 +60,15 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             var dto = _mapper.Map<RentalDto>(rental);
+            return Ok(dto);
+        }
+
+        // GET: api/Rental
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<RentalDto>>> GetRentals()
+        {
+            var rentals = await _context.Rentals.ToListAsync();
+            var dto = _mapper.Map<List<RentalDto>>(rentals);
             return Ok(dto);
         }
 
