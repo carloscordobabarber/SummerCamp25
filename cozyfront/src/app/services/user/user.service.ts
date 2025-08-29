@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserProfile } from '../../models/user';
-import { Rental } from '../../models/rental';
+import { UserRental } from '../../models/user-rental';
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +33,12 @@ export class UserService {
    * Obtiene los alquileres del usuario dado
    * @param userId ID del usuario
    */
-  getUserRentals(userId: number): Observable<Rental[]> {
-    return this.http.get<Rental[]>(`${this.userApiUrl}/${userId}/rentals`);
+  /**
+   * Obtiene los alquileres detallados del usuario dado
+   * @param userId ID del usuario
+   */
+  getUserRentals(userId: number): Observable<UserRental[]> {
+    return this.http.get<UserRental[]>(`/api/UsersRentals/user/${userId}`);
   }
 
   /**

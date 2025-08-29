@@ -6,27 +6,28 @@
   <table class="table table-hover">
     <thead class="table-light">
       <tr>
-        <th>Nombre</th>
+        <th>Distrito</th>
+        <th>Dirección</th>
         <th>Fecha Inicio</th>
         <th>Fecha Fin</th>
+        <th>Precio</th>
         <th>Estado</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let contrato of contratos" (dblclick)="abrirContrato(contrato)" style="cursor: pointer;">
-        <td>{{ contrato.nombre }}</td>
-        <td>{{ contrato.fechaInicio | date:'dd/MM/yyyy' }}</td>
-        <td>{{ contrato.fechaFin | date:'dd/MM/yyyy' }}</td>
+        <td>{{ contrato.districtName }}</td>
         <td>
-          <span
-            [ngClass]="{
-              'badge bg-success': contrato.estado === 'activo',
-              'badge bg-secondary': contrato.estado === 'finalizado',
-              'badge bg-warning text-dark': contrato.estado === 'pendiente'
-            }"
-          >
-            {{ contrato.estado | titlecase }}
-          </span>
+          {{ contrato.streetName }}
+          <span *ngIf="contrato.portal">, {{ contrato.portal }}</span>
+          <span *ngIf="contrato.floor">, {{ contrato.floor }}</span>
+          <span *ngIf="contrato.apartmentDoor">, {{ contrato.apartmentDoor }}</span>
+        </td>
+        <td>{{ contrato.startDate | date:'dd/MM/yyyy' }}</td>
+        <td>{{ contrato.endDate | date:'dd/MM/yyyy' }}</td>
+        <td>{{ contrato.apartmentPrice | currency:'EUR':'symbol':'1.0-0' }}</td>
+        <td>
+          <span class="badge bg-info">{{ contrato.statusName }}</span>
         </td>
       </tr>
     </tbody>
@@ -44,13 +45,14 @@
       </div>
 
       <div class="modal-body" *ngIf="contratoSeleccionado">
-        <h4>{{ contratoSeleccionado.nombre }}</h4>
-        <p><strong>Fecha Inicio:</strong> {{ contratoSeleccionado.fechaInicio | date:'dd/MM/yyyy' }}</p>
-        <p><strong>Fecha Fin:</strong> {{ contratoSeleccionado.fechaFin | date:'dd/MM/yyyy' }}</p>
-        <p><strong>Estado:</strong> {{ contratoSeleccionado.estado | titlecase }}</p>
-
+        <h4>Contrato de alquiler</h4>
+        <p><strong>Distrito:</strong> {{ contratoSeleccionado.districtName }}</p>
+        <p><strong>Dirección:</strong> {{ contratoSeleccionado.streetName }}<span *ngIf="contratoSeleccionado.portal">, {{ contratoSeleccionado.portal }}</span><span *ngIf="contratoSeleccionado.floor">, {{ contratoSeleccionado.floor }}</span><span *ngIf="contratoSeleccionado.apartmentDoor">, {{ contratoSeleccionado.apartmentDoor }}</span></p>
+        <p><strong>Fecha Inicio:</strong> {{ contratoSeleccionado.startDate | date:'dd/MM/yyyy' }}</p>
+        <p><strong>Fecha Fin:</strong> {{ contratoSeleccionado.endDate | date:'dd/MM/yyyy' }}</p>
+        <p><strong>Precio:</strong> {{ contratoSeleccionado.apartmentPrice | currency:'EUR':'symbol':'1.0-0' }}</p>
+        <p><strong>Estado:</strong> {{ contratoSeleccionado.statusName }}</p>
         <hr />
-
         <p>
           Aquí iría la simulación del contrato con toda la información legal y detalles específicos que quieras mostrar.
         </p>

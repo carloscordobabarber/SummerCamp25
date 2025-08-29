@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RentalsService } from '../../../services/rentals/rentals.service';
 import { UserProfile } from '../../../models/user';
-import { Rental } from '../../../models/rental';
+import { UserRental } from '../../../models/user-rental';
 import { UserService } from '../../../services/user/user.service';
 
 @Component({
@@ -11,23 +11,25 @@ import { UserService } from '../../../services/user/user.service';
   styleUrl: './my-rentals.css'
 })
 export class MyRentals {
-  // @Input() user!: UserProfile;
-  @Input() user: UserProfile | null = null;
-
-  rentals: Rental[] = [];
+  @Input() user!: UserProfile;
+  
+  rentals: UserRental[] = [];
   vista: 'lista' | 'card' = 'lista';
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    if (this.user?.id) {
-      this.loadRentals(this.user.id);
+    const userIdStr = localStorage.getItem('userId');
+    const userId = userIdStr ? parseInt(userIdStr, 10) : null;
+    if (userId) {
+      this.loadRentals(userId);
+    } else {
+      console.error('No se encontró el id de usuario en localStorage');
     }
   }
 
   loadRentals(userId: number) {
     this.userService.getUserRentals(userId).subscribe({
-    // this.rentalsService.getRentalsByUserId(userId).subscribe({
       next: (data) => this.rentals = data,
       error: (err) => console.error('Error al cargar alquileres', err)
     });
