@@ -7,6 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './header.css'
 })
 export class Header {
+  logout() {
+    localStorage.clear();
+  }
   get isAdmin(): boolean {
     try {
       const user = localStorage.getItem('userRole');
