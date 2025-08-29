@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user/user.service';
 import { UserRental } from '../../../models/user-rental';
+import { UserRentalsService } from '../../../services/user/user-rentals.service';
 
 declare var bootstrap: any;
 
@@ -14,19 +15,19 @@ declare var bootstrap: any;
 })
 export class MyContracts implements AfterViewInit, OnInit {
   @Input() user: any;
-  contratos: UserRental[] = [];
-  contratoSeleccionado: UserRental | null = null;
+  contracts: UserRental[] = [];
+  selectedContract: UserRental | null = null;
   @ViewChild('contratoModal') contratoModal!: ElementRef;
   private modalInstance: any;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserRentalsService) {}
 
   ngOnInit(): void {
     const userIdStr = localStorage.getItem('userId');
     const userId = userIdStr ? parseInt(userIdStr, 10) : null;
     if (userId) {
-      this.userService.getUserRentals(userId).subscribe({
-        next: (data) => this.contratos = data,
+      this.userService.getRentalsByUserId(userId).subscribe({
+        next: (data) => this.contracts = data,
         error: (err) => console.error('Error al cargar contratos', err)
       });
     }
@@ -34,14 +35,14 @@ export class MyContracts implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     this.modalInstance = new bootstrap.Modal(this.contratoModal.nativeElement);
-    // Limpia el contrato seleccionado al cerrar el modal
+    // Limpia el contract seleccionado al cerrar el modal
     this.contratoModal.nativeElement.addEventListener('hidden.bs.modal', () => {
-      this.contratoSeleccionado = null;
+      this.selectedContract = null;
     });
   }
 
-  abrirContrato(contrato: UserRental) {
-    this.contratoSeleccionado = contrato;
+  openContract(contract: UserRental) {
+    this.selectedContract = contract;
     this.modalInstance.show();
 
     setTimeout(() => {
@@ -55,7 +56,7 @@ export class MyContracts implements AfterViewInit, OnInit {
     }, 100);
   }
 
-  cerrarContrato() {
+  closeContract() {
     this.modalInstance.hide();
   }
 }

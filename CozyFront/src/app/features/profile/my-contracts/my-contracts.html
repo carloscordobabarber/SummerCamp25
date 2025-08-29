@@ -1,7 +1,5 @@
-<p>my-contracts works!</p>
-
 <div class="container mt-4">
-  <h2 class="mb-4">Mis Contratos</h2>
+  <h2 class="mb-4">Mis contracts</h2>
 
   <table class="table table-hover">
     <thead class="table-light">
@@ -15,19 +13,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let contrato of contratos" (dblclick)="abrirContrato(contrato)" style="cursor: pointer;">
-        <td>{{ contrato.districtName }}</td>
+      <tr *ngFor="let contract of contracts" (dblclick)="openContract(contract)" style="cursor: pointer;">
+        <td>{{ contract.districtName }}</td>
         <td>
-          {{ contrato.streetName }}
-          <span *ngIf="contrato.portal">, {{ contrato.portal }}</span>
-          <span *ngIf="contrato.floor">, {{ contrato.floor }}</span>
-          <span *ngIf="contrato.apartmentDoor">, {{ contrato.apartmentDoor }}</span>
+          {{ contract.streetName }}
+          <span *ngIf="contract.portal">, {{ contract.portal }}</span>
+          <span *ngIf="contract.floor">, {{ contract.floor }}</span>
+          <span *ngIf="contract.apartmentDoor">, {{ contract.apartmentDoor }}</span>
         </td>
-        <td>{{ contrato.startDate | date:'dd/MM/yyyy' }}</td>
-        <td>{{ contrato.endDate | date:'dd/MM/yyyy' }}</td>
-        <td>{{ contrato.apartmentPrice | currency:'EUR':'symbol':'1.0-0' }}</td>
+        <td>{{ contract.startDate | date:'dd/MM/yyyy' }}</td>
+        <td>{{ contract.endDate | date:'dd/MM/yyyy' }}</td>
+        <td>{{ contract.apartmentPrice | currency:'EUR':'symbol':'1.0-0' }}</td>
         <td>
-          <span class="badge bg-info">{{ contrato.statusName }}</span>
+          <span class="badge bg-info">{{ contract.statusName }}</span>
         </td>
       </tr>
     </tbody>
@@ -35,31 +33,31 @@
 </div>
 
 <!-- Modal Bootstrap -->
-<div #contratoModal class="modal fade" tabindex="-1" aria-labelledby="contratoModalLabel" aria-hidden="true">
+<div #contractModal class="modal fade" tabindex="-1" aria-labelledby="contractModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
       <div class="modal-header">
-        <h5 class="modal-title" id="contratoModalLabel">Detalle del Contrato</h5>
-        <button type="button" class="btn-close" aria-label="Cerrar" (click)="cerrarContrato()"></button>
+        <h5 class="modal-title" id="contractModalLabel">Detalle del contract</h5>
+        <button type="button" class="btn-close" aria-label="Cerrar" (click)="closeContract()"></button>
       </div>
 
-      <div class="modal-body" *ngIf="contratoSeleccionado">
-        <h4>Contrato de alquiler</h4>
-        <p><strong>Distrito:</strong> {{ contratoSeleccionado.districtName }}</p>
-        <p><strong>Dirección:</strong> {{ contratoSeleccionado.streetName }}<span *ngIf="contratoSeleccionado.portal">, {{ contratoSeleccionado.portal }}</span><span *ngIf="contratoSeleccionado.floor">, {{ contratoSeleccionado.floor }}</span><span *ngIf="contratoSeleccionado.apartmentDoor">, {{ contratoSeleccionado.apartmentDoor }}</span></p>
-        <p><strong>Fecha Inicio:</strong> {{ contratoSeleccionado.startDate | date:'dd/MM/yyyy' }}</p>
-        <p><strong>Fecha Fin:</strong> {{ contratoSeleccionado.endDate | date:'dd/MM/yyyy' }}</p>
-        <p><strong>Precio:</strong> {{ contratoSeleccionado.apartmentPrice | currency:'EUR':'symbol':'1.0-0' }}</p>
-        <p><strong>Estado:</strong> {{ contratoSeleccionado.statusName }}</p>
+      <div class="modal-body" *ngIf="selectedContract">
+        <h4>contract de alquiler</h4>
+        <p><strong>Distrito:</strong> {{ selectedContract.districtName }}</p>
+        <p><strong>Dirección:</strong> {{ selectedContract.streetName }}<span *ngIf="selectedContract.portal">, {{ selectedContract.portal }}</span><span *ngIf="selectedContract.floor">, {{ selectedContract.floor }}</span><span *ngIf="selectedContract.apartmentDoor">, {{ selectedContract.apartmentDoor }}</span></p>
+        <p><strong>Fecha Inicio:</strong> {{ selectedContract.startDate | date:'dd/MM/yyyy' }}</p>
+        <p><strong>Fecha Fin:</strong> {{ selectedContract.endDate | date:'dd/MM/yyyy' }}</p>
+        <p><strong>Precio:</strong> {{ selectedContract.apartmentPrice | currency:'EUR':'symbol':'1.0-0' }}</p>
+        <p><strong>Estado:</strong> {{ selectedContract.statusName }}</p>
         <hr />
         <p>
-          Aquí iría la simulación del contrato con toda la información legal y detalles específicos que quieras mostrar.
+          Aquí iría la simulación del contract con toda la información legal y detalles específicos que quieras mostrar.
         </p>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="cerrarContrato()">Cerrar</button>
+        <button type="button" class="btn btn-secondary" (click)="closeContract()">Cerrar</button>
       </div>
 
     </div>
