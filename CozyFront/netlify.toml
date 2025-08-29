@@ -1,0 +1,10 @@
+# Archivo: netlify.toml
+[build]
+  base = "CozyFront"
+  command = "npm ci && npm run build"
+  publish = "dist/CozyFront/browser" # cámbialo a dist/CozyFront si en angular.json no aparece "browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
