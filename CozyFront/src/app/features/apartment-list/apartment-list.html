@@ -1,74 +1,77 @@
-<div class="row mb-3">
-  <div class="col">
-    <app-search-bar (search)="onCodeSearch($event)" placeholder="Buscar por código..."></app-search-bar>
-  </div>
-  <div class="col">
-    <app-search-bar (search)="onStreetSearch($event)" placeholder="Buscar por calle..."></app-search-bar>
-  </div>
-  <div class="col">
-    <app-slider-filter class="slider-uniform-width" label="Área (m²) < " [min]="minArea" [max]="maxArea" [step]="10"
-      [(value)]="filterArea" (valueChange)="applyFilters()"></app-slider-filter>
-  </div>
-</div>
-<div class="row mb-3">
-  <div class="col">
-    <app-select-filter label="Habitaciones" [options]="getRoomsOptions()" [(value)]="filterRooms" placeholder="-"
-      selectId="roomsSelect" (valueChange)="applyFilters()">
-    </app-select-filter>
-  </div>
-  <div class="col">
-    <app-select-filter label="Baños" [options]="getBathsOptions()" [(value)]="filterBaths" placeholder="-"
-      selectId="bathsSelect" (valueChange)="applyFilters()">
-    </app-select-filter>
-  </div>
-  <div class="col">
-    <app-range-slider-filter class="slider-uniform-width" label="Precio (€)" [min]="minPrice" [max]="maxPrice"
-      [step]="100" [(minValue)]="filterPriceMin" [(maxValue)]="filterPriceMax" (rangeChange)="applyFilters()">
-    </app-range-slider-filter>
-  </div>
-</div>
-<div *ngIf="cargando">Cargando apartamentos...</div>
-
-<table *ngIf="!cargando" class="table table-striped align-middle">
-  <thead class="table-light">
-    <tr>
-      <th>#</th>
-      <th>Código</th>
-      <th>Calle</th>
-      <th>Puerta</th>
-      <th>Distrito</th>
-      <th>Precio</th>
-      <th>Habitaciones</th>
-      <th>Baños</th>
-      <th>Área (m²)</th>
-      <th>Disponible</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let apt of filteredApartments; let i = index" [routerLink]="['/apartment-details', apt.id]"
-      class="apartment-row" style="cursor:pointer">
-      <td>{{ apt.id }}</td>
-      <td>{{ apt.code }}</td>
-      <td>{{ apt.streetName }}</td>
-      <td>{{ apt.door }}</td>
-      <td>{{ apt.districtName }}</td>
-      <td>{{ apt.price | currency:'EUR':'symbol':'1.0-0' }}</td>
-      <td>{{ apt.numberOfRooms }}</td>
-      <td>{{ apt.numberOfBathrooms }}</td>
-      <td>{{ apt.area }}</td>
-      <td>
-        <span class="badge bg-success" *ngIf="apt.isAvailable">Sí</span>
-        <span class="badge bg-secondary" *ngIf="!apt.isAvailable">No</span>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- Espacio reservado para el paginador -->
-<div class="paginador-footer-space">
-  <div class="d-flex justify-content-center mt-4">
-    <app-paginador [page]="page" [pageSize]="pageSize" [totalItems]="totalCount" (pageChange)="onPageChange($event)"
-      (pageSizeChange)="onPageSizeChange($event)">
-    </app-paginador>
+<div class="card-manager-container">
+  <div class="card-manager-layout">
+    <aside class="sidebar">
+      <div class="filters-col">
+        <div class="filter-item">
+          <app-search-bar (search)="onCodeSearch($event)" placeholder="Buscar por código..."></app-search-bar>
+        </div>
+        <div class="filter-item">
+          <app-search-bar (search)="onStreetSearch($event)" placeholder="Buscar por calle..."></app-search-bar>
+        </div>
+        <div class="filter-item">
+          <app-slider-filter class="slider-uniform-width" label="Área (m²) < " [min]="minArea" [max]="maxArea" [step]="10"
+            [(value)]="filterArea" (valueChange)="applyFilters()"></app-slider-filter>
+        </div>
+        <div class="filter-item">
+          <app-select-filter label="Habitaciones" [options]="getRoomsOptions()" [(value)]="filterRooms" placeholder="-"
+            selectId="roomsSelect" (valueChange)="applyFilters()">
+          </app-select-filter>
+        </div>
+        <div class="filter-item">
+          <app-select-filter label="Baños" [options]="getBathsOptions()" [(value)]="filterBaths" placeholder="-"
+            selectId="bathsSelect" (valueChange)="applyFilters()">
+          </app-select-filter>
+        </div>
+        <div class="filter-item">
+          <app-range-slider-filter class="slider-uniform-width" label="Precio (€)" [min]="minPrice" [max]="maxPrice"
+            [step]="100" [(minValue)]="filterPriceMin" [(maxValue)]="filterPriceMax" (rangeChange)="applyFilters()">
+          </app-range-slider-filter>
+        </div>
+      </div>
+    </aside>
+    <main class="main-content">
+      <div *ngIf="cargando">Cargando apartamentos...</div>
+      <table *ngIf="!cargando" class="table table-striped align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Código</th>
+            <th>Calle</th>
+            <th>Puerta</th>
+            <th>Distrito</th>
+            <th>Precio</th>
+            <th>Habitaciones</th>
+            <th>Baños</th>
+            <th>Área (m²)</th>
+            <th>Disponible</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let apt of filteredApartments; let i = index" [routerLink]="['/apartment-details', apt.id]"
+            class="apartment-row" style="cursor:pointer">
+            <td>{{ apt.id }}</td>
+            <td>{{ apt.code }}</td>
+            <td>{{ apt.streetName }}</td>
+            <td>{{ apt.door }}</td>
+            <td>{{ apt.districtName }}</td>
+            <td>{{ apt.price | currency:'EUR':'symbol':'1.0-0' }}</td>
+            <td>{{ apt.numberOfRooms }}</td>
+            <td>{{ apt.numberOfBathrooms }}</td>
+            <td>{{ apt.area }}</td>
+            <td>
+              <span class="badge bg-success" *ngIf="apt.isAvailable">Sí</span>
+              <span class="badge bg-secondary" *ngIf="!apt.isAvailable">No</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="paginador-footer-space">
+        <div class="d-flex justify-content-center mt-4">
+          <app-paginador [page]="page" [pageSize]="pageSize" [totalItems]="totalCount" (pageChange)="onPageChange($event)"
+            (pageSizeChange)="onPageSizeChange($event)">
+          </app-paginador>
+        </div>
+      </div>
+    </main>
   </div>
 </div>
