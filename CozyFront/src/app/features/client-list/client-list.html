@@ -1,66 +1,69 @@
 
-<!-- Filtros -->
-<div class="row mb-3">
-  <div class="col-md-2 mb-2">
-    <app-search-bar (search)="onDocumentNumberSearch($event)" placeholder="Buscar nº documento..."></app-search-bar>
-  </div>
-  <div class="col-md-2 mb-2">
-    <app-search-bar (search)="onNameSearch($event)" placeholder="Buscar nombre..."></app-search-bar>
-  </div>
-  <div class="col-md-2 mb-2">
-    <app-search-bar (search)="onLastNameSearch($event)" placeholder="Buscar apellido..."></app-search-bar>
-  </div>
-  <div class="col-md-2 mb-2">
-    <app-search-bar (search)="onEmailSearch($event)" placeholder="Buscar email..."></app-search-bar>
-  </div>
-  <div class="col-md-2 mb-2">
-    <app-search-bar (search)="onPhoneSearch($event)" placeholder="Buscar teléfono..."></app-search-bar>
-  </div>
-  <div class="col-md-2 mb-2">
-    <app-search-bar (search)="onRoleSearch($event)" placeholder="Buscar rol..."></app-search-bar>
-  </div>
-</div>
-
-<div *ngIf="cargando">Cargando clientes...</div>
-
-<table *ngIf="!cargando" class="table table-striped align-middle">
-  <thead class="table-light">
-    <tr>
-      <th>#</th>
-      <th>Tipo de documento</th>
-      <th>Número de documento</th>
-      <th>Nombre</th>
-      <th>Apellido</th>
-      <th>Fecha de nacimiento</th>
-      <th>Email</th>
-      <th>Teléfono</th>
-      <th>Rol</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let cli of clients; let i = index">
-      <td>{{ i + 1 }}</td>
-      <td>{{ cli.documentType }}</td>
-      <td>{{ cli.documentNumber }}</td>
-      <td>{{ cli.name }}</td>
-      <td>{{ cli.lastName }}</td>
-    <td>{{ cli.birthDate | date:'dd/MM/yyyy' }}</td>
-      <td>{{ cli.email }}</td>
-      <td>{{ cli.phone }}</td>
-      <td>{{ cli.role }}</td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- Espacio reservado para el paginador -->
-<div class="paginador-footer-space">
-  <div class="d-flex justify-content-center mt-4">
-    <app-paginador
-      [page]="page"
-      [pageSize]="pageSize"
-      [totalItems]="totalCount"
-      (pageChange)="onPageChange($event)"
-      (pageSizeChange)="onPageSizeChange($event)">
-    </app-paginador>
+<div class="card-manager-container">
+  <div class="card-manager-layout">
+    <aside class="sidebar">
+      <div class="filters-col">
+        <div class="filter-item">
+          <app-search-bar (search)="onDocumentNumberSearch($event)" placeholder="Buscar nº documento..."></app-search-bar>
+        </div>
+        <div class="filter-item">
+          <app-search-bar (search)="onNameSearch($event)" placeholder="Buscar nombre..."></app-search-bar>
+        </div>
+        <div class="filter-item">
+          <app-search-bar (search)="onLastNameSearch($event)" placeholder="Buscar apellido..."></app-search-bar>
+        </div>
+        <div class="filter-item">
+          <app-search-bar (search)="onEmailSearch($event)" placeholder="Buscar email..."></app-search-bar>
+        </div>
+        <div class="filter-item">
+          <app-search-bar (search)="onPhoneSearch($event)" placeholder="Buscar teléfono..."></app-search-bar>
+        </div>
+        <div class="filter-item">
+          <app-search-bar (search)="onRoleSearch($event)" placeholder="Buscar rol..."></app-search-bar>
+        </div>
+      </div>
+    </aside>
+    <main class="main-content">
+      <div *ngIf="cargando">Cargando clientes...</div>
+      <table *ngIf="!cargando" class="table table-striped align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Tipo de documento</th>
+            <th>Número de documento</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Fecha de nacimiento</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cli of clients; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ cli.documentType }}</td>
+            <td>{{ cli.documentNumber }}</td>
+            <td>{{ cli.name }}</td>
+            <td>{{ cli.lastName }}</td>
+            <td>{{ cli.birthDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ cli.email }}</td>
+            <td>{{ cli.phone }}</td>
+            <td>{{ cli.role }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="paginador-footer-space">
+        <div class="d-flex justify-content-center mt-4">
+          <app-paginador
+            [page]="page"
+            [pageSize]="pageSize"
+            [totalItems]="totalCount"
+            (pageChange)="onPageChange($event)"
+            (pageSizeChange)="onPageSizeChange($event)">
+          </app-paginador>
+        </div>
+      </div>
+    </main>
   </div>
 </div>
