@@ -36,7 +36,8 @@ namespace SistemaAPI.Controllers
         )
         {
             var apartmentsQuery = _context.Apartments
-                .Where(a => a.IsAvailable) // Solo apartamentos disponibles
+                .Where(a => a.IsAvailable)
+                .AsNoTracking()
                 .AsQueryable();
 
             // Filtros directos sobre Apartment
@@ -61,10 +62,10 @@ namespace SistemaAPI.Controllers
                 apartmentsQuery = apartmentsQuery.Where(a => a.NumberOfBathrooms == numberOfBathrooms.Value);
 
             var apartments = await apartmentsQuery.ToListAsync();
-            var buildings = await _context.Buildings.ToListAsync();
-            var districtStreets = await _context.DistrictStreets.ToListAsync();
-            var districts = await _context.Districts.ToListAsync();
-            var streets = await _context.Streets.ToListAsync();
+            var buildings = await _context.Buildings.AsNoTracking().ToListAsync();
+            var districtStreets = await _context.DistrictStreets.AsNoTracking().ToListAsync();
+            var districts = await _context.Districts.AsNoTracking().ToListAsync();
+            var streets = await _context.Streets.AsNoTracking().ToListAsync();
 
             var apartmentDtos = new List<ApartmentCardsDto>();
 
@@ -114,6 +115,7 @@ namespace SistemaAPI.Controllers
                 dto.DistrictName = districtName;
 
                 dto.ImageUrls = await _context.imageApartments
+                    .AsNoTracking()
                     .Where(img => img.ApartmentId == apartment.Id)
                     .Select(img => img.PhotoUrl)
                     .ToListAsync();
@@ -126,7 +128,6 @@ namespace SistemaAPI.Controllers
                 apartmentDtos = apartmentDtos.Where(a => a.DistrictId == districtId.Value).ToList();
 
             var totalCount = apartmentDtos.Count;
-
 
             var pagedResult = apartmentDtos
                 .Skip((page - 1) * pageSize)
@@ -148,10 +149,10 @@ namespace SistemaAPI.Controllers
             if (apartment == null)
                 return NotFound();
 
-            var building = await _context.Buildings.FirstOrDefaultAsync(b => b.Id == apartment.BuildingId);
-            var districtStreets = await _context.DistrictStreets.ToListAsync();
-            var districts = await _context.Districts.ToListAsync();
-            var streets = await _context.Streets.ToListAsync();
+            var building = await _context.Buildings.AsNoTracking().FirstOrDefaultAsync(b => b.Id == apartment.BuildingId);
+            var districtStreets = await _context.DistrictStreets.AsNoTracking().ToListAsync();
+            var districts = await _context.Districts.AsNoTracking().ToListAsync();
+            var streets = await _context.Streets.AsNoTracking().ToListAsync();
 
             var dto = new ApartmentCardsDto
             {
@@ -196,6 +197,7 @@ namespace SistemaAPI.Controllers
             dto.DistrictName = districtName;
 
             dto.ImageUrls = await _context.imageApartments
+                .AsNoTracking()
                 .Where(img => img.ApartmentId == apartment.Id)
                 .Select(img => img.PhotoUrl)
                 .ToListAsync();

@@ -35,7 +35,7 @@ namespace SistemaAPI.Controllers
                 return BadRequest(new { exists = false, message = "Formato de fecha inválido." });
 
             // Buscar si existe un alquiler para ese apartamento que solape con la fecha
-            var exists = await _context.Rentals.AnyAsync(r =>
+            var exists = await _context.Rentals.AsNoTracking().AnyAsync(r =>
                 r.ApartmentId == apartmentId &&
                 r.StartDate <= startDate &&
                 r.EndDate > startDate
@@ -67,7 +67,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RentalDto>>> GetRentals()
         {
-            var rentals = await _context.Rentals.ToListAsync();
+            var rentals = await _context.Rentals.AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<RentalDto>>(rentals);
             return Ok(dto);
         }

@@ -24,7 +24,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BuildingDto>>> GetBuildings()
         {
-            var buildings = await _context.Buildings.ToListAsync();
+            var buildings = await _context.Buildings.AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<BuildingDto>>(buildings);
             return Ok(dto);
         }

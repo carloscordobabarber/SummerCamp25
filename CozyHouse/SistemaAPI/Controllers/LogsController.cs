@@ -24,7 +24,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LogDto>>> GetLogs()
         {
-            var logs = await _context.Logs.ToListAsync();
+            var logs = await _context.Logs.AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<LogDto>>(logs);
             return Ok(dto);
         }

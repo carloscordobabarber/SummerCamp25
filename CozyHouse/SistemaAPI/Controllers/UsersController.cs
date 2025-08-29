@@ -32,7 +32,7 @@ namespace SistemaAPI.Controllers
             [FromQuery] string? phone = null,
             [FromQuery] string? role = null)
         {
-            var query = _context.Users.AsQueryable();
+            var query = _context.Users.AsNoTracking().AsQueryable();
 
             if (!string.IsNullOrEmpty(documentNumber))
                 query = query.Where(u => u.DocumentNumber.ToLower().Contains(documentNumber.ToLower()));
@@ -73,6 +73,7 @@ namespace SistemaAPI.Controllers
         public async Task<ActionResult<IEnumerable<RentalDto>>> GetRentalsByUserId(int id)
         {
             var rentals = await _context.Rentals
+                .AsNoTracking()
                 .Where(r => r.UserId == id)
                 .ToListAsync();
 

@@ -27,7 +27,7 @@ namespace SistemaAPI.Controllers
             [FromQuery] int pageSize = 10,
             [FromQuery] string? contactReason = null)
         {
-            var contactsQuery = _context.Set<Contact>().AsQueryable();
+            var contactsQuery = _context.Set<Contact>().AsNoTracking().AsQueryable();
 
             if (!string.IsNullOrEmpty(contactReason))
                 contactsQuery = contactsQuery.Where(c => c.ContactReason == contactReason);

@@ -32,7 +32,7 @@ namespace SistemaAPI.Controllers
             [FromQuery] int? tenantId = null,
             [FromQuery] string? statusId = null)
         {
-            var query = _context.Incidences.AsQueryable();
+            var query = _context.Incidences.AsNoTracking().AsQueryable();
 
             if (issueType.HasValue)
                 query = query.Where(i => i.IssueType == issueType.Value);

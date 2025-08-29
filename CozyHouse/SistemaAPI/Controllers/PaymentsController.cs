@@ -24,7 +24,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PaymentDto>>> GetPayments()
         {
-            var payments = await _context.Payments.ToListAsync();
+            var payments = await _context.Payments.AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<PaymentDto>>(payments);
             return Ok(dto);
         }

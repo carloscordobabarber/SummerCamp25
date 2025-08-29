@@ -24,7 +24,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApartmentWorkerDto>>> GetApartments()
         {
-            var apartments = await _context.Apartments.ToListAsync();
+            var apartments = await _context.Apartments.AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<ApartmentWorkerDto>>(apartments);
             return Ok(dto);
         }

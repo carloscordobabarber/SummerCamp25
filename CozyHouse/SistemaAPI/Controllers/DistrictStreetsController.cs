@@ -24,7 +24,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DistrictStreetDto>>> GetDistrictStreets()
         {
-            var districtStreets = await _context.DistrictStreets.ToListAsync();
+            var districtStreets = await _context.DistrictStreets.AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<DistrictStreetDto>>(districtStreets);
             return Ok(dto);
         }

@@ -24,7 +24,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StatusDto>>> GetStatuses()
         {
-            var statuses = await _context.Statuses.ToListAsync();
+            var statuses = await _context.Statuses.AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<StatusDto>>(statuses);
             return Ok(dto);
         }

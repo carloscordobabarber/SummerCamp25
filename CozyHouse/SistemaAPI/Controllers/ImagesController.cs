@@ -24,7 +24,7 @@ namespace SistemaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ImagesDto>>> GetImages()
         {
-            var images = await _context.imageApartments.ToListAsync();
+            var images = await _context.imageApartments.AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<ImagesDto>>(images);
             return Ok(dto);
         }
