@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-paginador',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './paginador.html',
   styleUrl: './paginador.css'
 })
@@ -31,7 +32,8 @@ export class Paginador {
     this.pageSizeChange.emit(Number(size));
   }
 
-  onPageSizeSelect(event: Event) {
+  onPageSizeSelect(event: any) {
+    // Ya no es necesario con ngModel, pero se deja por compatibilidad
     const value = +(event.target as HTMLSelectElement).value;
     this.changePageSize(value);
   }
