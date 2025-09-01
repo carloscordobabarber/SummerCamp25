@@ -46,8 +46,8 @@
 
   <!-- Vista Cards -->
   <div *ngIf="vista === 'card'" class="row g-4">
-    <div class="col-md-6 col-lg-4" *ngFor="let rental of rentals">
-      <app-cards [apartment]="rental"></app-cards>
+    <div class="col-md-6 col-lg-4" *ngFor="let apartment of apartments">
+      <app-cards [apartment]="apartment"></app-cards>
     </div>
   </div>
 </div>
