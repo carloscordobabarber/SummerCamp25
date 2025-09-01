@@ -72,21 +72,23 @@ export class ApartmentDetails implements OnInit {
         this.isRenting = false;
         return;
       }
-      const rental: Partial<Rental> = {
+      const rental: Rental = {
+        id: 0, // Enviar 0 para que el backend genere el ID
         userId: this.userId!,
         apartmentId: this.apartment!.id,
         startDate: start.toISOString(),
         endDate: end.toISOString(),
         statusId: "1"
       };
-      this.rentalsService.createRental(rental as Rental).subscribe({
+      this.rentalsService.createRental(rental).subscribe({
         next: () => {
           this.rentMessage = '¡Alquiler realizado con éxito!';
           this.isRenting = false;
         },
-        error: () => {
+        error: (err) => {
           this.rentMessage = 'Error al realizar el alquiler.';
           this.isRenting = false;
+          console.error('Error al crear rental:', err);
         }
       });
     });

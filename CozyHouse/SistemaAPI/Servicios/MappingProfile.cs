@@ -38,6 +38,7 @@ namespace SistemaAPI.Servicios
             CreateMap<Payment, PaymentDto>();
 
             CreateMap<Rental, RentalDto>();
+            CreateMap<RentalDto, Rental>();
 
             CreateMap<Status, StatusDto>();
 
