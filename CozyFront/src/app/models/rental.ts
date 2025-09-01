@@ -4,5 +4,5 @@ export interface Rental {
   apartmentId: number;
   startDate: string;
   endDate: string;
-  statusId: number;
+  statusId: string;
 }

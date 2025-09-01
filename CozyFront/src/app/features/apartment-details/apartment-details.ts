@@ -77,7 +77,7 @@ export class ApartmentDetails implements OnInit {
         apartmentId: this.apartment!.id,
         startDate: start.toISOString(),
         endDate: end.toISOString(),
-        statusId: 1
+        statusId: "1"
       };
       this.rentalsService.createRental(rental as Rental).subscribe({
         next: () => {
