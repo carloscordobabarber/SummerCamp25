@@ -20,7 +20,7 @@
             <app-profile-details *ngIf="selectedSection === 'details'" [user]="loggedUser"></app-profile-details>
             <app-my-rentals *ngIf="selectedSection === 'my-rentals' && loggedUser" [user]="loggedUser"></app-my-rentals>
             <app-my-contracts *ngIf="selectedSection === 'my-contracts'" [user]="loggedUser"></app-my-contracts>
-            <!-- <app-incidences *ngIf="selectedSection === 'incidences'" [user]="loggedUser"></app-incidences> -->
+            <app-incidences *ngIf="selectedSection === 'incidences'" [user]="loggedUser"></app-incidences>
         </main>
     </div>
 </div>

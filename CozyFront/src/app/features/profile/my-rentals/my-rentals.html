@@ -13,14 +13,14 @@
 
   <!-- Vista Lista -->
   <div *ngIf="vista === 'lista'">
-    <table class="table table-striped table-hover align-middle">
+    <table class="table table-hover">
       <thead class="table-light">
         <tr>
           <th>Distrito</th>
           <th>Dirección</th>
           <th>Fecha Inicio</th>
           <th>Fecha Fin</th>
-          <th>Monto</th>
+          <th>Precio</th>
           <th>Estado</th>
         </tr>
       </thead>
@@ -33,8 +33,8 @@
             <span *ngIf="rental.floor">, {{ rental.floor }}</span>
             <span *ngIf="rental.apartmentDoor">, {{ rental.apartmentDoor }}</span>
           </td>
-          <td>{{ rental.startDate | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ rental.endDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ rental.startDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{ rental.endDate | date:'dd/MM/yyyy' }}</td>
           <td>{{ rental.apartmentPrice | currency:'EUR':'symbol':'1.0-0' }}</td>
           <td>
             <span class="badge bg-info">{{ rental.statusName }}</span>

@@ -5,8 +5,6 @@ import { UserRentalsService } from '../../../services/user/user-rentals.service'
 
 declare var bootstrap: any;
 
-// Puedes adaptar la interfaz si necesitas más campos
-
 @Component({
   selector: 'app-my-contracts',
   standalone: false,
@@ -42,7 +40,7 @@ export class MyContracts implements AfterViewInit, OnInit {
   }
 
   openContract(contract: UserRental) {
-    this.selectedContract = contract;
+    this.selectedContract = { ...contract }; //contract;
     this.modalInstance.show();
 
     setTimeout(() => {
@@ -58,5 +56,37 @@ export class MyContracts implements AfterViewInit, OnInit {
 
   closeContract() {
     this.modalInstance.hide();
+  }
+
+  getEstadoContrato(contract: UserRental): string {
+    const hoy = new Date();
+    const inicio = new Date(contract.startDate);
+    const fin = new Date(contract.endDate);
+    if (hoy < inicio) {
+      return 'Pendiente';
+    } else if (hoy > fin) {
+      return 'Finalizado';
+    } else {
+      return 'Activo';
+    }
+  }
+
+  isContratoActivo(contract: UserRental): boolean {
+    const hoy = new Date();
+    const inicio = new Date(contract.startDate);
+    const fin = new Date(contract.endDate);
+    return hoy >= inicio && hoy <= fin;
+  }
+
+  isContratoFinalizado(contract: UserRental): boolean {
+    const hoy = new Date();
+    const fin = new Date(contract.endDate);
+    return hoy > fin;
+  }
+
+  isContratoPendiente(contract: UserRental): boolean {
+    const hoy = new Date();
+    const inicio = new Date(contract.startDate);
+    return hoy < inicio;
   }
 }
