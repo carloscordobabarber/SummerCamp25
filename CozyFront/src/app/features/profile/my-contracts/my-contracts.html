@@ -4,28 +4,28 @@
   <table class="table table-hover">
     <thead class="table-light">
       <tr>
-        <th>Distrito</th>
-        <th>Dirección</th>
+        <th>Nombre</th>
         <th>Fecha Inicio</th>
         <th>Fecha Fin</th>
-        <th>Precio</th>
         <th>Estado</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let contract of contracts" (dblclick)="openContract(contract)" style="cursor: pointer;">
-        <td>{{ contract.districtName }}</td>
         <td>
-          {{ contract.streetName }}
-          <span *ngIf="contract.portal">, {{ contract.portal }}</span>
-          <span *ngIf="contract.floor">, {{ contract.floor }}</span>
-          <span *ngIf="contract.apartmentDoor">, {{ contract.apartmentDoor }}</span>
+          Contrato Alquiler - {{ contract.streetName }}{{ contract.portal ? contract.portal : '' }}, {{
+          contract.apartmentFloor }}{{ contract.apartmentDoor ? contract.apartmentDoor : '' }}
         </td>
         <td>{{ contract.startDate | date:'dd/MM/yyyy' }}</td>
         <td>{{ contract.endDate | date:'dd/MM/yyyy' }}</td>
-        <td>{{ contract.apartmentPrice | currency:'EUR':'symbol':'1.0-0' }}</td>
         <td>
-          <span class="badge bg-info">{{ contract.statusName }}</span>
+          <span class="badge" [ngClass]="{
+            'bg-success': isContratoActivo(contract),
+            'bg-danger': isContratoFinalizado(contract),
+            'bg-secondary': isContratoPendiente(contract)
+          }">
+            {{ getEstadoContrato(contract) }}
+          </span>
         </td>
       </tr>
     </tbody>
@@ -33,35 +33,113 @@
 </div>
 
 <!-- Modal Bootstrap -->
-<div #contractModal class="modal fade" tabindex="-1" aria-labelledby="contractModalLabel" aria-hidden="true">
+<!-- <div #contratoModal class="modal fade" tabindex="-1" aria-labelledby="contractModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-
       <div class="modal-header">
-        <h5 class="modal-title" id="contractModalLabel">Detalle del contract</h5>
+        <h5 class="modal-title" id="contractModalLabel">Detalle del contrato</h5>
         <button type="button" class="btn-close" aria-label="Cerrar" (click)="closeContract()"></button>
       </div>
-
       <div class="modal-body" *ngIf="selectedContract">
-        <h4>contract de alquiler</h4>
-        <p><strong>Distrito:</strong> {{ selectedContract.districtName }}</p>
-        <p><strong>Dirección:</strong> {{ selectedContract.streetName }}<span *ngIf="selectedContract.portal">, {{ selectedContract.portal }}</span><span *ngIf="selectedContract.floor">, {{ selectedContract.floor }}</span><span *ngIf="selectedContract.apartmentDoor">, {{ selectedContract.apartmentDoor }}</span></p>
+        <h4>Contrato de alquiler</h4>
+        <p><strong>Nombre:</strong> Contrato Alquiler - {{ selectedContract.streetName }}{{ selectedContract.portal ? selectedContract.portal : '' }}, {{ selectedContract.apartmentFloor }}{{ selectedContract.apartmentDoor ? selectedContract.apartmentDoor : '' }}</p>
         <p><strong>Fecha Inicio:</strong> {{ selectedContract.startDate | date:'dd/MM/yyyy' }}</p>
         <p><strong>Fecha Fin:</strong> {{ selectedContract.endDate | date:'dd/MM/yyyy' }}</p>
-        <p><strong>Precio:</strong> {{ selectedContract.apartmentPrice | currency:'EUR':'symbol':'1.0-0' }}</p>
-        <p><strong>Estado:</strong> {{ selectedContract.statusName }}</p>
+        <p><strong>Estado:</strong> 
+          <span class="badge" [ngClass]="{
+            'bg-success': isContratoActivo(selectedContract),
+            'bg-danger': isContratoFinalizado(selectedContract),
+            'bg-secondary': isContratoPendiente(selectedContract)
+          }">
+            {{ getEstadoContrato(selectedContract) }}
+          </span>
+        </p>
         <hr />
         <p>
-          Aquí iría la simulación del contract con toda la información legal y detalles específicos que quieras mostrar.
+          Aquí iría la simulación del contrato con toda la información legal y detalles específicos que quieras mostrar.
         </p>
       </div>
-
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeContract()">Cerrar</button>
       </div>
+    </div>
+  </div>
+</div> -->
 
+<!-- Modal Bootstrap Mejorado -->
+<div #contratoModal class="modal fade" tabindex="-1" aria-labelledby="contractModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="font-family: 'Times New Roman', Times, serif; font-size: 16px; line-height: 1.5;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contractModalLabel">Detalle del contrato</h5>
+        <button type="button" class="btn-close" aria-label="Cerrar" (click)="closeContract()"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedContract" style="white-space: pre-line;">
+        <h3 style="text-align: center; text-decoration: underline; margin-bottom: 1rem;">Contrato de Alquiler</h3>
+
+        <p><strong>Nombre del Contrato:</strong> Contrato Alquiler - {{ selectedContract.streetName }}{{
+          selectedContract.portal ? selectedContract.portal : '' }}, {{ selectedContract.apartmentFloor }}{{
+          selectedContract.apartmentDoor ? selectedContract.apartmentDoor : '' }}</p>
+
+        <p><strong>Fecha Inicio:</strong> {{ selectedContract.startDate | date:'dd/MM/yyyy' }}</p>
+
+        <p><strong>Fecha Fin:</strong> {{ selectedContract.endDate | date:'dd/MM/yyyy' }}</p>
+
+        <p><strong>Estado:</strong>
+          <span class="badge" [ngClass]="{
+            'bg-success': isContratoActivo(selectedContract),
+            'bg-danger': isContratoFinalizado(selectedContract),
+            'bg-secondary': isContratoPendiente(selectedContract)
+          }">
+            {{ getEstadoContrato(selectedContract) }}
+          </span>
+        </p>
+
+        <hr>
+
+        <p>
+          Por medio del presente contrato, <strong>'el arrendatario'</strong> y <strong>el arrendador,
+            CozyHouse,</strong> acuerdan lo siguiente:
+        </p>
+
+        <p>
+          1. <strong>Objeto del Contrato:</strong> El arrendador concede en alquiler el inmueble ubicado en {{
+          selectedContract.streetName }}{{ selectedContract.portal ? selectedContract.portal : '' }}, {{
+          selectedContract.apartmentFloor }}{{ selectedContract.apartmentDoor ? selectedContract.apartmentDoor : '' }},
+          para uso residencial/comercial conforme a las condiciones establecidas.
+        </p>
+
+        <p>
+          2. <strong>Duración:</strong> El presente contrato tendrá una duración desde la fecha {{
+          selectedContract.startDate | date:'dd/MM/yyyy' }} hasta la fecha {{ selectedContract.endDate |
+          date:'dd/MM/yyyy' }}.
+        </p>
+
+        <p>
+          3. <strong>Pago:</strong> El arrendatario se compromete a realizar los pagos mensuales en las fechas
+          establecidas, bajo las condiciones acordadas previamente.
+        </p>
+
+        <p>
+          4. <strong>Obligaciones:</strong> Ambas partes se comprometen a respetar y cumplir con las cláusulas
+          estipuladas para garantizar el buen uso y mantenimiento del inmueble.
+        </p>
+
+        <br /><br />
+        <div style="display: flex; justify-content: space-between; margin-top: 4rem;">
+          <div style="text-align: center;">
+            ___________________________<br />
+            <strong>Arrendatario</strong>
+          </div>
+          <div style="text-align: center;">
+            ___________________________<br />
+            <strong>Arrendador</strong>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeContract()">Cerrar</button>
+      </div>
     </div>
   </div>
 </div>
-
-

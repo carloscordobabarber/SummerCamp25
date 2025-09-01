@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IncidenceForm } from './components/incidence-form/incidence-form';
 import { IncidenceViewer } from './components/incidence-viewer/incidence-viewer';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, IncidenceForm, IncidenceViewer]
 })
 export class Incidences {
+  @Input() user: any;
   tab: 'nueva' | 'historial' = 'nueva';
   mockIncidence = {
     id: 1,

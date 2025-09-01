@@ -1,9 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { RentalsService } from '../../../services/rentals/rentals.service';
 import { UserProfile } from '../../../models/user';
-import { UserRental } from '../../../models/user-rental';
-import { UserService } from '../../../services/user/user.service';
 import { UserRentalsService } from '../../../services/user/user-rentals.service';
+import { UserRental } from '../../../models/user-rental';
 
 @Component({
   selector: 'app-my-rentals',
@@ -17,7 +15,7 @@ export class MyRentals {
   rentals: UserRental[] = [];
   vista: 'lista' | 'card' = 'lista';
 
-  constructor(private userService: UserRentalsService) {}
+  constructor(private userRentalsService: UserRentalsService) {}
 
   ngOnInit(): void {
     const userIdStr = localStorage.getItem('userId');
@@ -30,7 +28,7 @@ export class MyRentals {
   }
 
   loadRentals(userId: number) {
-    this.userService.getRentalsByUserId(userId).subscribe({
+    this.userRentalsService.getRentalsByUserId(userId).subscribe({
       next: (data) => this.rentals = data,
       error: (err) => console.error('Error al cargar alquileres', err)
     });
