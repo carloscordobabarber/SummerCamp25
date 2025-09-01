@@ -62,11 +62,46 @@ namespace SistemaAPI.Controllers
 
         // GET: api/Rental
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RentalDto>>> GetRentals()
+        public async Task<ActionResult<object>> GetRentals(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] int? userId = null,
+            [FromQuery] int? apartmentId = null,
+            [FromQuery] DateTime? startDate = null,
+            [FromQuery] DateTime? endDate = null,
+            [FromQuery] string? statusId = null
+        )
         {
-            var rentals = await _context.Rentals.AsNoTracking().ToListAsync();
+            var rentalsQuery = _context.Rentals.AsNoTracking().AsQueryable();
+
+            if (userId.HasValue)
+                rentalsQuery = rentalsQuery.Where(r => r.UserId == userId.Value);
+
+            if (apartmentId.HasValue)
+                rentalsQuery = rentalsQuery.Where(r => r.ApartmentId == apartmentId.Value);
+
+            if (startDate.HasValue)
+                rentalsQuery = rentalsQuery.Where(r => r.StartDate >= startDate.Value);
+
+            if (endDate.HasValue)
+                rentalsQuery = rentalsQuery.Where(r => r.EndDate <= endDate.Value);
+
+            if (!string.IsNullOrEmpty(statusId))
+                rentalsQuery = rentalsQuery.Where(r => r.StatusId.ToLower().Contains(statusId.ToLower()));
+
+            var totalCount = await rentalsQuery.CountAsync();
+            var rentals = await rentalsQuery
+                .OrderByDescending(r => r.CreatedAt)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
             var dto = _mapper.Map<List<RentalDto>>(rentals);
-            return Ok(dto);
+            return Ok(new
+            {
+                totalCount,
+                items = dto
+            });
         }
 
         // POST: api/Rental

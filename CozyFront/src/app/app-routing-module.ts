@@ -15,6 +15,7 @@ import { Login } from './features/login/login';
 import { ProfileDetails } from './features/profile/profile-details/profile-details';
 import { MyRentals } from './features/profile/my-rentals/my-rentals';
 import { MyContracts } from './features/profile/my-contracts/my-contracts';
+import { ContractList } from './features/contract-list/contract-list';
 
 const routes: Routes = [
   { path: '', component: CardManager },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'apartment-list', component: ApartmentList },
   { path: 'client-list', component: ClientList },
   { path: 'incidence-list', component: IncidenceList },
+  { path: 'contract-list', component: ContractList },
   { path: 'contact', component: Contact },
   { path: 'about', component: About },
   { path: '**', redirectTo: '' }

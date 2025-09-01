@@ -13,8 +13,24 @@ export class RentalsService {
 
   constructor(private http: HttpClient) {}
 
-  getRentals(): Observable<Rental[]> {
-    return this.http.get<Rental[]>(this.apiUrl);
+  getRentalsWithFilters(filters: {
+    userId?: string;
+    apartmentId?: string;
+    statusId?: string;
+    startDate?: string;
+    endDate?: string;
+    page?: number;
+    pageSize?: number;
+  }): Observable<{ items: Rental[]; totalCount: number }> {
+    const params: any = {};
+    if (filters.userId) params.userId = filters.userId;
+    if (filters.apartmentId) params.apartmentId = filters.apartmentId;
+    if (filters.statusId) params.statusId = filters.statusId;
+    if (filters.startDate) params.startDate = filters.startDate;
+    if (filters.endDate) params.endDate = filters.endDate;
+    if (filters.page) params.page = filters.page;
+    if (filters.pageSize) params.pageSize = filters.pageSize;
+    return this.http.get<{ items: Rental[]; totalCount: number }>(`${this.apiUrl}`, { params });
   }
 
   getRental(id: number): Observable<Rental> {
