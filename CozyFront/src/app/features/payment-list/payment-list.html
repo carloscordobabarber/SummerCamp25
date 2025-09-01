@@ -1,0 +1,55 @@
+<div class="card-manager-container">
+	<div class="card-manager-layout">
+		<aside class="sidebar">
+			<div class="filters-col">
+				<div class="filter-item">
+					<app-search-bar (search)="onStatusIdSearch($event)" placeholder="Buscar por Id estado..."></app-search-bar>
+				</div>
+				<div class="filter-item">
+					<app-search-bar (search)="onAmountSearch($event)" placeholder="Buscar por Importe..."></app-search-bar>
+				</div>
+				<div class="filter-item">
+					<app-search-bar (search)="onRentalIdSearch($event)" placeholder="Buscar por Id alquiler..."></app-search-bar>
+				</div>
+				<div class="filter-item">
+					<app-search-bar (search)="onBankAccountSearch($event)" placeholder="Buscar por Cuenta bancaria..."></app-search-bar>
+				</div>
+						<div class="filter-item">
+							<app-date-range-filter label="Rango de fechas de pago" (dateRangeChange)="onDateRangeChange($event)"></app-date-range-filter>
+						</div>
+			</div>
+		</aside>
+		<main class="main-content">
+			<div *ngIf="cargando">Cargando pagos...</div>
+			<table *ngIf="!cargando" class="table table-striped align-middle">
+				<thead class="table-light">
+					<tr>
+						<th>#</th>
+						<th>Id estado</th>
+						<th>Importe</th>
+						<th>Id alquiler</th>
+						<th>Fecha de pago</th>
+						<th>Cuenta bancaria</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let payment of payments">
+						<td>{{ payment.id }}</td>
+						<td>{{ payment.statusId }}</td>
+						<td>{{ payment.amount | currency:'EUR':'symbol':'1.2-2' }}</td>
+						<td>{{ payment.rentalId }}</td>
+						<td>{{ payment.paymentDate | date:'dd/MM/yyyy' }}</td>
+						<td>{{ payment.bankAccount }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="paginador-footer-space">
+				<div class="d-flex justify-content-center mt-4">
+					<app-paginador [page]="page" [pageSize]="pageSize" [totalItems]="totalCount" (pageChange)="onPageChange($event)"
+						(pageSizeChange)="onPageSizeChange($event)">
+					</app-paginador>
+				</div>
+			</div>
+		</main>
+	</div>
+</div>

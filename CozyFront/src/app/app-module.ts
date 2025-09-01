@@ -32,6 +32,8 @@ import { MyContracts } from './features/profile/my-contracts/my-contracts';
 
 import { DateRangeFilter } from './shared/date-filter/date-range-filter';
 import { ContractList } from './features/contract-list/contract-list';
+import { DateFilter } from './shared/date-filter/date-filter';
+import { PaymentList } from './features/payment-list/payment-list';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import { ContractList } from './features/contract-list/contract-list';
     MyContracts,
     SelectFilterComponent,
     ContractList,
-    DateRangeFilter
+    DateRangeFilter,
+    DateFilter,
+    PaymentList
   ],
   imports: [
     BrowserModule,

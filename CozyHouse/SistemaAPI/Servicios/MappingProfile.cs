@@ -35,7 +35,7 @@ namespace SistemaAPI.Servicios
 
             CreateMap<Log, LogDto>();
 
-            CreateMap<Payment, PaymentDto>();
+            CreateMap<Payment, PaymentDto>().ReverseMap();
 
             CreateMap<Rental, RentalDto>();
             CreateMap<RentalDto, Rental>();
