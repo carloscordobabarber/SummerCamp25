@@ -28,7 +28,8 @@ namespace SistemaAPI.Controllers
             [FromQuery] string? statusId = null,
             [FromQuery] double? amount = null,
             [FromQuery] int? rentalId = null,
-            [FromQuery] DateTime? paymentDate = null,
+            [FromQuery] DateTime? startDate = null,
+            [FromQuery] DateTime? endDate = null,
             [FromQuery] string? bankAccount = null
         )
         {
@@ -43,8 +44,11 @@ namespace SistemaAPI.Controllers
             if (rentalId.HasValue)
                 paymentsQuery = paymentsQuery.Where(p => p.RentalId == rentalId.Value);
 
-            if (paymentDate.HasValue)
-                paymentsQuery = paymentsQuery.Where(p => p.PaymentDate.Date == paymentDate.Value.Date);
+            if (startDate.HasValue)
+                paymentsQuery = paymentsQuery.Where(p => p.PaymentDate.Date >= startDate.Value.Date);
+
+            if (endDate.HasValue)
+                paymentsQuery = paymentsQuery.Where(p => p.PaymentDate.Date <= endDate.Value.Date);
 
             if (!string.IsNullOrEmpty(bankAccount))
                 paymentsQuery = paymentsQuery.Where(p => p.BankAccount.Length >= 4 && p.BankAccount.Substring(p.BankAccount.Length - 4).Contains(bankAccount));

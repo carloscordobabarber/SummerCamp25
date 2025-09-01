@@ -1,0 +1,18 @@
+@import '../../features/apartment-list/apartment-list.css';
+/* Sidebar más ancho para filtros */
+.sidebar {
+	width: 420px !important;
+	min-width: 370px;
+	max-width: 500px;
+}
+
+/* Mejorar espacio para el filtro de fechas */
+.date-range-filter .date-inputs {
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+.date-range-filter input[type="date"] {
+	min-width: 140px;
+	width: 100%;
+	max-width: 200px;
+}
