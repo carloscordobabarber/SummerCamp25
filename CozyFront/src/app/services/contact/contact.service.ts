@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Contact } from '../../features/contact/contact';
 
 export interface ContactDto {
   id?: number;
@@ -15,22 +16,22 @@ export interface ContactDto {
   providedIn: 'root',
 })
 export class ContactService {
-  private apiUrl = '/api/Contacts';
+  private apiUrl = 'https://devdemoapi4.azurewebsites.net/api/contacts';
 
   constructor(private http: HttpClient) {}
 
-  getContacts(params?: {
+  getContactsWithFilters(filters: {
+    email?: string;
+    contactReason?: string;
     page?: number;
     pageSize?: number;
-    contactReason?: string;
-  }): Observable<{ totalCount: number; items: ContactDto[] }> {
-    let httpParams = new HttpParams();
-    if (params) {
-      if (params.page) httpParams = httpParams.set('page', params.page.toString());
-      if (params.pageSize) httpParams = httpParams.set('pageSize', params.pageSize.toString());
-      if (params.contactReason) httpParams = httpParams.set('contactReason', params.contactReason);
-    }
-    return this.http.get<{ totalCount: number; items: ContactDto[] }>(this.apiUrl, { params: httpParams });
+  }): Observable<{ items: Contact[]; totalCount: number }> {
+    const params: any = {};
+    if (filters.email) params.email = filters.email;
+    if (filters.contactReason) params.contactReason = filters.contactReason;
+    if (filters.page) params.page = filters.page;
+    if (filters.pageSize) params.pageSize = filters.pageSize;
+    return this.http.get<{ items: Contact[]; totalCount: number }>(`${this.apiUrl}`, { params });
   }
 
   getContact(id: number): Observable<ContactDto> {

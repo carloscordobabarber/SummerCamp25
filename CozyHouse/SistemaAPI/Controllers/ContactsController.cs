@@ -25,12 +25,16 @@ namespace SistemaAPI.Controllers
         public async Task<ActionResult<object>> GetContacts(
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10,
-            [FromQuery] string? contactReason = null)
+            [FromQuery] string? contactReason = null,
+            [FromQuery] string? email = null)
         {
             var contactsQuery = _context.Set<Contact>().AsNoTracking().AsQueryable();
 
             if (!string.IsNullOrEmpty(contactReason))
                 contactsQuery = contactsQuery.Where(c => c.ContactReason == contactReason);
+
+            if (!string.IsNullOrEmpty(email))
+                contactsQuery = contactsQuery.Where(c => c.Email.ToLower().Contains(email.ToLower()));
 
             var totalCount = await contactsQuery.CountAsync();
 

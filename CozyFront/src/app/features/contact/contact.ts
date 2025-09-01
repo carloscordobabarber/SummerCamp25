@@ -21,6 +21,22 @@ export class Contact {
   submitSuccess: boolean | null = null;
   submitError: string | null = null;
 
+  // Admin list
+  contacts: any[] = [];
+  filterEmail: string = '';
+  filterContactReason: string = '';
+  page = 1;
+  pageSize = 10;
+  totalCount = 0;
+  cargando = false;
+
+  contactReasonOptions = [
+    'Trabaja con nosotros',
+    'Reclamaciones',
+    'Solicitudes',
+    'Otros'
+  ];
+
   constructor(private fb: FormBuilder, private contactService: ContactService) {
     this.contactForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -56,5 +72,70 @@ export class Contact {
         }
       });
     }
+  }
+
+  get isAdmin(): boolean {
+    try {
+      const user = localStorage.getItem('userRole');
+      if (!user) return false;
+      return user === 'Admin';
+    } catch {
+      return false;
+    }
+  }
+
+  // Métodos para la lista de contactos admin
+  ngOnInit() {
+    if (this.isAdmin) {
+      this.loadContacts();
+    }
+  }
+
+  loadContacts() {
+    this.cargando = true;
+    this.contactService.getContactsWithFilters({
+      email: this.filterEmail,
+      contactReason: this.filterContactReason,
+      page: this.page,
+      pageSize: this.pageSize
+    }).subscribe((result: { items: any[]; totalCount: number }) => {
+      this.contacts = result.items;
+      this.totalCount = result.totalCount;
+      this.cargando = false;
+    }, () => {
+      this.cargando = false;
+    });
+  }
+
+  onEmailSearch(term: string) {
+    this.filterEmail = term;
+    this.page = 1;
+    this.loadContacts();
+  }
+  onContactReasonChange(val: string) {
+    // Map label to value for API
+    switch (val) {
+      case 'Trabaja con nosotros':
+        this.filterContactReason = 'trabaja'; break;
+      case 'Reclamaciones':
+        this.filterContactReason = 'reclamaciones'; break;
+      case 'Solicitudes':
+        this.filterContactReason = 'solicitudes'; break;
+      case 'Otros':
+        this.filterContactReason = 'otros'; break;
+      default:
+        this.filterContactReason = '';
+    }
+    this.page = 1;
+    this.loadContacts();
+  }
+  onPageChange(newPage: number) {
+    this.page = newPage;
+    this.loadContacts();
+  }
+  onPageSizeChange(newSize: number) {
+    this.pageSize = +newSize;
+    this.page = 1;
+    this.loadContacts();
   }
 }
