@@ -22,11 +22,61 @@ namespace SistemaAPI.Controllers
 
         // GET: api/Payments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PaymentDto>>> GetPayments()
+        public async Task<ActionResult<object>> GetPayments(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] string? statusId = null,
+            [FromQuery] double? amount = null,
+            [FromQuery] int? rentalId = null,
+            [FromQuery] DateTime? paymentDate = null,
+            [FromQuery] string? bankAccount = null
+        )
         {
-            var payments = await _context.Payments.AsNoTracking().ToListAsync();
+            var paymentsQuery = _context.Payments.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrEmpty(statusId))
+                paymentsQuery = paymentsQuery.Where(p => p.StatusId.ToLower().Contains(statusId.ToLower()));
+
+            if (amount.HasValue)
+                paymentsQuery = paymentsQuery.Where(p => p.Amount <= amount.Value);
+
+            if (rentalId.HasValue)
+                paymentsQuery = paymentsQuery.Where(p => p.RentalId == rentalId.Value);
+
+            if (paymentDate.HasValue)
+                paymentsQuery = paymentsQuery.Where(p => p.PaymentDate.Date == paymentDate.Value.Date);
+
+            if (!string.IsNullOrEmpty(bankAccount))
+                paymentsQuery = paymentsQuery.Where(p => p.BankAccount.Length >= 4 && p.BankAccount.Substring(p.BankAccount.Length - 4).Contains(bankAccount));
+
+            var totalCount = await paymentsQuery.CountAsync();
+            var payments = await paymentsQuery
+                .OrderByDescending(p => p.PaymentDate)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
             var dto = _mapper.Map<List<PaymentDto>>(payments);
-            return Ok(dto);
+
+            // Enmascarar BankAccount
+            foreach (var item in dto)
+            {
+                if (!string.IsNullOrEmpty(item.BankAccount) && item.BankAccount.Length > 4)
+                {
+                    var last4 = item.BankAccount.Substring(item.BankAccount.Length - 4);
+                    item.BankAccount = new string('*', item.BankAccount.Length - 4) + last4;
+                }
+                else if (!string.IsNullOrEmpty(item.BankAccount))
+                {
+                    item.BankAccount = new string('*', item.BankAccount.Length);
+                }
+            }
+
+            return Ok(new
+            {
+                totalCount,
+                items = dto
+            });
         }
 
         // GET: api/Payments/5
@@ -38,6 +88,16 @@ namespace SistemaAPI.Controllers
                 return NotFound();
 
             var dto = _mapper.Map<PaymentDto>(payment);
+            // Enmascarar BankAccount
+            if (!string.IsNullOrEmpty(dto.BankAccount) && dto.BankAccount.Length > 4)
+            {
+                var last4 = dto.BankAccount.Substring(dto.BankAccount.Length - 4);
+                dto.BankAccount = new string('*', dto.BankAccount.Length - 4) + last4;
+            }
+            else if (!string.IsNullOrEmpty(dto.BankAccount))
+            {
+                dto.BankAccount = new string('*', dto.BankAccount.Length);
+            }
             return Ok(dto);
         }
 

@@ -30,6 +30,9 @@ import { ProfileDetails } from './features/profile/profile-details/profile-detai
 import { MyRentals } from './features/profile/my-rentals/my-rentals';
 import { MyContracts } from './features/profile/my-contracts/my-contracts';
 
+import { DateRangeFilter } from './shared/date-filter/date-range-filter';
+import { ContractList } from './features/contract-list/contract-list';
+
 @NgModule({
   declarations: [
     App,
@@ -46,15 +49,17 @@ import { MyContracts } from './features/profile/my-contracts/my-contracts';
     ClientList,
     IncidenceList,
     SearchBar,
-  SliderFilter,
-  RangeSliderFilter,
+    SliderFilter,
+    RangeSliderFilter,
     ChatBot,
     SliderFilter,
     ApartmentDetails,
     ProfileDetails,
     MyRentals,
     MyContracts,
-    SelectFilterComponent
+    SelectFilterComponent,
+    ContractList,
+    DateRangeFilter
   ],
   imports: [
     BrowserModule,
@@ -65,7 +70,7 @@ import { MyContracts } from './features/profile/my-contracts/my-contracts';
     Incidences,
     IncidenceForm,
     IncidenceViewer,
-  Paginador
+    Paginador
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

@@ -1,0 +1,15 @@
+.date-range-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.date-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+input[type="date"] {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
