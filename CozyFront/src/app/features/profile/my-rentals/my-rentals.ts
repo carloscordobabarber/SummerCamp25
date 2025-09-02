@@ -1,3 +1,5 @@
+import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+declare var bootstrap: any;
 import { Component, Input } from '@angular/core';
 import { UserProfile } from '../../../models/user';
 import { UserRentalsService } from '../../../services/user/user-rentals.service';
@@ -10,7 +12,10 @@ import { ApartmentCardDto } from '../../../services/apartment-card/apartment-car
   templateUrl: './my-rentals.html',
   styleUrl: './my-rentals.css'
 })
-export class MyRentals {
+export class MyRentals implements AfterViewInit {
+  @ViewChild('paymentModal') paymentModal!: ElementRef;
+  selectedRental: UserRental | null = null;
+  private modalInstance: any;
   @Input() user!: UserProfile;
   
   rentals: UserRental[] = [];
@@ -18,6 +23,29 @@ export class MyRentals {
   vista: 'lista' | 'card' = 'lista';
 
   constructor(private userRentalsService: UserRentalsService) {}
+  ngAfterViewInit() {
+    this.modalInstance = new bootstrap.Modal(this.paymentModal.nativeElement);
+    this.paymentModal.nativeElement.addEventListener('hidden.bs.modal', () => {
+      this.selectedRental = null;
+    });
+  }
+  openPaymentForm(rental: UserRental) {
+    this.selectedRental = { ...rental };
+    this.modalInstance.show();
+    setTimeout(() => {
+      const modalElement = this.paymentModal.nativeElement as HTMLElement;
+      const focusable = modalElement.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])') as HTMLElement;
+      if (focusable) {
+        focusable.focus();
+      } else {
+        modalElement.focus();
+      }
+    }, 100);
+  }
+
+  closePaymentForm() {
+    this.modalInstance.hide();
+  }
 
   ngOnInit(): void {
     const userIdStr = localStorage.getItem('userId');

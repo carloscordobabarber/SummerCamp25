@@ -18,10 +18,11 @@
         <tr>
           <th>Distrito</th>
           <th>Dirección</th>
-          <th>Fecha Inicio</th>
-          <th>Fecha Fin</th>
+          <th>Fecha inicio</th>
+          <th>Fecha fin</th>
           <th>Precio</th>
           <th>Estado</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -38,7 +39,12 @@
           <td>{{ rental.apartmentPrice | currency:'EUR':'symbol':'1.0-0' }}</td>
           <td>
             <span class="badge bg-info">{{ rental.statusName }}</span>
-          </td>
+            </td>
+            <td>
+              <span *ngIf="rental.statusName === 'Impago'"> 
+                <button class="btn btn-primary btn-sm ms-2" (click)="openPaymentForm(rental)">Pagar</button>
+              </span>
+            </td>
         </tr>
       </tbody>
     </table>
@@ -48,6 +54,17 @@
   <div *ngIf="vista === 'card'" class="row g-4">
     <div class="col-md-6 col-lg-4" *ngFor="let apartment of apartments">
       <app-cards [apartment]="apartment"></app-cards>
+    </div>
+  </div>
+</div>
+<div #paymentModal class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <app-payment-form
+        [rental]="selectedRental"
+        (paymentSuccess)="closePaymentForm()"
+        (paymentCancel)="closePaymentForm()">
+      </app-payment-form>
     </div>
   </div>
 </div>
