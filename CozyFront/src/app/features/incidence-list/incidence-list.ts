@@ -42,7 +42,7 @@ export class IncidenceList {
 
   loadIncidences() {
     const filters: any = {
-      issueType: this.filterIssueType && this.filterIssueType !== '-' ? this.issueTypeOptions.indexOf(this.filterIssueType) + 1 : undefined,
+      issueType: this.filterIssueType && this.filterIssueType !== '-' ? this.issueTypeOptions.indexOf(this.filterIssueType): undefined,
       assignedCompany: this.filterAssignedCompany ? this.filterAssignedCompany : undefined,
       apartmentId: this.filterApartmentId ? this.filterApartmentId : undefined,
       rentalId: this.filterRentalId ? this.filterRentalId : undefined,
@@ -99,12 +99,12 @@ export class IncidenceList {
 
   getIssueTypeText(issueType: number): string {
     switch (issueType) {
-      case 1: return 'Avería eléctrica';
-      case 2: return 'Fuga de agua';
-      case 3: return 'Problema de calefacción';
-      case 4: return 'Daños estructurales';
-      case 5: return 'Plagas';
-      case 6: return 'Problemas de acceso';
+      case 0: return 'Avería eléctrica';
+      case 1: return 'Fuga de agua';
+      case 2: return 'Problema de calefacción';
+      case 3: return 'Daños estructurales';
+      case 4: return 'Plagas';
+      case 5: return 'Problemas de acceso';
       default: return 'Otros';
     }
   }

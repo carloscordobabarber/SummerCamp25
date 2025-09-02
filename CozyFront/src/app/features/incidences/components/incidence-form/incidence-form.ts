@@ -2,6 +2,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { IncidencesService } from '../../../../services/incidences/incidences.service';
+import { Incidence } from '../../../../models/incidence';
 
 @Component({
   selector: 'app-incidence-form',
@@ -23,7 +25,7 @@ export class IncidenceForm {
     'Otros'
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private incidencesService: IncidencesService) {
     this.incidenceForm = this.fb.group({
       spokesperson: [
         ' ',
@@ -33,16 +35,23 @@ export class IncidenceForm {
         '',
         [Validators.required, Validators.maxLength(1000)]
       ],
-  issueType: [6, [Validators.required]]
+      issueType: [6, [Validators.required]],
+      apartmentId: [null, [Validators.required, Validators.min(1)]],
+      rentalId: [null, [Validators.required, Validators.min(1)]]
     });
   }
 
   get spokesperson() {
     return this.incidenceForm.get('spokesperson');
   }
-
   get description() {
     return this.incidenceForm.get('description');
+  }
+  get apartmentId() {
+    return this.incidenceForm.get('apartmentId');
+  }
+  get rentalId() {
+    return this.incidenceForm.get('rentalId');
   }
 
   onSubmit() {
@@ -54,8 +63,31 @@ export class IncidenceForm {
       }
       // issueType ya es un número del 0 al 6
       formValue.issueType = Number(formValue.issueType);
-      console.log(formValue);
-      // Aquí puedes enviar formValue a la API
+
+      // Construir el objeto Incidence para la API
+      const incidence: Incidence = {
+        id: 0,
+        spokesperson: formValue.spokesperson,
+        description: formValue.description,
+        issueType: formValue.issueType,
+        assignedCompany: '',
+        createdAt: new Date().toISOString(),
+        updatedAt: null,
+        apartmentId: Number(formValue.apartmentId),
+        rentalId: Number(formValue.rentalId),
+        tenantId: Number(localStorage.getItem('userId')),
+        statusId: 'P'
+      };
+
+      this.incidencesService.createIncidence(incidence).subscribe({
+        next: (res) => {
+          alert('Incidencia enviada correctamente');
+          this.incidenceForm.reset();
+        },
+        error: (err) => {
+          alert('Error al enviar la incidencia');
+        }
+      });
     } else {
       this.incidenceForm.markAllAsTouched();
     }
