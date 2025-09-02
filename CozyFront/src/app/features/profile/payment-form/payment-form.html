@@ -4,10 +4,10 @@
 		<label>Monto</label>
 		<input type="number" class="form-control" formControlName="amount" readonly>
 	</div>
-	<div class="mb-3">
-		<label>Alquiler</label>
-		<input type="text" class="form-control" [value]="rental.districtName + ', ' + rental.streetName" readonly>
-	</div>
+		<div class="mb-3" *ngIf="rental">
+			<label>Alquiler</label>
+			<input type="text" class="form-control" [value]="rental?.districtName + ', ' + rental?.streetName" readonly>
+		</div>
 	<div class="mb-3">
 		<label>Fecha de pago</label>
 		<input type="date" class="form-control" formControlName="paymentDate">

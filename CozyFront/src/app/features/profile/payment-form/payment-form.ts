@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,7 +12,7 @@ import { Payment } from '../../../models/payment';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule]
 })
-export class PaymentFormComponent {
+export class PaymentFormComponent implements OnChanges {
   @Input() rental: any;
   @Input() user: any;
   @Output() paymentSuccess = new EventEmitter<void>();
@@ -28,19 +28,39 @@ export class PaymentFormComponent {
   ) {}
 
   ngOnInit() {
+    this.initForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['rental'] && changes['rental'].currentValue) {
+      this.initForm();
+    }
+  }
+
+  private initForm() {
     this.paymentForm = this.fb.group({
       amount: [this.rental?.apartmentPrice, [Validators.required, Validators.min(1)]],
-      rentalId: [this.rental?.id, Validators.required],
+  rentalId: [this.rental ? this.rental.rentalId : '', Validators.required],
       bankAccount: ['', Validators.required],
       paymentDate: [new Date().toISOString().substring(0, 10), Validators.required]
     });
   }
 
   submit() {
-    if (this.paymentForm.invalid) return;
+    if (this.paymentForm.invalid) {
+      console.log('Formulario inválido:', this.paymentForm.value, this.paymentForm.status);
+      return;
+    }
     this.loading = true;
-    const payment: Payment = this.paymentForm.value;
-    payment.statusId = '1'; // Asume '1' es pagado, ajusta según tu lógica
+    const payment: Payment = {
+      ...this.paymentForm.value,
+      statusId: 'G',
+      amount: this.paymentForm.value.amount,
+      rentalId: this.paymentForm.value.rentalId,
+      bankAccount: this.paymentForm.value.bankAccount,
+      paymentDate: this.paymentForm.value.paymentDate
+    };
+    console.log('Enviando pago:', payment);
     this.paymentsService.createPayment(payment).subscribe({
       next: () => {
         this.loading = false;
@@ -49,6 +69,7 @@ export class PaymentFormComponent {
       error: err => {
         this.loading = false;
         this.error = 'Error al realizar el pago';
+        console.error('Error en el pago:', err);
       }
     });
   }
