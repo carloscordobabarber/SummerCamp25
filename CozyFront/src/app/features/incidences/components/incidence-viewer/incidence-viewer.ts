@@ -10,6 +10,7 @@ import { DatePipe, CommonModule } from '@angular/common';
 })
 export class IncidenceViewer {
   @Input() incidence: any;
+  @Input() incidences: any[] = [];
 
   incidenceTypes = [
     'Avería eléctrica',
@@ -25,5 +26,11 @@ export class IncidenceViewer {
     if (!this.incidence) return '';
     const idx = Number(this.incidence.issueType);
     return this.incidenceTypes[idx] ?? 'Desconocido';
+  }
+
+  get incidenceNumber(): number | null {
+    if (!this.incidence || !this.incidences?.length) return null;
+    const idx = this.incidences.findIndex(i => i.id === this.incidence.id);
+    return idx >= 0 ? idx + 1 : null;
   }
 }

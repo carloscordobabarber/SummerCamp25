@@ -1,5 +1,5 @@
 <div *ngIf="incidence" class="incidence-card">
-	<div class="incidence-id">Incidencia #{{ incidence.id }}</div>
+	<div class="incidence-id">Incidencia #{{ incidenceNumber }}</div>
 	<div class="incidence-field">
 		<span class="incidence-label">Tipo:</span>
 		<span class="incidence-value">{{ issueTypeName }}</span>
@@ -40,7 +40,4 @@
 		<span class="incidence-label">Estado:</span>
 		<span class="incidence-value">{{ incidence.statusId }}</span>
 	</div>
-</div>
-<div *ngIf="!incidence">
-	<em>No hay datos de incidencia para mostrar.</em>
 </div>
