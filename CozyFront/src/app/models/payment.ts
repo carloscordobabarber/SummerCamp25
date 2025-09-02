@@ -1,6 +1,6 @@
 export interface Payment {
   id: number;
-  statusId: number;
+  statusId: string;
   amount: number;
   rentalId: number;
   paymentDate: string;
