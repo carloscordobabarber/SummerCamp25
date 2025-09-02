@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IncidenceForm } from './components/incidence-form/incidence-form';
 import { IncidenceViewer } from './components/incidence-viewer/incidence-viewer';
+import { IncidenceSidebar } from './components/incidence-sidebar/incidence-sidebar';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,22 +9,20 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   templateUrl: './incidences.html',
   styleUrl: './incidences.css',
-  imports: [CommonModule, IncidenceForm, IncidenceViewer]
+  imports: [CommonModule, IncidenceForm, IncidenceViewer, IncidenceSidebar]
 })
 export class Incidences {
   @Input() user: any;
   tab: 'nueva' | 'historial' = 'nueva';
-  mockIncidence = {
-    id: 1,
-    spokesperson: 'Juan Pérez',
-    description: 'No funciona la luz del pasillo.',
-    issueType: 0,
-    assignedCompany: 'Electricistas S.A.',
-    createdAt: new Date(),
-    updatedAt: null,
-    apartmentId: 101,
-    rentalId: 2001,
-    tenantId: 3001,
-    statusId: 'A'
-  };
+  selectedIncidence: any = null;
+  incidences: any[] = [];
+
+  constructor() {
+    window.addEventListener('incidenceSelected', (e: any) => {
+      this.selectedIncidence = e.detail;
+    });
+    window.addEventListener('incidencesLoaded', (e: any) => {
+      this.incidences = e.detail;
+    });
+  }
 }
