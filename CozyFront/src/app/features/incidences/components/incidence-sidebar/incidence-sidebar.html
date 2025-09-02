@@ -1,0 +1,13 @@
+<div class="incidence-sidebar">
+    <h3>Mis incidencias</h3>
+    <div *ngIf="incidences.length === 0">
+        <em>No tienes incidencias registradas.</em>
+    </div>
+    <ul *ngIf="incidences.length > 0">
+            <li *ngFor="let inc of incidences" class="incidence-item" (click)="selectIncidence(inc)" style="cursor:pointer;">
+                <div class="incidence-type">{{ getTypeName(inc.issueType) }}</div>
+                <div class="incidence-date">Creada: {{ inc.createdAt | date:'short' }}</div>
+                <div class="incidence-desc">{{ inc.description }}</div>
+            </li>
+    </ul>
+</div>

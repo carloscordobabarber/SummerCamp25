@@ -1,0 +1,42 @@
+.incidence-sidebar {
+  width: 300px;
+  background: #f7f7fa;
+  border-right: 1px solid #e0e0e0;
+  padding: 1rem;
+  height: calc(100vh - 70px);
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.incidence-sidebar ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.incidence-sidebar h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+.incidence-item {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  margin-bottom: 1rem;
+  padding: 0.7rem 1rem;
+  transition: box-shadow 0.2s;
+}
+.incidence-item:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.incidence-type {
+  font-weight: bold;
+  color: #1976d2;
+}
+.incidence-date {
+  font-size: 0.9em;
+  color: #888;
+}
+.incidence-desc {
+  margin-top: 0.3em;
+  color: #444;
+}

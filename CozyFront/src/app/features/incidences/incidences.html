@@ -7,6 +7,9 @@
 		<app-incidence-form></app-incidence-form>
 	</ng-container>
 	<ng-container *ngIf="tab === 'historial'">
-		<app-incidence-viewer [incidence]="mockIncidence"></app-incidence-viewer>
+		<div style="display: flex; gap: 2em; align-items: flex-start;">
+			<app-incidence-sidebar></app-incidence-sidebar>
+			<app-incidence-viewer [incidence]="selectedIncidence" [incidences]="incidences"></app-incidence-viewer>
+		</div>
 	</ng-container>
 </div>

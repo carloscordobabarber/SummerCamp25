@@ -34,6 +34,7 @@ import { DateRangeFilter } from './shared/date-filter/date-range-filter';
 import { ContractList } from './features/contract-list/contract-list';
 import { DateFilter } from './shared/date-filter/date-filter';
 import { PaymentList } from './features/payment-list/payment-list';
+import { PaymentFormComponent } from './features/profile/payment-form/payment-form';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,6 @@ import { PaymentList } from './features/payment-list/payment-list';
     SliderFilter,
     RangeSliderFilter,
     ChatBot,
-    SliderFilter,
     ApartmentDetails,
     ProfileDetails,
     MyRentals,
@@ -64,6 +64,7 @@ import { PaymentList } from './features/payment-list/payment-list';
     DateRangeFilter,
     DateFilter,
     PaymentList
+    
   ],
   imports: [
     BrowserModule,
@@ -74,7 +75,8 @@ import { PaymentList } from './features/payment-list/payment-list';
     Incidences,
     IncidenceForm,
     IncidenceViewer,
-    Paginador
+    Paginador,
+    PaymentFormComponent
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
