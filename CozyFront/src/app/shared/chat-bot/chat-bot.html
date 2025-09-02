@@ -10,11 +10,12 @@
     <button class="close-btn" (click)="closeChat()">&times;</button>
   </div>
   <div class="chatbot-body">
-    <div class="chatbot-message bot">Soy su agente inmobiliario virtual, estoy listo para ayudarle</div>
-    <!-- Aquí irán los mensajes del usuario y del bot -->
+    <div *ngFor="let msg of messages" [ngClass]="{'chatbot-message': true, 'bot': msg.from === 'bot', 'user': msg.from === 'user'}">
+      {{ msg.text }}
+    </div>
   </div>
   <div class="chatbot-input-bar">
-    <input type="text" placeholder="Escriba su mensaje..." />
-    <button class="send-btn">Enviar</button>
+    <input type="text" placeholder="Escriba su mensaje..." [(ngModel)]="userInput" (keyup.enter)="sendMessage()" />
+    <button class="send-btn" (click)="sendMessage()">Enviar</button>
   </div>
 </div>

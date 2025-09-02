@@ -14,4 +14,12 @@ export class ApartmentClientsService {
   getApartments(): Observable<Apartment[]> {
     return this.http.get<Apartment[]>(this.apiUrl);
   }
+
+  setApartmentAvailable(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}/set-available`, {});
+  }
+
+  setApartmentUnavailable(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}/set-unavailable`, {});
+  }
 }

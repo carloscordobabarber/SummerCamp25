@@ -102,6 +102,8 @@
   min-height: 80px;
   max-height: 340px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 .chatbot-message.bot {
   background: #e6dcc9;
@@ -111,6 +113,18 @@
   margin-bottom: 8px;
   max-width: 90%;
   font-size: 1em;
+  align-self: flex-start;
+}
+.chatbot-message.user {
+  background: #f3ede6;
+  color: #4d3a1a;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  max-width: 90%;
+  font-size: 1em;
+  align-self: flex-end;
+  box-shadow: 0 1px 4px rgba(176,137,104,0.08);
 }
 .chatbot-input-bar {
   display: flex;

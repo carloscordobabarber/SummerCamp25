@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Apartment } from '../../models/apartment';
 import { ApartmentCard } from '../../services/apartment-card/apartment-card';
+import { ApartmentClientsService } from '../../services/apartment-client/apartment-client';
 import { RentalsService } from '../../services/rentals/rentals.service';
 import { Rental } from '../../models/rental';
 
@@ -28,7 +29,8 @@ export class ApartmentDetails implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private apartmentService: ApartmentCard,
-    private rentalsService: RentalsService
+    private rentalsService: RentalsService,
+    private apartmentClientsService: ApartmentClientsService
   ) { }
 
   ngOnInit(): void {
@@ -82,8 +84,18 @@ export class ApartmentDetails implements OnInit {
       };
       this.rentalsService.createRental(rental).subscribe({
         next: () => {
-          this.rentMessage = '¡Alquiler realizado con éxito!';
-          this.isRenting = false;
+          // Cambiar el estado del apartamento a no disponible
+          this.apartmentClientsService.setApartmentUnavailable(this.apartment!.id).subscribe({
+            next: () => {
+              this.rentMessage = '¡Alquiler realizado con éxito!';
+              this.isRenting = false;
+            },
+            error: (err) => {
+              this.rentMessage = 'Alquiler realizado, pero error al actualizar disponibilidad.';
+              this.isRenting = false;
+              console.error('Error al actualizar disponibilidad:', err);
+            }
+          });
         },
         error: (err) => {
           this.rentMessage = 'Error al realizar el alquiler.';

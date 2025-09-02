@@ -124,5 +124,51 @@ namespace SistemaAPI.Controllers
 
             return NoContent();
         }
+
+        // PUT: api/Apartments/{id}/set-available
+        [HttpPut("{id}/set-available")]
+        public async Task<IActionResult> SetApartmentAvailable(int id)
+        {
+            var apartment = await _context.Apartments.FindAsync(id);
+            if (apartment == null)
+                return NotFound();
+
+            apartment.IsAvailable = true;
+            apartment.UpdatedAt = DateTime.UtcNow;
+            _context.Entry(apartment).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el estado del apartamento: {ex.Message}");
+            }
+
+            return NoContent();
+        }
+
+        // PUT: api/Apartments/{id}/set-unavailable
+        [HttpPut("{id}/set-unavailable")]
+        public async Task<IActionResult> SetApartmentUnavailable(int id)
+        {
+            var apartment = await _context.Apartments.FindAsync(id);
+            if (apartment == null)
+                return NotFound();
+
+            apartment.IsAvailable = false;
+            apartment.UpdatedAt = DateTime.UtcNow;
+            _context.Entry(apartment).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el estado del apartamento: {ex.Message}");
+            }
+
+            return NoContent();
+        }
     }
 }

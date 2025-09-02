@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApartmentCard as ApartmentCardService } from '../../services/apartment-card/apartment-card';
@@ -19,8 +20,7 @@ export class CardManager implements OnInit {
   minPrice: number = 200;
   maxPrice: number = 5000;
 
-
-  // Ya no se actualizan los rangos según los resultados, siempre se consulta a la API con los filtros actuales
+  // se consulta a la API con los filtros actuales
 
   // Filtros de habitaciones y baños (usados por search-bar)
   numberOfRooms: number | null = null;
@@ -34,7 +34,19 @@ export class CardManager implements OnInit {
 
   ngOnInit() {
     this.loadApartments();
-    
+  }
+
+  resetFilters() {
+    this.area = 20;
+    this.minPrice = 200;
+    this.maxPrice = 5000;
+    this.numberOfRooms = null;
+    this.numberOfBathrooms = null;
+    this.hasLift = undefined;
+    this.hasGarage = undefined;
+    this.name = '';
+    this.page = 1;
+    this.loadApartments();
   }
 
   loadApartments() {
@@ -108,9 +120,4 @@ export class CardManager implements OnInit {
     this.loadApartments();
   }
 
-  // onSearch(term: string) {
-  //   this.searchTerm = term;
-  //   this.page = 1;
-  //   this.loadApartments();
-  // }
 }
