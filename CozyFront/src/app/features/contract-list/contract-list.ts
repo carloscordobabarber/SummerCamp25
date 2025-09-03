@@ -24,6 +24,24 @@ export class ContractList implements OnInit {
   pageSize = 10;
   totalCount = 0;
 
+  // Mapeo de estados
+  statusMap: { [key: string]: string } = {
+    'A': 'Activo',
+    'B': 'Bloqueado',
+    'C': 'Cancelado',
+    'E': 'EnProceso',
+    'F': 'Finalizado',
+    'G': 'Pagado',
+    'I': 'Inactivo',
+    'P': 'Pendiente',
+    'R': 'Resuelto',
+    'U': 'Impago'
+  };
+
+  getStatusName(statusId: string): string {
+    return this.statusMap[statusId] || 'Error/Desconocido';
+  }
+
   constructor(private rentalsService: RentalsService) {}
 
   ngOnInit(): void {
