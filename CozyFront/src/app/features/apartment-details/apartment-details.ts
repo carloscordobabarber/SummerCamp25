@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Apartment } from '../../models/apartment';
-import { ApartmentCard } from '../../services/apartment-card/apartment-card';
+import { ApartmentCardService } from '../../services/apartment-card/apartment-card';
 import { ApartmentClientsService } from '../../services/apartment-client/apartment-client';
 import { RentalsService } from '../../services/rentals/rentals.service';
 import { Rental } from '../../models/rental';
@@ -28,7 +28,7 @@ export class ApartmentDetails implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private apartmentService: ApartmentCard,
+  private apartmentService: ApartmentCardService,
     private rentalsService: RentalsService,
     private apartmentClientsService: ApartmentClientsService
   ) { }
