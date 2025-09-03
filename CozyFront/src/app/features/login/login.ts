@@ -1,6 +1,7 @@
 import { UserService } from '../../services/user/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class Login implements OnInit {
   loginForm!: FormGroup;
   errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private userService: UserService) { }
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -37,7 +38,7 @@ export class Login implements OnInit {
         localStorage.setItem('userRole', res.role);
         alert('Login exitoso');
         this.errorMessage = '';
-        // Aquí puedes redirigir si lo necesitas
+        this.router.navigate(['/']);
       },
       error: err => {
         if (err.status === 404) this.errorMessage = 'Error al conectarse al servidor';
