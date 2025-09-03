@@ -2,30 +2,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
-export interface ApartmentCardDto {
-  id: number;
-  code: string;
-  door: string;
-  floor: string;
-  price: number;
-  area: number;
-  numberOfRooms: number;
-  numberOfBathrooms: number;
-  buildingId: number;
-  hasLift: boolean;
-  hasGarage: boolean;
-  isAvailable: boolean;
-  streetName: string;
-  districtId: number;
-  districtName: string;
-  imageUrls: string[];
-}
+import { ApartmentCard } from '../../models/apartment-card';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApartmentCard {
+export class ApartmentCardService {
   private apiUrl = 'https://devdemoapi4.azurewebsites.net/api/apartmentcard';
 
   constructor(private http: HttpClient) {}
@@ -41,7 +23,7 @@ export class ApartmentCard {
     hasGarage?: boolean,
     numberOfRooms?: number,
     numberOfBathrooms?: number
-  } = {}): Observable<{ items: ApartmentCardDto[], totalCount: number }> {
+  } = {}): Observable<{ items: ApartmentCard[], totalCount: number }> {
     let httpParams = new HttpParams();
     Object.entries(params).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
@@ -51,7 +33,7 @@ export class ApartmentCard {
     return this.http.get<any>(this.apiUrl, { params: httpParams }).pipe(
       map(result => {
         if (result && Array.isArray(result.items) && typeof result.totalCount === 'number') {
-          return result as { items: ApartmentCardDto[], totalCount: number };
+          return result as { items: ApartmentCard[], totalCount: number };
         }
         if (Array.isArray(result)) {
           return { items: result, totalCount: result.length };
@@ -61,7 +43,7 @@ export class ApartmentCard {
     );
   }
 
-  getApartment(id: number): Observable<ApartmentCardDto> {
-    return this.http.get<ApartmentCardDto>(`${this.apiUrl}/${id}`);
+  getApartment(id: number): Observable<ApartmentCard> {
+    return this.http.get<ApartmentCard>(`${this.apiUrl}/${id}`);
   }
 }

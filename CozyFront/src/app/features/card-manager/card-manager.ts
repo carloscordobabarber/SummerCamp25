@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApartmentCard as ApartmentCardService } from '../../services/apartment-card/apartment-card';
+import { ApartmentCardService } from '../../services/apartment-card/apartment-card';
 
 @Component({
   selector: 'app-card-manager',
