@@ -137,8 +137,34 @@ namespace SistemaAPI.Controllers
         //    return NoContent();
         //}
 
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
+        [HttpPut("clientRole/{id}")]
+        public async Task<IActionResult> PutUserRole(int id, [FromBody] UserRoleUpdateDto userRoleDto)
+        {
+            if (userRoleDto == null || string.IsNullOrEmpty(userRoleDto.Role))
+                return BadRequest();
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return NotFound();
+
+            user.Role = userRoleDto.Role;
+            user.UpdatedAt = DateTime.UtcNow;
+
+            _context.Entry(user).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el rol del usuario: {ex.Message}");
+            }
+
+            return NoContent();
+        }
+
+            // DELETE: api/Users/5
+            [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
