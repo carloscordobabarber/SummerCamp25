@@ -3,6 +3,7 @@
 
 
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
 
@@ -17,7 +18,7 @@ export class Clients implements OnInit {
   submitted = false;
   apiError: string | null = null;
 
-  constructor(private fb: FormBuilder, private userService: UserService) {}
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.clientForm = this.fb.group({
@@ -184,6 +185,7 @@ export class Clients implements OnInit {
         alert('¡Usuario registrado correctamente!');
         this.clientForm.reset();
         this.submitted = false;
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         this.apiError = err?.error?.message || 'Error al registrar el usuario.';

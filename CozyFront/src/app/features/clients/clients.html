@@ -114,20 +114,6 @@
                 <div *ngIf="passwordMismatch">Las contraseñas no coinciden.</div>
             </div>
         </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="role" class="form-label">Rol</label>
-                <select id="role" formControlName="role" class="form-select"
-                    [ngClass]="{'is-invalid': submitted && f['role'].errors}">
-                    <option value="Client">Cliente</option>
-                    <option value="Admin">Administrador</option>
-                </select>
-                <div *ngIf="submitted && f['role'].errors" class="invalid-feedback">
-                    <div *ngIf="f['role'].errors?.['required']">El rol es obligatorio.</div>
-                    <div *ngIf="f['role'].errors?.['maxlength']">Máximo 6 caracteres.</div>
-                </div>
-            </div>
-        </div>
         <div *ngIf="apiError" class="alert alert-danger mt-2">{{ apiError }}</div>
         <button type="submit" class="btn btn-primary mt-3">Registrar</button>
     </div>
