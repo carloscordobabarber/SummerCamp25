@@ -42,6 +42,9 @@ namespace Dominio
         [Required]
         public bool HasGarage { get; set; }
 
+        [Required, StringLength(1)]
+        public string StatusId { get; set; } = null!;
+
         [Required]
         public DateTime CreatedAt { get; set; }
 
