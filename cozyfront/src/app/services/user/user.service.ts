@@ -59,4 +59,8 @@ export class UserService {
   updateUser(user: UserProfile): Observable<void> {
     return this.http.put<void>(`${this.userApiUrl}/${user.id}`, user);
   }
+
+  updateUserRole(id: number, role: string): Observable<void> {
+    return this.http.put<void>(`${this.userApiUrl}/clientRole/${id}`, { role });
+  }
 }

@@ -1,6 +1,7 @@
 
 
 import { Component } from '@angular/core';
+import { UserProfile } from '../../models/user';
 import { Client } from '../../models/client';
 import { UserService } from '../../services/user/user.service';
 
@@ -86,5 +87,16 @@ export class ClientList {
     this.pageSize = +newSize;
     this.page = 1;
     this.loadClients();
+  }
+  cambiarRol(id: number, role: string) {
+    this.UserService.updateUserRole(id, role).subscribe({
+      next: () => {
+        alert('Rol actualizado correctamente');
+        this.loadClients();
+      },
+      error: () => {
+        alert('Error al actualizar el rol');
+      }
+    });
   }
 }

@@ -37,6 +37,7 @@
             <th>Email</th>
             <th>Teléfono</th>
             <th>Rol</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -49,7 +50,17 @@
             <td>{{ cli.birthDate | date:'dd/MM/yyyy' }}</td>
             <td>{{ cli.email }}</td>
             <td>{{ cli.phone }}</td>
-            <td>{{ cli.role }}</td>
+            <td>
+              <select [(ngModel)]="cli.role" name="roleSelect{{i}}">
+                <option value="Admin">Admin</option>
+                <option value="Client">Client</option>
+              </select>
+            </td>
+            <td>
+              <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1" (click)="cambiarRol(cli.id, cli.role)">
+                Cambiar rol
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
