@@ -35,9 +35,12 @@ import { ContractList } from './features/contract-list/contract-list';
 import { DateFilter } from './shared/date-filter/date-filter';
 import { PaymentList } from './features/payment-list/payment-list';
 import { PaymentFormComponent } from './features/profile/payment-form/payment-form';
+import { ChangePassword } from './features/profile/change-password/change-password';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
+    ChangePassword,
     App,
     Header,
     Footer,
@@ -67,6 +70,7 @@ import { PaymentFormComponent } from './features/profile/payment-form/payment-fo
     
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
