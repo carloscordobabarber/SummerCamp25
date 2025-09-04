@@ -25,8 +25,11 @@ namespace SistemaAPI.Servicios
                 .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedAt));
 
             CreateMap<Building, BuildingDto>();
+            CreateMap<BuildingDto, Building>();
+
             CreateMap<Contact, ContactDto>().ReverseMap();
             CreateMap<District, DistrictDto>();
+            CreateMap<DistrictDto, District>();
             CreateMap<DistrictStreet, DistrictStreetDto>();
 
             CreateMap<ImageApartment, ImagesDto>();
@@ -54,6 +57,17 @@ namespace SistemaAPI.Servicios
 
             CreateMap<ApartmentPostDto, Apartment>();
 
+            // NUEVO: StreetQPDto -> StreetDto y Street
+            CreateMap<StreetQPDto, StreetDto>();
+            CreateMap<StreetQPDto, Street>();
+
+            // NUEVO: ApartmentQPDto -> ApartmentPostDto
+            CreateMap<ApartmentQPDto, ApartmentPostDto>()
+                .ForMember(dest => dest.IsAvailable, opt => opt.MapFrom(src => true))
+                .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => "E"));
+
+            CreateMap<StreetDto, Street>();
+            CreateMap<Street, StreetDto>();
         }
     }
 }

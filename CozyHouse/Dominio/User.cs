@@ -36,6 +36,9 @@ namespace Dominio
         [Required, StringLength(6)]
         public string Role { get; set; } = null!;
 
+        [Required, StringLength(1)]
+        public string StatusId { get; set; } = null!;
+
         [Required]
         public DateTime CreatedAt { get; set; }
 

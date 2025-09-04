@@ -27,5 +27,9 @@ namespace Dominio
         public DateTime CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
+
+        // Campo opcional para almacenar el PDF del contrato en binario (hasta 10 MB)
+        [MaxLength(10485760)]
+        public byte[]? ContractPdf { get; set; }
     }
 }
