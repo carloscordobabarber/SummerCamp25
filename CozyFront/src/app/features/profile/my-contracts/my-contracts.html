@@ -8,6 +8,7 @@
         <th>Fecha Inicio</th>
         <th>Fecha Fin</th>
         <th>Estado</th>
+        <th>PDF</th>
       </tr>
     </thead>
     <tbody>
@@ -26,6 +27,12 @@
           }">
             {{ getEstadoContrato(contract) }}
           </span>
+        </td>
+        <td>
+          <button type="button" class="btn btn-outline-danger btn-sm" title="Descargar PDF" >
+            <!-- (click)="downloadPdf(contract)" -->
+            <i class="bi bi-file-earmark-pdf"></i>
+          </button>
         </td>
       </tr>
     </tbody>
@@ -137,7 +144,10 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer">
+        <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger btn-sm me-2" title="Descargar PDF">
+          <i class="bi bi-file-earmark-pdf"></i>   <!-- (click)="downloadPdf(selectedContract)" -->
+        </button>
         <button type="button" class="btn btn-secondary" (click)="closeContract()">Cerrar</button>
       </div>
     </div>

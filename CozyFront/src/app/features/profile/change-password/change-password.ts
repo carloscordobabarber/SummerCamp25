@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ChangePassService } from '../../../services/change-pass/change-pass.service';
+import { ChangePass } from '../../../models/change-pass';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AbstractControl, FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
@@ -19,7 +21,7 @@ export class ChangePassword implements OnInit {
   showConfirmPassword = false;
   passwordForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private changePassService: ChangePassService) {}
 
   ngOnInit(): void {
     this.passwordForm = this.fb.group({
@@ -55,10 +57,21 @@ export class ChangePassword implements OnInit {
 
   onSubmit(): void {
     if (this.passwordForm.valid) {
-      // Aquí deberías llamar a tu servicio para cambiar la contraseña
-      console.log('Contraseña cambiada con éxito', this.passwordForm.value);
-      alert('Contraseña cambiada con éxito!');
-      this.passwordForm.reset();
+      const userId = Number(localStorage.getItem('userId'));
+      const dto: ChangePass = {
+        userId,
+        oldPassword: this.passwordForm.value.currentPassword,
+        newPassword: this.passwordForm.value.newPassword
+      };
+      this.changePassService.changePassword(dto).subscribe({
+        next: (res) => {
+          alert('Contraseña cambiada con éxito!');
+          this.passwordForm.reset();
+        },
+        error: (err) => {
+          alert(err?.error || 'Error al cambiar la contraseña');
+        }
+      });
     }
   }
 }

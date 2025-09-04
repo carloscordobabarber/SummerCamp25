@@ -10,6 +10,7 @@ import { UserProfile } from '../../models/user';
   styleUrl: './profile.css'
 })
 export class Profile implements OnInit {
+  showProfileDropdown = false;
   loggedUser: UserProfile | null = null;
   selectedSection: string = 'details'; // Por defecto muestra 'Mi Perfil'
 
@@ -40,5 +41,17 @@ export class Profile implements OnInit {
 
   selectSection(section: string): void {
     this.selectedSection = section;
+    if (section !== 'details') {
+      this.showProfileDropdown = false;
+    }
+  }
+
+  toggleProfileDropdown(): void {
+    if (this.selectedSection !== 'details') {
+      this.selectedSection = 'details';
+      this.showProfileDropdown = true;
+    } else {
+      this.showProfileDropdown = !this.showProfileDropdown;
+    }
   }
 }
