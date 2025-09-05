@@ -19,10 +19,10 @@ namespace SistemaAPI.Servicios
                 .ForMember(dest => dest.ApartmentPrice, opt => opt.MapFrom(src => Math.Round((decimal)src.Price, 2)))
                 .ForMember(dest => dest.NumberOfRooms, opt => opt.MapFrom(src => src.NumberOfRooms))
                 .ForMember(dest => dest.NumberOfBathrooms, opt => opt.MapFrom(src => src.NumberOfBathrooms))
-                .ForMember(dest => dest.BuildingId, opt => opt.MapFrom(src => src.BuildingId))
                 .ForMember(dest => dest.HasLift, opt => opt.MapFrom(src => src.HasLift))
                 .ForMember(dest => dest.HasGarage, opt => opt.MapFrom(src => src.HasGarage))
-                .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedAt));
+                .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedAt))
+                .ForMember(dest => dest.BuildingCode, opt => opt.Ignore());
 
             CreateMap<Building, BuildingDto>();
             CreateMap<BuildingDto, Building>();
