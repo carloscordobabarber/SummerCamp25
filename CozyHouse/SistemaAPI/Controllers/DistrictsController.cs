@@ -61,50 +61,5 @@ namespace SistemaAPI.Controllers
             var resultDto = _mapper.Map<DistrictDto>(district);
             return CreatedAtAction(nameof(GetDistrict), new { id = district.Id }, resultDto);
         }
-
-        // PUT: api/Districts/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDistrict(int id, [FromBody] DistrictDto districtDto)
-        {
-            if (districtDto == null || id != districtDto.Id)
-                return BadRequest();
-            var district = await _context.Districts.FindAsync(id);
-            if (district == null)
-                return NotFound();
-            district.Name = districtDto.Name;
-            district.Zipcode = districtDto.Zipcode;
-            district.Country = districtDto.Country;
-            district.City = districtDto.City;
-            district.UpdatedAt = DateTime.UtcNow;
-            _context.Entry(district).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al actualizar el distrito: {ex.Message}");
-            }
-            return NoContent();
-        }
-
-        // DELETE: api/Districts/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDistrict(int id)
-        {
-            var district = await _context.Districts.FindAsync(id);
-            if (district == null)
-                return NotFound();
-            _context.Districts.Remove(district);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al eliminar el distrito: {ex.Message}");
-            }
-            return NoContent();
-        }
     }
 }

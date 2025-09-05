@@ -40,28 +40,6 @@ namespace SistemaAPI.Controllers
             return Ok(dto);
         }
 
-        // POST: api/Buildings
-        [HttpPost]
-        public async Task<IActionResult> PostBuilding([FromBody] BuildingDto buildingDto)
-        {
-            if (buildingDto == null)
-                return BadRequest();
-            var building = _mapper.Map<Building>(buildingDto);
-            building.CreatedAt = DateTime.UtcNow;
-            building.UpdatedAt = null;
-            _context.Buildings.Add(building);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al guardar el edificio: {ex.Message}");
-            }
-            var resultDto = _mapper.Map<BuildingDto>(building);
-            return CreatedAtAction(nameof(GetBuilding), new { id = building.Id }, resultDto);
-        }
-
         // PUT: api/Buildings/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBuilding(int id, [FromBody] BuildingDto buildingDto)
@@ -84,25 +62,6 @@ namespace SistemaAPI.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error al actualizar el edificio: {ex.Message}");
-            }
-            return NoContent();
-        }
-
-        // DELETE: api/Buildings/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBuilding(int id)
-        {
-            var building = await _context.Buildings.FindAsync(id);
-            if (building == null)
-                return NotFound();
-            _context.Buildings.Remove(building);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al eliminar el edificio: {ex.Message}");
             }
             return NoContent();
         }
