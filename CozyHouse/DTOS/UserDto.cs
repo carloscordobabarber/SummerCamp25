@@ -8,10 +8,8 @@ namespace DTOS
         public string Name { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Email { get; set; } = null!;
-
         public DateTime BirthDate { get; set; }
         public string Phone { get; set; }
         public string Role { get; set; } = null!;
-
     }
 }

@@ -77,14 +77,14 @@
           <input type="tel" id="phone" class="form-control form-control-sm" formControlName="phone"
             [ngClass]="{ 'is-invalid': phone?.invalid && phone?.touched }" />
           <div *ngIf="phone?.errors && phone?.touched" class="invalid-feedback">
-            <div *ngIf="phone?.errors?.['pattern']">Número inválido. Usa formato internacional (ej: +123456789).</div>
+            <div *ngIf="phone?.errors?.['pattern']">Número inválido. Usa formato internacional (+123456789) o nacional (123456789).</div>
           </div>
         </div>
       </div>
 
       <!-- Botón -->
       <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary btn-sm px-4" [disabled]="userForm.invalid">
+        <button type="submit" class="btn btn-primary btn-sm px-4" [disabled]="!isFormReadyToSubmit">
           Actualizar Perfil
         </button>
       </div>

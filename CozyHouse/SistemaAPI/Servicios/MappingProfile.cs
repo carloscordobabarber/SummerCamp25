@@ -51,7 +51,7 @@ namespace SistemaAPI.Servicios
             CreateMap<User, UserDto>().ReverseMap();
 
             CreateMap<User, UserWorkerDto>();
-            CreateMap<UserRegisterDto, User>();
+            CreateMap<UserRegisterDto, User>().ReverseMap();
 
             CreateMap<ApartmentDTO, Apartment>()
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.Now));

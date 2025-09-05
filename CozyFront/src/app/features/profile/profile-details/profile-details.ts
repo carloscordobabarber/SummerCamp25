@@ -16,6 +16,10 @@ export class ProfileDetails implements OnInit {
   // user: UserProfile | null = null;
   userName: string;
 
+  get isFormReadyToSubmit(): boolean {
+    return this.userForm && this.userForm.valid && !this.userForm.pristine;
+  }
+
   constructor(private userService: UserService, private fb: FormBuilder) {
     this.userName = "";
   }
@@ -28,7 +32,7 @@ export class ProfileDetails implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       birthDate: ['', Validators.required],
-      phone: ['', [Validators.pattern(/^\+\d{7,15}$/)]], // opcional, pero si se pone debe ser formato internacional
+      phone: ['', [Validators.pattern(/^((\+\d{7,15})|(\d{9,15}))$/)]], // acepta internacional (+123456789) o nacional (123456789)
     });
 
     const userId = localStorage.getItem('userId');
@@ -58,6 +62,7 @@ export class ProfileDetails implements OnInit {
       birthDate: this.formatDateForInput(user.birthDate),  // aquí hacemos la conversión
       phone: user.phone
     });
+  this.userForm.markAsPristine();
   }
 
   private formatDocType(userDocType: string): string {
@@ -85,10 +90,20 @@ export class ProfileDetails implements OnInit {
 
   onSubmit() {
     if (this.userForm.valid) {
-      console.log('Formulario válido', this.userForm.value);
-      // Aquí puedes hacer el update en backend o lógica que necesites
-      // Aquí puedes llamar a un método del servicio para actualizar el perfil, por ejemplo:
-      // this.userService.updateUser(this.user!.id, this.userForm.value).subscribe(...)
+      const updatedUser: UserProfile = {
+        ...this.user,
+        ...this.userForm.value,
+        id: this.user.id
+      };
+      this.userService.updateUser(updatedUser).subscribe({
+        next: () => {
+          alert('Perfil actualizado correctamente');
+          this.userForm.markAsPristine();
+        },
+        error: (err) => {
+          console.error('Error al actualizar perfil', err);
+        }
+      });
     } else {
       // Marcar todos los campos como tocados para mostrar errores
       this.userForm.markAllAsTouched();

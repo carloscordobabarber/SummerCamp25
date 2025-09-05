@@ -78,6 +78,7 @@ namespace SistemaAPI.Controllers
             var user = _mapper.Map<User>(userDto);
             user.CreatedAt = DateTime.UtcNow;
             user.UpdatedAt = null;
+            user.StatusId = "A"; // Asignar 'A' por defecto (Activo)
 
             _context.Users.Add(user);
             try
@@ -89,7 +90,7 @@ namespace SistemaAPI.Controllers
                 return StatusCode(500, $"Error al guardar el usuario: {ex.Message}");
             }
 
-            // Devuelve UserDto, que no incluye la contraseña
+            // Devuelve UserDto, que no incluye la contraseï¿½a
             var resultDto = _mapper.Map<UserDto>(user);
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, resultDto);
         }
@@ -112,6 +113,7 @@ namespace SistemaAPI.Controllers
             user.LastName = userDto.LastName;
             user.Email = userDto.Email;
             user.Phone = userDto.Phone;
+            user.BirthDate = userDto.BirthDate;
             user.UpdatedAt = DateTime.UtcNow;
 
             _context.Entry(user).State = EntityState.Modified;
