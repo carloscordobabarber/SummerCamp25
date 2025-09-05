@@ -59,47 +59,5 @@ namespace SistemaAPI.Controllers
             var resultDto = _mapper.Map<DistrictStreetDto>(districtStreet);
             return CreatedAtAction(nameof(GetDistrictStreet), new { id = districtStreet.Id }, resultDto);
         }
-
-        // PUT: api/DistrictStreets/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDistrictStreet(int id, [FromBody] DistrictStreetDto districtStreetDto)
-        {
-            if (districtStreetDto == null)
-                return BadRequest();
-            var districtStreet = await _context.DistrictStreets.FindAsync(id);
-            if (districtStreet == null)
-                return NotFound();
-            districtStreet.DistrictId = districtStreetDto.DistrictId;
-            districtStreet.StreetId = districtStreetDto.StreetId;
-            _context.Entry(districtStreet).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al actualizar la relación distrito-calle: {ex.Message}");
-            }
-            return NoContent();
-        }
-
-        // DELETE: api/DistrictStreets/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDistrictStreet(int id)
-        {
-            var districtStreet = await _context.DistrictStreets.FindAsync(id);
-            if (districtStreet == null)
-                return NotFound();
-            _context.DistrictStreets.Remove(districtStreet);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al eliminar la relación distrito-calle: {ex.Message}");
-            }
-            return NoContent();
-        }
     }
 }

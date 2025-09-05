@@ -65,54 +65,5 @@ namespace SistemaAPI.Controllers
             var resultDto = _mapper.Map<StreetDto>(street);
             return CreatedAtAction(nameof(GetStreet), new { id = street.Id }, resultDto);
         }
-
-        // PUT: api/Street/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutStreet(int id, [FromBody] StreetDto streetDto)
-        {
-            if (streetDto == null || id != streetDto.Id)
-                return BadRequest();
-
-            var street = await _context.Streets.FindAsync(id);
-            if (street == null)
-                return NotFound();
-
-            street.Code = streetDto.Code;
-            street.Name = streetDto.Name;
-            street.UpdatedAt = DateTime.UtcNow;
-
-            _context.Entry(street).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al actualizar la calle: {ex.Message}");
-            }
-
-            return NoContent();
-        }
-
-        // DELETE: api/Street/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStreet(int id)
-        {
-            var street = await _context.Streets.FindAsync(id);
-            if (street == null)
-                return NotFound();
-
-            _context.Streets.Remove(street);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al eliminar la calle: {ex.Message}");
-            }
-
-            return NoContent();
-        }
     }
 }
