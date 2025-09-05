@@ -41,31 +41,6 @@ namespace SistemaAPI.Controllers
             return Ok(dto);
         }
 
-        // POST: api/Apartments
-        [HttpPost]
-        public async Task<IActionResult> PostApartment([FromBody] ApartmentWorkerDto apartmentDto)
-        {
-            if (apartmentDto == null)
-                return BadRequest();
-
-            var apartment = _mapper.Map<Apartment>(apartmentDto);
-            apartment.CreatedAt = DateTime.UtcNow;
-            apartment.UpdatedAt = null;
-
-            _context.Apartments.Add(apartment);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al guardar el apartamento: {ex.Message}");
-            }
-
-            var resultDto = _mapper.Map<ApartmentWorkerDto>(apartment);
-            return CreatedAtAction(nameof(GetApartment), new { id = apartment.Id }, resultDto);
-        }
-
         // PUT: api/Apartments/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutApartment(int id, [FromBody] ApartmentWorkerDto apartmentDto)
@@ -99,27 +74,6 @@ namespace SistemaAPI.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error al actualizar el apartamento: {ex.Message}");
-            }
-
-            return NoContent();
-        }
-
-        // DELETE: api/Apartments/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteApartment(int id)
-        {
-            var apartment = await _context.Apartments.FindAsync(id);
-            if (apartment == null)
-                return NotFound();
-
-            _context.Apartments.Remove(apartment);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al eliminar el apartamento: {ex.Message}");
             }
 
             return NoContent();

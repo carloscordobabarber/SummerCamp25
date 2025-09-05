@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Apartment } from '../../models/apartment';
 import { ApartmentCardService } from '../../services/apartment-card/apartment-card';
-import { ApartmentClientsService } from '../../services/apartment-client/apartment-client';
+import { ApartmentAvailabilityService } from '../../services/apartment-availability/apartment-availability.service';
 import { RentalsService } from '../../services/rentals/rentals.service';
 import { Rental } from '../../models/rental';
 
@@ -28,9 +28,9 @@ export class ApartmentDetails implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-  private apartmentService: ApartmentCardService,
+    private apartmentService: ApartmentCardService,
     private rentalsService: RentalsService,
-    private apartmentClientsService: ApartmentClientsService
+    private apartmentAvailabilityService: ApartmentAvailabilityService
   ) { }
 
   ngOnInit(): void {
@@ -84,8 +84,8 @@ export class ApartmentDetails implements OnInit {
       };
       this.rentalsService.createRental(rental).subscribe({
         next: () => {
-          // Cambiar el estado del apartamento a no disponible
-          this.apartmentClientsService.setApartmentUnavailable(this.apartment!.id).subscribe({
+          // Cambiar el estado del apartamento a no disponible usando el endpoint correcto
+          this.apartmentAvailabilityService.setUnavailable(this.apartment!.id).subscribe({
             next: () => {
               this.rentMessage = '¡Alquiler realizado con éxito!';
               this.isRenting = false;

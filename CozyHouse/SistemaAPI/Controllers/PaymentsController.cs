@@ -161,26 +161,5 @@ namespace SistemaAPI.Controllers
 
             return NoContent();
         }
-
-        // DELETE: api/Payments/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePayment(int id)
-        {
-            var payment = await _context.Payments.FindAsync(id);
-            if (payment == null)
-                return NotFound();
-
-            _context.Payments.Remove(payment);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al eliminar el pago: {ex.Message}");
-            }
-
-            return NoContent();
-        }
     }
 }
