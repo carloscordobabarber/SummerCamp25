@@ -35,6 +35,7 @@ namespace SistemaAPI.Servicios
             CreateMap<ImageApartment, ImagesDto>();
 
             CreateMap<Incidence, IncidenceDto>().ReverseMap();
+            CreateMap<Incidence, QFIncidencesDto>().ReverseMap();
 
             CreateMap<Log, LogDto>();
 
