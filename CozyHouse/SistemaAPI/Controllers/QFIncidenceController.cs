@@ -49,10 +49,5 @@ namespace SistemaAPI.Controllers
 
             return NoContent();
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
     }
 }
