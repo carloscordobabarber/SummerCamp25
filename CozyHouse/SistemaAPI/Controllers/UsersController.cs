@@ -4,6 +4,7 @@ using Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CozyData;
+using Microsoft.Extensions.Logging;
 
 namespace SistemaAPI.Controllers
 {
@@ -13,11 +14,13 @@ namespace SistemaAPI.Controllers
     {
         private readonly ContextDataBase _context;
         private readonly IMapper _mapper;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(ContextDataBase context, IMapper mapper)
+        public UsersController(ContextDataBase context, IMapper mapper, ILogger<UsersController> logger)
         {
             _context = context;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET: api/Users
@@ -32,40 +35,61 @@ namespace SistemaAPI.Controllers
             [FromQuery] string? phone = null,
             [FromQuery] string? role = null)
         {
-            var query = _context.Users.AsNoTracking().AsQueryable();
+            try
+            {
+                var query = _context.Users.AsNoTracking().AsQueryable();
 
-            if (!string.IsNullOrEmpty(documentNumber))
-                query = query.Where(u => u.DocumentNumber.ToLower().Contains(documentNumber.ToLower()));
-            if (!string.IsNullOrEmpty(name))
-                query = query.Where(u => u.Name.ToLower().Contains(name.ToLower()));
-            if (!string.IsNullOrEmpty(lastName))
-                query = query.Where(u => u.LastName.ToLower().Contains(lastName.ToLower()));
-            if (!string.IsNullOrEmpty(email))
-                query = query.Where(u => u.Email.ToLower().Contains(email.ToLower()));
-            if (!string.IsNullOrEmpty(phone))
-                query = query.Where(u => u.Phone.Contains(phone));
-            if (!string.IsNullOrEmpty(role))
-                query = query.Where(u => u.Role.ToLower().Contains(role.ToLower()));
+                if (!string.IsNullOrEmpty(documentNumber))
+                    query = query.Where(u => u.DocumentNumber.ToLower().Contains(documentNumber.ToLower()));
+                if (!string.IsNullOrEmpty(name))
+                    query = query.Where(u => u.Name.ToLower().Contains(name.ToLower()));
+                if (!string.IsNullOrEmpty(lastName))
+                    query = query.Where(u => u.LastName.ToLower().Contains(lastName.ToLower()));
+                if (!string.IsNullOrEmpty(email))
+                    query = query.Where(u => u.Email.ToLower().Contains(email.ToLower()));
+                if (!string.IsNullOrEmpty(phone))
+                    query = query.Where(u => u.Phone.Contains(phone));
+                if (!string.IsNullOrEmpty(role))
+                    query = query.Where(u => u.Role.ToLower().Contains(role.ToLower()));
 
-            var totalCount = await query.CountAsync();
-            var users = await query
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-            var dto = _mapper.Map<List<UserDto>>(users);
-            return Ok(new { totalCount, items = dto });
+                var totalCount = await query.CountAsync();
+                var users = await query
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+                var dto = _mapper.Map<List<UserDto>>(users);
+                _logger.LogInformation("Consulta de usuarios realizada correctamente. Total: {Count}", dto.Count);
+                return Ok(new { totalCount, items = dto });
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener la lista de usuarios");
+                return StatusCode(500, $"Error al obtener la lista de usuarios: {ex.Message}");
+            }
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-                return NotFound();
+            try
+            {
+                var user = await _context.Users.FindAsync(id);
+                if (user == null)
+                {
+                    _logger.LogWarning("Usuario no encontrado para id {Id}", id);
+                    return NotFound();
+                }
 
-            var dto = _mapper.Map<UserDto>(user);
-            return Ok(dto);
+                var dto = _mapper.Map<UserDto>(user);
+                _logger.LogInformation("Consulta de usuario realizada correctamente para id {Id}", id);
+                return Ok(dto);
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener el usuario con id {Id}", id);
+                return StatusCode(500, $"Error al obtener el usuario: {ex.Message}");
+            }
         }
 
         // POST: api/Users
@@ -73,7 +97,10 @@ namespace SistemaAPI.Controllers
         public async Task<IActionResult> PostUser([FromBody] UserRegisterDto userDto)
         {
             if (userDto == null)
+            {
+                _logger.LogWarning("Intento de creación de usuario fallido: DTO nulo");
                 return BadRequest();
+            }
 
             var user = _mapper.Map<User>(userDto);
             user.CreatedAt = DateTime.UtcNow;
@@ -84,13 +111,15 @@ namespace SistemaAPI.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("Usuario creado correctamente con id {Id}", user.Id);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
+                _logger.LogError(ex, "Error al guardar el usuario");
                 return StatusCode(500, $"Error al guardar el usuario: {ex.Message}");
             }
 
-            // Devuelve UserDto, que no incluye la contrase�a
+            // Devuelve UserDto, que no incluye la contraseña
             var resultDto = _mapper.Map<UserDto>(user);
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, resultDto);
         }
@@ -100,11 +129,17 @@ namespace SistemaAPI.Controllers
         public async Task<IActionResult> PutUser(int id, [FromBody] UserWorkerDto userDto)
         {
             if (userDto == null || id != userDto.Id)
+            {
+                _logger.LogWarning("Intento de actualización de usuario fallido: DTO nulo o id no coincide");
                 return BadRequest();
+            }
 
             var user = await _context.Users.FindAsync(id);
             if (user == null)
+            {
+                _logger.LogWarning("Usuario no encontrado para id {Id} al intentar actualizar", id);
                 return NotFound();
+            }
 
             // Map fields except Id, CreatedAt
             user.DocumentType = userDto.DocumentType;
@@ -118,6 +153,7 @@ namespace SistemaAPI.Controllers
 
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            _logger.LogInformation("Usuario actualizado correctamente con id {Id}", id);
 
             return NoContent();
         }
@@ -126,11 +162,17 @@ namespace SistemaAPI.Controllers
         public async Task<IActionResult> PutUserRole(int id, [FromBody] UserRoleUpdateDto userRoleDto)
         {
             if (userRoleDto == null || string.IsNullOrEmpty(userRoleDto.Role))
+            {
+                _logger.LogWarning("Intento de actualización de rol de usuario fallido: DTO nulo o rol vacío");
                 return BadRequest();
+            }
 
             var user = await _context.Users.FindAsync(id);
             if (user == null)
+            {
+                _logger.LogWarning("Usuario no encontrado para id {Id} al intentar actualizar rol", id);
                 return NotFound();
+            }
 
             user.Role = userRoleDto.Role;
             user.UpdatedAt = DateTime.UtcNow;
@@ -139,9 +181,11 @@ namespace SistemaAPI.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("Rol de usuario actualizado correctamente para id {Id}", id);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
+                _logger.LogError(ex, "Error al actualizar el rol del usuario con id {Id}", id);
                 return StatusCode(500, $"Error al actualizar el rol del usuario: {ex.Message}");
             }
 
