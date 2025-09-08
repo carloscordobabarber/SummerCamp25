@@ -88,7 +88,7 @@ namespace SistemaAPI.Controllers
                     items = dto
                 });
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener la lista de pagos");
                 return StatusCode(500, $"Error al obtener la lista de pagos: {ex.Message}");
@@ -122,7 +122,7 @@ namespace SistemaAPI.Controllers
                 _logger.LogInformation("Consulta de pago realizada correctamente para id {Id}", id);
                 return Ok(dto);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener el pago con id {Id}", id);
                 return StatusCode(500, $"Error al obtener el pago: {ex.Message}");
@@ -149,7 +149,7 @@ namespace SistemaAPI.Controllers
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Pago creado correctamente con id {Id}", payment.Id);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al guardar el pago");
                 return StatusCode(500, $"Error al guardar el pago: {ex.Message}");
@@ -190,7 +190,7 @@ namespace SistemaAPI.Controllers
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Pago actualizado correctamente con id {Id}", id);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al actualizar el pago con id {Id}", id);
                 return StatusCode(500, $"Error al actualizar el pago: {ex.Message}");

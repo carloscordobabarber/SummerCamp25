@@ -61,7 +61,7 @@ namespace SistemaAPI.Controllers
                 _logger.LogInformation("Consulta de incidencias realizada correctamente. Total: {Count}", dto.Count);
                 return Ok(new { totalCount, items = dto });
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener la lista de incidencias");
                 return StatusCode(500, $"Error al obtener la lista de incidencias: {ex.Message}");
@@ -85,7 +85,7 @@ namespace SistemaAPI.Controllers
                 _logger.LogInformation("Consulta de incidencia realizada correctamente para id {Id}", id);
                 return Ok(dto);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener la incidencia con id {Id}", id);
                 return StatusCode(500, $"Error al obtener la incidencia: {ex.Message}");
@@ -112,7 +112,7 @@ namespace SistemaAPI.Controllers
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Incidencia creada correctamente con id {Id}", incidence.Id);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al guardar la incidencia");
                 return StatusCode(500, $"Error al guardar la incidencia: {ex.Message}");
@@ -140,7 +140,7 @@ namespace SistemaAPI.Controllers
                 _logger.LogInformation("Incidencia eliminada correctamente con id {Id}", id);
                 return NoContent();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al eliminar la incidencia con id {Id}", id);
                 return StatusCode(500, $"Error al eliminar la incidencia: {ex.Message}");

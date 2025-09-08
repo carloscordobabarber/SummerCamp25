@@ -142,7 +142,7 @@ namespace SistemaAPI.Controllers
                     items = pagedResult
                 });
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener la lista de apartamentos (trabajadores)");
                 return StatusCode(500, $"Error al obtener la lista de apartamentos: {ex.Message}");

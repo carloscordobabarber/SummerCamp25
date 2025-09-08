@@ -61,7 +61,7 @@ namespace SistemaAPI.Controllers
                 _logger.LogInformation("Consulta de usuarios realizada correctamente. Total: {Count}", dto.Count);
                 return Ok(new { totalCount, items = dto });
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener la lista de usuarios");
                 return StatusCode(500, $"Error al obtener la lista de usuarios: {ex.Message}");
@@ -85,7 +85,7 @@ namespace SistemaAPI.Controllers
                 _logger.LogInformation("Consulta de usuario realizada correctamente para id {Id}", id);
                 return Ok(dto);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener el usuario con id {Id}", id);
                 return StatusCode(500, $"Error al obtener el usuario: {ex.Message}");
@@ -113,7 +113,7 @@ namespace SistemaAPI.Controllers
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Usuario creado correctamente con id {Id}", user.Id);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al guardar el usuario");
                 return StatusCode(500, $"Error al guardar el usuario: {ex.Message}");
@@ -183,7 +183,7 @@ namespace SistemaAPI.Controllers
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Rol de usuario actualizado correctamente para id {Id}", id);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al actualizar el rol del usuario con id {Id}", id);
                 return StatusCode(500, $"Error al actualizar el rol del usuario: {ex.Message}");

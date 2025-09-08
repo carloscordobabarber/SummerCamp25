@@ -34,7 +34,7 @@ namespace SistemaAPI.Controllers
                 _logger.LogInformation("Consulta de imágenes realizada correctamente. Total: {Count}", dto.Count);
                 return Ok(dto);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener la lista de imágenes");
                 return StatusCode(500, $"Error al obtener la lista de imágenes: {ex.Message}");
@@ -57,7 +57,7 @@ namespace SistemaAPI.Controllers
                 _logger.LogInformation("Consulta de imagen realizada correctamente para id {Id}", id);
                 return Ok(dto);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener la imagen con id {Id}", id);
                 return StatusCode(500, $"Error al obtener la imagen: {ex.Message}");
@@ -80,7 +80,7 @@ namespace SistemaAPI.Controllers
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Imagen creada correctamente con id {Id}", image.Id);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al guardar la imagen");
                 return StatusCode(500, $"Error al guardar la imagen: {ex.Message}");

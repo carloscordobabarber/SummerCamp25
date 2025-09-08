@@ -73,7 +73,7 @@ namespace SistemaAPI.Controllers
                 _logger.LogInformation("Consulta de alquileres de usuario realizada correctamente para userId {UserId}. Total: {Count}", userId, result.Count);
                 return Ok(result);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener los alquileres del usuario con id {UserId}", userId);
                 return StatusCode(500, $"Error al obtener los alquileres del usuario: {ex.Message}");

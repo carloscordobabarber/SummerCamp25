@@ -49,7 +49,7 @@ namespace SistemaAPI.Controllers
                 _logger.LogInformation("Consulta de apartamentos disponibles realizada correctamente. Total: {Count}", totalCount);
                 return Ok(result);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener los apartamentos disponibles");
                 return StatusCode(500, $"Error al obtener los apartamentos disponibles: {ex.Message}");

@@ -41,7 +41,7 @@ namespace SistemaAPI.Controllers
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Distrito creado correctamente con id {Id}", district.Id);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al guardar el distrito");
                 return StatusCode(500, $"Error al guardar el distrito: {ex.Message}");
@@ -110,7 +110,7 @@ namespace SistemaAPI.Controllers
                 _logger.LogInformation("Calle y relación distrito-calle creadas correctamente. CalleId: {StreetId}, DistritoId: {DistrictId}", streetId, districtId);
                 return CreatedAtAction(nameof(PostStreet), new { id = streetId }, new { StreetId = streetId, DistrictId = districtId });
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 await transaction.RollbackAsync();
                 _logger.LogError(ex, "Error al guardar la calle y su relación");
@@ -147,7 +147,7 @@ namespace SistemaAPI.Controllers
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Edificio creado correctamente con id {Id}", building.Id);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al guardar el edificio");
                 return StatusCode(500, $"Error al guardar el edificio: {ex.Message}");
@@ -190,7 +190,7 @@ namespace SistemaAPI.Controllers
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Apartamento creado correctamente con id {Id}", apartment.Id);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al guardar el apartamento");
                 return StatusCode(500, $"Error al guardar el apartamento: {ex.Message}");

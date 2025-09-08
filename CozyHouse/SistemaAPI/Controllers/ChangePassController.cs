@@ -50,7 +50,7 @@ namespace SistemaAPI.Controllers
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Contraseña actualizada correctamente para usuario id {UserId}", request.UserId);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al actualizar la contraseña para usuario id {UserId}", request.UserId);
                 return StatusCode(500, $"Error al actualizar la contraseña: {ex.Message}");
