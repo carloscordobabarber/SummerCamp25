@@ -37,7 +37,7 @@ namespace SistemaAPI.Servicios
             CreateMap<Incidence, IncidenceDto>().ReverseMap();
             CreateMap<Incidence, QFIncidencesDto>().ReverseMap();
 
-            CreateMap<Log, LogDto>();
+            
 
             CreateMap<Payment, PaymentDto>().ReverseMap();
 
