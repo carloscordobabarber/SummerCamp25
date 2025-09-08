@@ -12,8 +12,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let contract of contracts" (dblclick)="openContract(contract)" style="cursor: pointer;">
-        <td>
+      <tr *ngFor="let contract of contracts"  style="cursor: pointer;">
+        <td (click)="openContract(contract)" style="cursor: pointer;">
           Contrato Alquiler - {{ contract.streetName }}{{ contract.portal ? contract.portal : '' }}, {{
           contract.apartmentFloor }}{{ contract.apartmentDoor ? contract.apartmentDoor : '' }}
         </td>
@@ -21,16 +21,15 @@
         <td>{{ contract.endDate | date:'dd/MM/yyyy' }}</td>
         <td>
           <span class="badge" [ngClass]="{
-            'bg-success': isContratoActivo(contract),
-            'bg-danger': isContratoFinalizado(contract),
-            'bg-secondary': isContratoPendiente(contract)
+            'bg-success': isContractActive(contract),
+            'bg-danger': isContractFinished(contract),
+            'bg-secondary': isContractPending(contract)
           }">
-            {{ getEstadoContrato(contract) }}
+            {{ getContractStatus(contract) }}
           </span>
         </td>
         <td>
-          <button type="button" class="btn btn-outline-danger btn-sm" title="Descargar PDF" >
-            <!-- (click)="downloadPdf(contract)" -->
+            <button type="button" class="btn btn-outline-danger btn-sm" title="Descargar PDF" (click)="downloadPdf(contract)">
             <i class="bi bi-file-earmark-pdf"></i>
           </button>
         </td>
@@ -94,11 +93,11 @@
 
         <p><strong>Estado:</strong>
           <span class="badge" [ngClass]="{
-            'bg-success': isContratoActivo(selectedContract),
-            'bg-danger': isContratoFinalizado(selectedContract),
-            'bg-secondary': isContratoPendiente(selectedContract)
+            'bg-success': isContractActive(selectedContract),
+            'bg-danger': isContractFinished(selectedContract),
+            'bg-secondary': isContractPending(selectedContract)
           }">
-            {{ getEstadoContrato(selectedContract) }}
+            {{ getContractStatus(selectedContract) }}
           </span>
         </p>
 
@@ -145,8 +144,8 @@
         </div>
       </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger btn-sm me-2" title="Descargar PDF">
-          <i class="bi bi-file-earmark-pdf"></i>   <!-- (click)="downloadPdf(selectedContract)" -->
+        <button  type="button" class="btn btn-outline-danger btn-sm me-2" (click)="downloadPdf(selectedContract)" [disabled]="!selectedContract" title="Descargar PDF">
+          <i class="bi bi-file-earmark-pdf"></i>
         </button>
         <button type="button" class="btn btn-secondary" (click)="closeContract()">Cerrar</button>
       </div>
