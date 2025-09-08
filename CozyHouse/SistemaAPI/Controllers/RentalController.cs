@@ -161,26 +161,5 @@ namespace SistemaAPI.Controllers
 
             return NoContent();
         }
-
-        // DELETE: api/Rental/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRental(int id)
-        {
-            var rental = await _context.Rentals.FindAsync(id);
-            if (rental == null)
-                return NotFound();
-
-            _context.Rentals.Remove(rental);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al eliminar el alquiler: {ex.Message}");
-            }
-
-            return NoContent();
-        }
     }
 }

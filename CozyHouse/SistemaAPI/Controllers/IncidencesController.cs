@@ -93,41 +93,6 @@ namespace SistemaAPI.Controllers
             return CreatedAtAction(nameof(GetIncidence), new { id = incidence.Id }, resultDto);
         }
 
-        // PUT: api/Incidences/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutIncidence(int id, [FromBody] IncidenceDto incidenceDto)
-        {
-            if (incidenceDto == null || id != incidenceDto.Id)
-                return BadRequest();
-
-            var incidence = await _context.Incidences.FindAsync(id);
-            if (incidence == null)
-                return NotFound();
-
-            // Mapear campos excepto Id y CreatedAt
-            incidence.Spokesperson = incidenceDto.Spokesperson;
-            incidence.Description = incidenceDto.Description;
-            incidence.IssueType = incidenceDto.IssueType;
-            incidence.AssignedCompany = incidenceDto.AssignedCompany;
-            incidence.ApartmentId = incidenceDto.ApartmentId;
-            incidence.RentalId = incidenceDto.RentalId;
-            incidence.TenantId = incidenceDto.TenantId;
-            incidence.StatusId = incidenceDto.StatusId;
-            incidence.UpdatedAt = DateTime.UtcNow;
-
-            _context.Entry(incidence).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al actualizar la incidencia: {ex.Message}");
-            }
-
-            return NoContent();
-        }
-
         // DELETE: api/Incidences/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIncidence(int id)

@@ -41,44 +41,6 @@ namespace SistemaAPI.Controllers
             return Ok(dto);
         }
 
-        // PUT: api/Apartments/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutApartment(int id, [FromBody] ApartmentWorkerDto apartmentDto)
-        {
-            if (apartmentDto == null || id != apartmentDto.Id)
-                return BadRequest();
-
-            var apartment = await _context.Apartments.FindAsync(id);
-            if (apartment == null)
-                return NotFound();
-
-            // Map fields except Id, CreatedAt
-            apartment.Code = apartmentDto.Code;
-            apartment.Door = apartmentDto.Door;
-            apartment.Floor = apartmentDto.Floor;
-            apartment.Price = apartmentDto.Price;
-            apartment.Area = apartmentDto.Area;
-            apartment.NumberOfRooms = apartmentDto.NumberOfRooms ?? 0;
-            apartment.NumberOfBathrooms = apartmentDto.NumberOfBathrooms ?? 0;
-            apartment.IsAvailable = apartmentDto.IsAvailable ?? false;
-            apartment.BuildingId = apartmentDto.BuildingId;
-            apartment.HasLift = apartmentDto.HasLift;
-            apartment.HasGarage = apartmentDto.HasGarage;
-            apartment.UpdatedAt = DateTime.UtcNow;
-
-            _context.Entry(apartment).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al actualizar el apartamento: {ex.Message}");
-            }
-
-            return NoContent();
-        }
-
         // PUT: api/Apartments/{id}/set-available
         [HttpPut("{id}/set-available")]
         public async Task<IActionResult> SetApartmentAvailable(int id)
