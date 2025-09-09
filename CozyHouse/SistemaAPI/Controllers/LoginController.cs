@@ -3,6 +3,7 @@ using Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CozyData;
+using SistemaAPI.Servicios;
 
 namespace SistemaAPI.Controllers
 {
@@ -11,10 +12,12 @@ namespace SistemaAPI.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ContextDataBase _context;
+        private readonly JwtService _jwtService;
 
-        public LoginController(ContextDataBase context)
+        public LoginController(ContextDataBase context, JwtService jwtService)
         {
             _context = context;
+            _jwtService = jwtService;
         }
 
         [HttpPost("login")]
@@ -32,7 +35,8 @@ namespace SistemaAPI.Controllers
             if (!loginDto.Password.Equals(user.Password))
                 return Unauthorized("Contraseña incorrecta");
 
-            return Ok(new { id = user.Id, role = user.Role });
+            var token = _jwtService.GenerateToken(user);
+            return Ok(new { token });
         }
     }
 }

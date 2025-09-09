@@ -10,20 +10,24 @@ export class Header {
   logout() {
     localStorage.clear();
   }
+
   get isAdmin(): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return false;
     try {
-      const user = localStorage.getItem('userRole');
-      if (!user) return false;
-      return user === 'Admin';
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role === 'Admin';
     } catch {
       return false;
     }
   }
+
   get isLoggedIn(): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return false;
     try {
-      const user = localStorage.getItem('userId');
-      if (!user) return false;
-      return true;
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return !!payload.sub;
     } catch {
       return false;
     }
