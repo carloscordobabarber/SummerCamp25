@@ -24,4 +24,5 @@ Documentacion online del repositorio analizado con IA
 https://deepwiki.com/carloscordobabarber/SummerCamp25
 
 Link al build actual online:
-https://68b6de520f9c820007dc029a--cozyhousesc25.netlify.app/
+
+https://cozyhousesc25.netlify.app/
