@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from '../../services/user/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContactService, ContactDto } from '../../services/contact/contact.service';
 
@@ -37,7 +38,7 @@ export class Contact {
     'Otros'
   ];
 
-  constructor(private fb: FormBuilder, private contactService: ContactService) {
+  constructor(private fb: FormBuilder, private contactService: ContactService, private userService: UserService) {
     this.contactForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       reason: ['', Validators.required],
@@ -75,13 +76,7 @@ export class Contact {
   }
 
   get isAdmin(): boolean {
-    try {
-      const user = localStorage.getItem('userRole');
-      if (!user) return false;
-      return user === 'Admin';
-    } catch {
-      return false;
-    }
+    return this.userService.getRoleFromToken() === 'Admin';
   }
 
   // Métodos para la lista de contactos admin

@@ -9,16 +9,39 @@ import { UserRental } from '../../models/user-rental';
   providedIn: 'root'
 })
 export class UserService {
-  // Cambia el puerto aquí para pruebas locales
-  private readonly LOCAL_PORT = 7195;
-  private readonly LOCAL_HOST = `https://localhost:${this.LOCAL_PORT}`;
-  private userApiUrl = `${this.LOCAL_HOST}/api/users`;
-  private loginUrl = `${this.LOCAL_HOST}/api/login/login`;
-  // private userApiUrl = 'https://devdemoapi4.azurewebsites.net/api/users';
-  // private loginUrl = 'https://devdemoapi4.azurewebsites.net/api/login/login';
+  /**
+   * Obtiene el id del usuario actual desde el token JWT (Posiblemente obsoleto con GetUser)
+   */
+  getUserIdFromToken(): number | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.sub ? parseInt(payload.sub, 10) : null;
+    } catch {
+      return null;
+    }
+  }
+  /**
+   * Obtiene el rol del usuario actual desde el token JWT
+   */
+  getRoleFromToken(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || null;
+    } catch {
+      return null;
+    }
+  }
+
+   private userApiUrl = 'https://devdemoapi4.azurewebsites.net/api/users';
+   private loginUrl = 'https://devdemoapi4.azurewebsites.net/api/login/login';
 
   constructor(private http: HttpClient) {}
 
+  //modificado para funcionar con JWT
   getUsers(page?: number, pageSize?: number, filters?: any): Observable<any> {
     let params: any = {};
     if (page !== undefined && pageSize !== undefined) {

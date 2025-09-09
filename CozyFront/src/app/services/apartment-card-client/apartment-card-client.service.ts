@@ -7,7 +7,7 @@ import { ApartmentCard } from '../../models/apartment-card';
   providedIn: 'root'
 })
 export class ApartmentCardClientService {
-  private apiUrl = '/api/ApartmentCardClient';
+  private apiUrl = 'https://devdemoapi4.azurewebsites.net/api/ApartmentCardClient';
 
   constructor(private http: HttpClient) {}
 
