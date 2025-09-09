@@ -13,7 +13,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(page?: number, pageSize?: number, filters?: any): Observable<any> {
+  getUsers(page?: number, pageSize?: number, filters?: any): Observable<{ items: UserProfile[]; totalCount: number }> {
     let params: any = {};
     if (page !== undefined && pageSize !== undefined) {
       params.page = page;
@@ -26,7 +26,7 @@ export class UserService {
         }
       });
     }
-    return this.http.get<any>(this.userApiUrl, { params });
+    return this.http.get<{ items: UserProfile[]; totalCount: number }>(this.userApiUrl, { params });
   }
 
   /**
@@ -52,8 +52,8 @@ export class UserService {
     return this.http.get<UserProfile>(`${this.userApiUrl}/${id}`);
   }
 
-  createUser(user: any): Observable<any> {
-    return this.http.post<any>(this.userApiUrl, user);
+  createUser(user: UserProfile): Observable<UserProfile> {
+    return this.http.post<UserProfile>(this.userApiUrl, user);
   }
 
   updateUser(user: UserProfile): Observable<void> {
