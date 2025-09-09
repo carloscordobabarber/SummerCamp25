@@ -33,14 +33,23 @@ export class Login implements OnInit {
 
     this.userService.login(email, password).subscribe({
       next: res => {
-        // Guardar id y role en localStorage
-        localStorage.setItem('userId', res.id.toString());
-        localStorage.setItem('userRole', res.role);
+        console.log('Login response:', res);
+        // Guardar token en localStorage
+        localStorage.setItem('token', res.token);
+        // Decodificar el token para obtener id y role
+        try {
+          const payload = JSON.parse(atob(res.token.split('.')[1]));
+          localStorage.setItem('userId', payload.sub);
+          localStorage.setItem('userRole', payload.role);
+        } catch (e) {
+          console.error('Error decodificando el token', e);
+        }
         alert('Login exitoso');
         this.errorMessage = '';
         this.router.navigate(['/']);
       },
       error: err => {
+        console.error('Login error:', err);
         if (err.status === 404) this.errorMessage = 'Error al conectarse al servidor';
         else if (err.status === 401) this.errorMessage = 'Email o contraseña incorrectos';
         else this.errorMessage = 'Error desconocido';
