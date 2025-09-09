@@ -4,6 +4,7 @@ using Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CozyData;
+using Microsoft.Extensions.Logging;
 
 namespace SistemaAPI.Controllers
 {
@@ -13,11 +14,13 @@ namespace SistemaAPI.Controllers
     {
         private readonly ContextDataBase _context;
         private readonly IMapper _mapper;
+        private readonly ILogger<ApartmentClientsController> _logger;
 
-        public ApartmentClientsController(ContextDataBase context, IMapper mapper)
+        public ApartmentClientsController(ContextDataBase context, IMapper mapper, ILogger<ApartmentClientsController> logger)
         {
             _context = context;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -26,22 +29,31 @@ namespace SistemaAPI.Controllers
             if (pageSize <= 0) pageSize = 10;
             if (page <= 0) page = 1;
 
-            var query = _context.Apartments.AsNoTracking().Where(a => a.IsAvailable);
-            var totalCount = await query.CountAsync();
-            var apartments = await query
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            var dto = _mapper.Map<List<ApartmentClientDto>>(apartments);
-            var result = new PagedResult<ApartmentClientDto>
+            try
             {
-                Items = dto,
-                TotalCount = totalCount,
-                Page = page,
-                PageSize = pageSize
-            };
-            return Ok(result);
+                var query = _context.Apartments.AsNoTracking().Where(a => a.IsAvailable);
+                var totalCount = await query.CountAsync();
+                var apartments = await query
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+                var dto = _mapper.Map<List<ApartmentClientDto>>(apartments);
+                var result = new PagedResult<ApartmentClientDto>
+                {
+                    Items = dto,
+                    TotalCount = totalCount,
+                    Page = page,
+                    PageSize = pageSize
+                };
+                _logger.LogInformation("Consulta de apartamentos disponibles realizada correctamente. Total: {Count}", totalCount);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener los apartamentos disponibles");
+                return StatusCode(500, $"Error al obtener los apartamentos disponibles: {ex.Message}");
+            }
         }
     }
 }

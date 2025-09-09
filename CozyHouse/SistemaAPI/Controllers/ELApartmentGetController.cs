@@ -8,6 +8,7 @@ using DTOS;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace SistemaAPI.Controllers
 {
@@ -17,11 +18,13 @@ namespace SistemaAPI.Controllers
     {
         private readonly ContextDataBase _context;
         private readonly IMapper _mapper;
+        private readonly ILogger<ELApartmentGetController> _logger;
 
-        public ELApartmentGetController(ContextDataBase context, IMapper mapper)
+        public ELApartmentGetController(ContextDataBase context, IMapper mapper, ILogger<ELApartmentGetController> logger)
         {
             _context = context;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET: api/ELApartmentGet
@@ -39,10 +42,12 @@ namespace SistemaAPI.Controllers
                     dto.BuildingCode = building?.CodeBuilding ?? string.Empty;
                     return dto;
                 }).ToList();
+                _logger.LogInformation("Consulta de todos los apartamentos (EL) realizada correctamente. Total: {Count}", result.Count);
                 return Ok(result);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error al obtener los apartamentos (EL)");
                 return StatusCode(500, $"Error al obtener los apartamentos: {ex.Message}");
             }
         }
@@ -55,15 +60,20 @@ namespace SistemaAPI.Controllers
             {
                 var apartment = await _context.Apartments.AsNoTracking().FirstOrDefaultAsync(a => a.Code == apartmentCode);
                 if (apartment == null)
+                {
+                    _logger.LogWarning("No se encontró el apartamento con código {ApartmentCode}", apartmentCode);
                     return NotFound($"No se encontró el apartamento con código '{apartmentCode}'.");
+                }
 
                 var building = await _context.Buildings.FirstOrDefaultAsync(b => b.Id == apartment.BuildingId);
                 var dto = _mapper.Map<ApartmentELDto>(apartment);
                 dto.BuildingCode = building?.CodeBuilding ?? string.Empty;
+                _logger.LogInformation("Consulta de apartamento (EL) realizada correctamente para código {ApartmentCode}", apartmentCode);
                 return Ok(dto);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error al obtener el apartamento (EL) con código {ApartmentCode}", apartmentCode);
                 return StatusCode(500, $"Error al obtener el apartamento: {ex.Message}");
             }
         }

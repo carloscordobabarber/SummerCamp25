@@ -4,6 +4,7 @@ using Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CozyData;
+using Microsoft.Extensions.Logging;
 
 namespace SistemaAPI.Controllers
 {
@@ -13,11 +14,13 @@ namespace SistemaAPI.Controllers
     {
         private readonly ContextDataBase _context;
         private readonly IMapper _mapper;
+        private readonly ILogger<ApartmentCardController> _logger;
 
-        public ApartmentCardController(ContextDataBase context, IMapper mapper)
+        public ApartmentCardController(ContextDataBase context, IMapper mapper, ILogger<ApartmentCardController> logger)
         {
             _context = context;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET: api/ApartmentCard
@@ -35,42 +38,139 @@ namespace SistemaAPI.Controllers
             [FromQuery] int? numberOfBathrooms = null
         )
         {
-            var apartmentsQuery = _context.Apartments
-                .Where(a => a.IsAvailable)
-                .AsNoTracking()
-                .AsQueryable();
-
-            // Filtros directos sobre Apartment
-            if (area.HasValue)
-                apartmentsQuery = apartmentsQuery.Where(a => a.Area <= area.Value);
-
-            if (hasLift.HasValue)
-                apartmentsQuery = apartmentsQuery.Where(a => a.HasLift == hasLift.Value);
-
-            if (minPrice.HasValue)
-                apartmentsQuery = apartmentsQuery.Where(a => a.Price >= minPrice.Value);
-            if (maxPrice.HasValue)
-                apartmentsQuery = apartmentsQuery.Where(a => a.Price <= maxPrice.Value);
-
-            if (hasGarage.HasValue)
-                apartmentsQuery = apartmentsQuery.Where(a => a.HasGarage == hasGarage.Value);
-
-            if (numberOfRooms.HasValue)
-                apartmentsQuery = apartmentsQuery.Where(a => a.NumberOfRooms == numberOfRooms.Value);
-
-            if (numberOfBathrooms.HasValue)
-                apartmentsQuery = apartmentsQuery.Where(a => a.NumberOfBathrooms == numberOfBathrooms.Value);
-
-            var apartments = await apartmentsQuery.ToListAsync();
-            var buildings = await _context.Buildings.AsNoTracking().ToListAsync();
-            var districtStreets = await _context.DistrictStreets.AsNoTracking().ToListAsync();
-            var districts = await _context.Districts.AsNoTracking().ToListAsync();
-            var streets = await _context.Streets.AsNoTracking().ToListAsync();
-
-            var apartmentDtos = new List<ApartmentCardsDto>();
-
-            foreach (var apartment in apartments)
+            try
             {
+                var apartmentsQuery = _context.Apartments
+                    .Where(a => a.IsAvailable)
+                    .AsNoTracking()
+                    .AsQueryable();
+
+                // Filtros directos sobre Apartment
+                if (area.HasValue)
+                    apartmentsQuery = apartmentsQuery.Where(a => a.Area <= area.Value);
+
+                if (hasLift.HasValue)
+                    apartmentsQuery = apartmentsQuery.Where(a => a.HasLift == hasLift.Value);
+
+                if (minPrice.HasValue)
+                    apartmentsQuery = apartmentsQuery.Where(a => a.Price >= minPrice.Value);
+                if (maxPrice.HasValue)
+                    apartmentsQuery = apartmentsQuery.Where(a => a.Price <= maxPrice.Value);
+
+                if (hasGarage.HasValue)
+                    apartmentsQuery = apartmentsQuery.Where(a => a.HasGarage == hasGarage.Value);
+
+                if (numberOfRooms.HasValue)
+                    apartmentsQuery = apartmentsQuery.Where(a => a.NumberOfRooms == numberOfRooms.Value);
+
+                if (numberOfBathrooms.HasValue)
+                    apartmentsQuery = apartmentsQuery.Where(a => a.NumberOfBathrooms == numberOfBathrooms.Value);
+
+                var apartments = await apartmentsQuery.ToListAsync();
+                var buildings = await _context.Buildings.AsNoTracking().ToListAsync();
+                var districtStreets = await _context.DistrictStreets.AsNoTracking().ToListAsync();
+                var districts = await _context.Districts.AsNoTracking().ToListAsync();
+                var streets = await _context.Streets.AsNoTracking().ToListAsync();
+
+                var apartmentDtos = new List<ApartmentCardsDto>();
+
+                foreach (var apartment in apartments)
+                {
+                    var dto = new ApartmentCardsDto
+                    {
+                        Id = apartment.Id,
+                        Code = apartment.Code,
+                        Door = apartment.Door,
+                        Floor = apartment.Floor,
+                        Price = apartment.Price,
+                        Area = apartment.Area,
+                        NumberOfRooms = apartment.NumberOfRooms,
+                        NumberOfBathrooms = apartment.NumberOfBathrooms,
+                        BuildingId = apartment.BuildingId,
+                        HasLift = apartment.HasLift,
+                        HasGarage = apartment.HasGarage,
+                        IsAvailable = apartment.IsAvailable
+                    };
+
+                    var building = buildings.FirstOrDefault(b => b.Id == apartment.BuildingId);
+                    string streetName = string.Empty;
+                    int dtoDistrictId = 0;
+                    string districtName = string.Empty;
+
+                    if (building != null)
+                    {
+                        var street = streets.FirstOrDefault(s => s.Code == building.CodeStreet);
+                        if (street != null)
+                            streetName = street.Name;
+
+                        var streetId = street?.Id ?? 0;
+                        var districtStreet = districtStreets.FirstOrDefault(ds => ds.StreetId == streetId);
+                        if (districtStreet != null)
+                        {
+                            var district = districts.FirstOrDefault(d => d.Id == districtStreet.DistrictId);
+                            if (district != null)
+                            {
+                                dtoDistrictId = district.Id;
+                                districtName = district.Name;
+                            }
+                        }
+                    }
+                    dto.StreetName = streetName;
+                    dto.DistrictId = dtoDistrictId;
+                    dto.DistrictName = districtName;
+
+                    dto.ImageUrls = await _context.imageApartments
+                        .AsNoTracking()
+                        .Where(img => img.ApartmentId == apartment.Id)
+                        .Select(img => img.PhotoUrl)
+                        .ToListAsync();
+
+                    apartmentDtos.Add(dto);
+                }
+
+                // Filtro por districtId (requiere haber resuelto la relaciï¿½n)
+                if (districtId.HasValue)
+                    apartmentDtos = apartmentDtos.Where(a => a.DistrictId == districtId.Value).ToList();
+
+                var totalCount = apartmentDtos.Count;
+
+                var pagedResult = apartmentDtos
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                _logger.LogInformation("Consulta de apartamentos realizada correctamente. Total: {Count}", totalCount);
+                return Ok(new
+                {
+                    totalCount,
+                    items = pagedResult
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener la lista de apartamentos");
+                return StatusCode(500, $"Error al obtener la lista de apartamentos: {ex.Message}");
+            }
+        }
+
+        // GET: api/ApartmentCard/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApartmentCardsDto>> GetApartment(int id)
+        {
+            try
+            {
+                var apartment = await _context.Apartments.FindAsync(id);
+                if (apartment == null)
+                {
+                    _logger.LogWarning("Apartamento no encontrado para id {Id}", id);
+                    return NotFound();
+                }
+
+                var building = await _context.Buildings.AsNoTracking().FirstOrDefaultAsync(b => b.Id == apartment.BuildingId);
+                var districtStreets = await _context.DistrictStreets.AsNoTracking().ToListAsync();
+                var districts = await _context.Districts.AsNoTracking().ToListAsync();
+                var streets = await _context.Streets.AsNoTracking().ToListAsync();
+
                 var dto = new ApartmentCardsDto
                 {
                     Id = apartment.Id,
@@ -84,12 +184,11 @@ namespace SistemaAPI.Controllers
                     BuildingId = apartment.BuildingId,
                     HasLift = apartment.HasLift,
                     HasGarage = apartment.HasGarage,
-                    IsAvailable = apartment.IsAvailable
+                    IsAvailable= apartment.IsAvailable
                 };
 
-                var building = buildings.FirstOrDefault(b => b.Id == apartment.BuildingId);
                 string streetName = string.Empty;
-                int dtoDistrictId = 0;
+                int districtId = 0;
                 string districtName = string.Empty;
 
                 if (building != null)
@@ -105,13 +204,13 @@ namespace SistemaAPI.Controllers
                         var district = districts.FirstOrDefault(d => d.Id == districtStreet.DistrictId);
                         if (district != null)
                         {
-                            dtoDistrictId = district.Id;
+                            districtId = district.Id;
                             districtName = district.Name;
                         }
                     }
                 }
                 dto.StreetName = streetName;
-                dto.DistrictId = dtoDistrictId;
+                dto.DistrictId = districtId;
                 dto.DistrictName = districtName;
 
                 dto.ImageUrls = await _context.imageApartments
@@ -120,89 +219,14 @@ namespace SistemaAPI.Controllers
                     .Select(img => img.PhotoUrl)
                     .ToListAsync();
 
-                apartmentDtos.Add(dto);
+                _logger.LogInformation("Consulta de apartamento realizada correctamente para id {Id}", id);
+                return Ok(dto);
             }
-
-            // Filtro por districtId (requiere haber resuelto la relaciï¿½n)
-            if (districtId.HasValue)
-                apartmentDtos = apartmentDtos.Where(a => a.DistrictId == districtId.Value).ToList();
-
-            var totalCount = apartmentDtos.Count;
-
-            var pagedResult = apartmentDtos
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-
-            return Ok(new
+            catch (Exception ex)
             {
-                totalCount,
-                items = pagedResult
-            });
-        }
-
-        // GET: api/ApartmentCard/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ApartmentCardsDto>> GetApartment(int id)
-        {
-            var apartment = await _context.Apartments.FindAsync(id);
-            if (apartment == null)
-                return NotFound();
-
-            var building = await _context.Buildings.AsNoTracking().FirstOrDefaultAsync(b => b.Id == apartment.BuildingId);
-            var districtStreets = await _context.DistrictStreets.AsNoTracking().ToListAsync();
-            var districts = await _context.Districts.AsNoTracking().ToListAsync();
-            var streets = await _context.Streets.AsNoTracking().ToListAsync();
-
-            var dto = new ApartmentCardsDto
-            {
-                Id = apartment.Id,
-                Code = apartment.Code,
-                Door = apartment.Door,
-                Floor = apartment.Floor,
-                Price = apartment.Price,
-                Area = apartment.Area,
-                NumberOfRooms = apartment.NumberOfRooms,
-                NumberOfBathrooms = apartment.NumberOfBathrooms,
-                BuildingId = apartment.BuildingId,
-                HasLift = apartment.HasLift,
-                HasGarage = apartment.HasGarage,
-                IsAvailable= apartment.IsAvailable
-            };
-
-            string streetName = string.Empty;
-            int districtId = 0;
-            string districtName = string.Empty;
-
-            if (building != null)
-            {
-                var street = streets.FirstOrDefault(s => s.Code == building.CodeStreet);
-                if (street != null)
-                    streetName = street.Name;
-
-                var streetId = street?.Id ?? 0;
-                var districtStreet = districtStreets.FirstOrDefault(ds => ds.StreetId == streetId);
-                if (districtStreet != null)
-                {
-                    var district = districts.FirstOrDefault(d => d.Id == districtStreet.DistrictId);
-                    if (district != null)
-                    {
-                        districtId = district.Id;
-                        districtName = district.Name;
-                    }
-                }
+                _logger.LogError(ex, "Error al obtener el apartamento con id {Id}", id);
+                return StatusCode(500, $"Error al obtener el apartamento: {ex.Message}");
             }
-            dto.StreetName = streetName;
-            dto.DistrictId = districtId;
-            dto.DistrictName = districtName;
-
-            dto.ImageUrls = await _context.imageApartments
-                .AsNoTracking()
-                .Where(img => img.ApartmentId == apartment.Id)
-                .Select(img => img.PhotoUrl)
-                .ToListAsync();
-
-            return Ok(dto);
         }
     }
 }
