@@ -6,6 +6,7 @@ import { ApartmentCardClientService } from '../../../services/apartment-card-cli
 import { ApartmentCard } from '../../../models/apartment-card';
 import { UserRentalsService } from '../../../services/user/user-rentals.service';
 import { UserRental } from '../../../models/user-rental';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
   selector: 'app-my-rentals',
@@ -24,7 +25,8 @@ export class MyRentals implements AfterViewInit {
 
   constructor(
     private userRentalsService: UserRentalsService,
-    private apartmentCardClientService: ApartmentCardClientService
+    private apartmentCardClientService: ApartmentCardClientService,
+    private userService: UserService
   ) {}
   ngAfterViewInit() {
     this.modalInstance = new bootstrap.Modal(this.paymentModal.nativeElement);
@@ -51,14 +53,24 @@ export class MyRentals implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    const userIdStr = localStorage.getItem('userId');
-    const userId = userIdStr ? parseInt(userIdStr, 10) : null;
-    if (userId) {
-      this.loadRentals(userId);
-      this.loadApartments(userId);
-    } else {
-      console.error('No se encontró el id de usuario en localStorage');
-    }
+    this.userService.getUser().subscribe({
+      next: (user) => {
+        const userId = user.id;
+        if (userId !== null && userId !== undefined) {
+          this.loadRentals(userId);
+          this.loadApartments(userId);
+        } else {
+          console.error('No se encontró el id de usuario en el perfil');
+          this.rentals = [];
+          this.apartments = [];
+        }
+      },
+      error: (err) => {
+        console.error('Error al obtener el usuario', err);
+        this.rentals = [];
+        this.apartments = [];
+      }
+    });
   }
 
   loadRentals(userId: number) {

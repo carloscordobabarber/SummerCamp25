@@ -3,7 +3,10 @@ using Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CozyData;
+
+using SistemaAPI.Servicios;
 using Microsoft.Extensions.Logging;
+
 
 namespace SistemaAPI.Controllers
 {
@@ -12,11 +15,13 @@ namespace SistemaAPI.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ContextDataBase _context;
+        private readonly JwtService _jwtService;
         private readonly ILogger<LoginController> _logger;
 
-        public LoginController(ContextDataBase context, ILogger<LoginController> logger)
+        public LoginController(ContextDataBase context, JwtService jwtService, ILogger<LoginController> logger)
         {
             _context = context;
+            _jwtService = jwtService;
             _logger = logger;
         }
 
@@ -26,7 +31,7 @@ namespace SistemaAPI.Controllers
             if (loginDto == null || string.IsNullOrWhiteSpace(loginDto.Email) || string.IsNullOrWhiteSpace(loginDto.Password))
             {
                 _logger.LogWarning("Intento de login fallido: datos incompletos o nulos");
-                return BadRequest("Email y contraseña son obligatorios.");
+                return BadRequest("Email y contraseÃ±a son obligatorios.");
             }
 
             var user = await _context.Users
@@ -40,12 +45,13 @@ namespace SistemaAPI.Controllers
 
             if (!loginDto.Password.Equals(user.Password))
             {
-                _logger.LogWarning("Intento de login fallido: contraseña incorrecta para usuario con email {Email}", loginDto.Email);
-                return Unauthorized("Contraseña incorrecta");
+                _logger.LogWarning("Intento de login fallido: contraseÃ±a incorrecta para usuario con email {Email}", loginDto.Email);
+                return Unauthorized("ContraseÃ±a incorrecta");
             }
 
             _logger.LogInformation("Login exitoso para usuario con email {Email}", loginDto.Email);
-            return Ok(new { id = user.Id, role = user.Role });
+            var token = _jwtService.GenerateToken(user);
+            return Ok(new { token, id = user.Id, role = user.Role });
         }
     }
 }

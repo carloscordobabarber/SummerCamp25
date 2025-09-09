@@ -35,21 +35,17 @@ export class ProfileDetails implements OnInit {
       phone: ['', [Validators.pattern(/^((\+\d{7,15})|(\d{9,15}))$/)]], // acepta internacional (+123456789) o nacional (123456789)
     });
 
-    const userId = localStorage.getItem('userId');
-
-    if (userId) {
-      this.userService.getUser(+userId).subscribe({
-        next: (userData) => {
-          this.user = userData;
-          this.userName = `${userData.name}`;
-          console.log('birthDate type:', typeof userData.birthDate, userData.birthDate);
-          this.patchUserForm(userData);
-        },
-        error: (err) => {
-          console.error('Error al obtener usuario', err);
-        }
-      });
-    }
+    this.userService.getUser().subscribe({
+      next: (userData) => {
+        this.user = userData;
+        this.userName = `${userData.name}`;
+        console.log('birthDate type:', typeof userData.birthDate, userData.birthDate);
+        this.patchUserForm(userData);
+      },
+      error: (err) => {
+        console.error('Error al obtener usuario', err);
+      }
+    });
   }
 
   private patchUserForm(user: UserProfile) {

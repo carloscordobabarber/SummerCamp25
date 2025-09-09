@@ -1,5 +1,9 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Apartment } from '../../models/apartment';
+import { ApartmentFilters } from '../../models/apartment-filters';
+
+type ApartmentApiResult = { items: Apartment[]; totalCount: number } | Apartment[];
 import { ApartmentWorker } from '../../services/apartment-worker/apartment-worker';
 
 @Component({
@@ -47,18 +51,25 @@ export class ApartmentList implements OnInit {
   ngOnInit(): void {
     this.cargando = true;
     // Cargar todos los apartamentos para los filtros globales
-    this.apartmentWorker.getApartmentsWithFilters({ page: 1, pageSize: 10000 }).subscribe((result: any) => {
-      const all = result.items ? result.items : result;
+    this.apartmentWorker.getApartmentsWithFilters({ page: 1, pageSize: 10000 }).subscribe((result: ApartmentApiResult) => {
+      let all: Apartment[];
+      if (Array.isArray(result)) {
+        all = result;
+      } else if ('items' in result) {
+        all = result.items;
+      } else {
+        all = [];
+      }
       this.allApartments = all;
-      this.roomsOptions = Array.from(new Set((all as Apartment[]).map((a: Apartment) => Number(a.numberOfRooms)).filter((n: number) => !isNaN(n)))).sort((a: number, b: number) => a - b);
-      this.bathsOptions = Array.from(new Set((all as Apartment[]).map((a: Apartment) => Number(a.numberOfBathrooms)).filter((n: number) => !isNaN(n)))).sort((a: number, b: number) => a - b);
+      this.roomsOptions = Array.from(new Set(all.map((a: Apartment) => Number(a.numberOfRooms)).filter((n: number) => !isNaN(n)))).sort((a: number, b: number) => a - b);
+      this.bathsOptions = Array.from(new Set(all.map((a: Apartment) => Number(a.numberOfBathrooms)).filter((n: number) => !isNaN(n)))).sort((a: number, b: number) => a - b);
       // Ahora cargar la página actual
       this.loadApartments();
     });
   }
 
   loadApartments() {
-    const filters: any = {
+    const filters: ApartmentFilters = {
       page: this.page,
       pageSize: this.pageSize,
       minPrice: this.filterPriceMin,
@@ -69,13 +80,16 @@ export class ApartmentList implements OnInit {
       street: this.searchStreet || undefined,
       code: this.searchCode || undefined
     };
-    this.apartmentWorker.getApartmentsWithFilters(filters).subscribe((result: any) => {
-      if (result.items && result.totalCount !== undefined) {
+    this.apartmentWorker.getApartmentsWithFilters(filters).subscribe((result: ApartmentApiResult) => {
+      if (Array.isArray(result)) {
+        this.apartments = result;
+        this.totalCount = result.length;
+      } else if ('items' in result && 'totalCount' in result) {
         this.apartments = result.items;
         this.totalCount = result.totalCount;
       } else {
-        this.apartments = result;
-        this.totalCount = result.length;
+        this.apartments = [];
+        this.totalCount = 0;
       }
       this.filteredApartments = this.apartments;
       // Las opciones de los filtros ya se calculan en ngOnInit con todos los apartamentos

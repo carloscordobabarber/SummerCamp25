@@ -17,26 +17,17 @@ export class Profile implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    const localUser = localStorage.getItem('user');
-    if (localUser) {
-      this.loggedUser = JSON.parse(localUser);
-    }
-
-    // 2. Llamar a la API para datos actualizados
-    const userId = this.loggedUser?.id || localStorage.getItem('userId');
-    if (userId) {
-      this.userService.getUser(+userId).subscribe({
-        next: (user) => {
-          this.loggedUser = user;
-
-          // Actualizar el localStorage con la versión más reciente
-          localStorage.setItem('user', JSON.stringify(user));
-        },
-        error: (err) => {
-          console.error('Error actualizando el usuario desde API:', err);
-        }
-      });
-    }
+    // Llamar a la API para datos actualizados usando JWT
+    this.userService.getUser().subscribe({
+      next: (user) => {
+        this.loggedUser = user;
+        // Actualizar el localStorage con la versión más reciente
+        localStorage.setItem('user', JSON.stringify(user));
+      },
+      error: (err) => {
+        console.error('Error actualizando el usuario desde API:', err);
+      }
+    });
   }
 
   selectSection(section: string): void {

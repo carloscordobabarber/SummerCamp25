@@ -37,8 +37,8 @@ export class RentalsService {
     return this.http.get<Rental>(`${this.apiUrl}/${id}`);
   }
 
-  getRentalsByUserId(userId: number) {
-    return this.http.get<any[]>(`${this.apiUrl}/${userId}`);
+  getRentalsByUserId(userId: number): Observable<Rental[]> {
+    return this.http.get<Rental[]>(`${this.apiUrl}/${userId}`);
   }
 
   createRental(rental: Rental): Observable<Rental> {
