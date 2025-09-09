@@ -1,5 +1,28 @@
 <form [formGroup]="incidenceForm" (ngSubmit)="onSubmit()" novalidate>
 	<div class="form-group">
+		<label for="rentalId">Número de contrato</label>
+	<input id="rentalId" type="number" formControlName="rentalId" class="form-control" min="1" required [disabled]="true" />
+		<!-- <div class="invalid-feedback" *ngIf="rentalId?.errors && (rentalId?.touched || rentalId?.dirty)">
+			<span *ngIf="rentalId?.errors?.['required']">El número de contrato es obligatorio.</span>
+			<span *ngIf="rentalId?.errors?.['min']">Debe ser mayor que 0.</span>
+		</div> -->
+	</div>
+
+	<div class="form-group">
+		<label for="apartmentId">Apartamento</label>
+		<select id="apartmentId" formControlName="apartmentId" class="form-select" (change)="onRentalChange($event)">
+			<option value="" disabled selected>Selecciona un apartamento</option>
+			<option *ngFor="let rental of userRentals" [value]="rental.apartmentId">
+				{{ rental.streetName }}{{ rental.portal ? ' ' + rental.portal : '' }}{{ rental.floor ? ', ' +
+				rental.floor : '' }}{{ rental.apartmentDoor ? ', ' + rental.apartmentDoor : '' }}
+			</option>
+		</select>
+		<div class="invalid-feedback" *ngIf="apartmentId?.errors && (apartmentId?.touched || apartmentId?.dirty)">
+			<span *ngIf="apartmentId?.errors?.['required']">Debes seleccionar un apartamento.</span>
+		</div>
+	</div>
+
+	<div class="form-group">
 		<label for="spokesperson" class="label-help">
 			Persona de contacto
 			<span class="help-icon" tabindex="0">
@@ -14,26 +37,6 @@
 			maxlength="100" />
 		<div class="invalid-feedback" *ngIf="spokesperson?.errors && (spokesperson?.touched || spokesperson?.dirty)">
 			<span *ngIf="spokesperson?.errors?.['maxlength']">Máximo 100 caracteres.</span>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label for="apartmentId">Número de apartamento</label>
-		<input id="apartmentId" type="number" formControlName="apartmentId" class="form-control" min="1" required
-			[class.is-invalid]="apartmentId?.invalid && (apartmentId?.touched || apartmentId?.dirty)" />
-		<div class="invalid-feedback" *ngIf="apartmentId?.errors && (apartmentId?.touched || apartmentId?.dirty)">
-			<span *ngIf="apartmentId?.errors?.['required']">El número de apartamento es obligatorio.</span>
-			<span *ngIf="apartmentId?.errors?.['min']">Debe ser mayor que 0.</span>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label for="rentalId">Número de contrato</label>
-		<input id="rentalId" type="number" formControlName="rentalId" class="form-control" min="1" required
-			[class.is-invalid]="rentalId?.invalid && (rentalId?.touched || rentalId?.dirty)" />
-		<div class="invalid-feedback" *ngIf="rentalId?.errors && (rentalId?.touched || rentalId?.dirty)">
-			<span *ngIf="rentalId?.errors?.['required']">El número de contrato es obligatorio.</span>
-			<span *ngIf="rentalId?.errors?.['min']">Debe ser mayor que 0.</span>
 		</div>
 	</div>
 

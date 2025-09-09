@@ -8,7 +8,7 @@ export interface UserRental {
   apartmentFloor: number;
   startDate: string;
   endDate: string;
-  statusId: number;
+  statusId: string;
   statusName: string;
   streetName: string;
   portal: string;

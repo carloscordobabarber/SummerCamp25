@@ -65,6 +65,7 @@ export class MyRentals implements AfterViewInit {
     this.userRentalsService.getRentalsByUserId(userId).subscribe({
       next: (rentals) => {
         this.rentals = rentals;
+        console.log('[MyRentals] Rentals cargados:', rentals);
       },
       error: (err) => console.error('Error al cargar alquileres', err)
     });

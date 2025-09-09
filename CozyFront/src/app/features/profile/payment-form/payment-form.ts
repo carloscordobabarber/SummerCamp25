@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PaymentsService } from '../../../services/payments/payments.service';
+import { RentalsService } from '../../../services/rentals/rentals.service';
 import { Payment } from '../../../models/payment';
 
 @Component({
@@ -24,8 +25,9 @@ export class PaymentFormComponent implements OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private paymentsService: PaymentsService
-  ) {}
+    private paymentsService: PaymentsService,
+    private rentalsService: RentalsService
+  ) { }
 
   ngOnInit() {
     this.initForm();
@@ -40,7 +42,7 @@ export class PaymentFormComponent implements OnChanges {
   private initForm() {
     this.paymentForm = this.fb.group({
       amount: [this.rental?.apartmentPrice, [Validators.required, Validators.min(1)]],
-  rentalId: [this.rental ? this.rental.rentalId : '', Validators.required],
+      rentalId: [this.rental ? this.rental.rentalId : '', Validators.required],
       bankAccount: ['', Validators.required],
       paymentDate: [new Date().toISOString().substring(0, 10), Validators.required]
     });
@@ -63,8 +65,25 @@ export class PaymentFormComponent implements OnChanges {
     console.log('Enviando pago:', payment);
     this.paymentsService.createPayment(payment).subscribe({
       next: () => {
-        this.loading = false;
-        this.paymentSuccess.emit();
+        // Actualizar el statusId del alquiler a 'U'
+        this.rentalsService.updateRental(payment.rentalId, {
+          id: payment.rentalId,
+          userId: this.rental.userId,
+          apartmentId: this.rental.apartmentId,
+          startDate: this.rental.startDate,
+          endDate: this.rental.endDate,
+          statusId: 'U'
+        }).subscribe({
+          next: () => {
+            this.loading = false;
+            this.paymentSuccess.emit();
+          },
+          error: err => {
+            this.loading = false;
+            this.error = 'Pago realizado, pero no se pudo actualizar el estado del alquiler';
+            console.error('Error al actualizar alquiler:', err);
+          }
+        });
       },
       error: err => {
         this.loading = false;
