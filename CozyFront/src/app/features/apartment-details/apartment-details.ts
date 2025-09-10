@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Apartment } from '../../models/apartment';
 import { ApartmentCardService } from '../../services/apartment-card/apartment-card';
 import { ApartmentAvailabilityService } from '../../services/apartment-availability/apartment-availability.service';
+import { UserService } from '../../services/user/user.service';
 import { RentalsService } from '../../services/rentals/rentals.service';
 import { Rental } from '../../models/rental';
 
@@ -30,7 +31,8 @@ export class ApartmentDetails implements OnInit {
     private route: ActivatedRoute,
     private apartmentService: ApartmentCardService,
     private rentalsService: RentalsService,
-    private apartmentAvailabilityService: ApartmentAvailabilityService
+    private apartmentAvailabilityService: ApartmentAvailabilityService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -49,10 +51,10 @@ export class ApartmentDetails implements OnInit {
       }
     });
     // Detectar usuario en localStorage (nuevo formato)
-    const userIdStr = localStorage.getItem('userId');
-    const userRoleStr = localStorage.getItem('userRole');
-    this.userId = userIdStr ? Number(userIdStr) : null;
-    this.userRole = userRoleStr ?? null;
+  const userId = this.userService.getUserIdFromToken();
+  this.userId = userId;
+  // Si tienes un método para el rol, úsalo aquí
+  this.userRole = null;
   }
   onRentNow(): void {
     if (!this.userId || !this.apartment) {
