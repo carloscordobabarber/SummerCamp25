@@ -31,7 +31,17 @@ export class CardManager implements OnInit {
   hasLift?: boolean;
   hasGarage?: boolean;
 
-  constructor(private http: HttpClient, private apartmentCardService: ApartmentCardService) {}
+  // Mensaje de redirección por permisos
+  redirectMessage: string | null = null;
+
+  constructor(private http: HttpClient, private apartmentCardService: ApartmentCardService) {
+    // Verifica si hay mensaje en sessionStorage
+    const msg = sessionStorage.getItem('redirectMessage');
+    if (msg) {
+      this.redirectMessage = msg;
+      sessionStorage.removeItem('redirectMessage');
+    }
+  }
 
   ngOnInit() {
     this.loadApartments();

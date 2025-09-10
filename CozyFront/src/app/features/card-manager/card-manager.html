@@ -1,5 +1,8 @@
 
 <div class="card-manager-container">
+  <div *ngIf="redirectMessage" class="alert alert-warning" style="margin-bottom: 1em;">
+    {{ redirectMessage }}
+  </div>
   <div class="card-manager-layout">
     <aside class="sidebar">
       <div class="filters-col">
