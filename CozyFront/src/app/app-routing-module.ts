@@ -17,25 +17,19 @@ import { MyRentals } from './features/profile/my-rentals/my-rentals';
 import { MyContracts } from './features/profile/my-contracts/my-contracts';
 import { ContractList } from './features/contract-list/contract-list';
 import { PaymentList } from './features/payment-list/payment-list';
+import { RoleGuard } from './guards/role.guard';
 
 const routes: Routes = [
   { path: '', component: CardManager },
   { path: 'register', component: Clients },
   { path: 'apartment-details/:id', component: ApartmentDetails },
   { path: 'login', component: Login },
-  { path: 'profile', component: Profile,
-    //   children: [
-    //   { path: '', component: ProfileDetails }, 
-    //   { path: 'my-rentals', component: MyRentals },
-    //   { path: 'my-contracts', component: MyContracts },
-    //   { path: 'incidences', component: Incidences }
-    // ]
-   },
-  { path: 'apartment-list', component: ApartmentList },
-  { path: 'client-list', component: ClientList },
-  { path: 'incidence-list', component: IncidenceList },
-  { path: 'contract-list', component: ContractList },
-  { path: 'payment-list', component: PaymentList },
+  { path: 'profile', component: Profile, canActivate: [RoleGuard], data: { roles: ['Client', 'Admin'] } },
+  { path: 'apartment-list', component: ApartmentList, canActivate: [RoleGuard], data: { roles: ['Admin'] } },
+  { path: 'client-list', component: ClientList, canActivate: [RoleGuard], data: { roles: ['Admin'] } },
+  { path: 'incidence-list', component: IncidenceList, canActivate: [RoleGuard], data: { roles: ['Admin'] } },
+  { path: 'contract-list', component: ContractList, canActivate: [RoleGuard], data: { roles: ['Admin'] } },
+  { path: 'payment-list', component: PaymentList, canActivate: [RoleGuard], data: { roles: ['Admin'] } },
   { path: 'contact', component: Contact },
   { path: 'about', component: About },
   { path: '**', redirectTo: '' }
