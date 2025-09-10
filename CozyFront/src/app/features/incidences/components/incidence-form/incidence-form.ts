@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { IncidencesService } from '../../../../services/incidences/incidences.service';
 import { UserRentalsService } from '../../../../services/user/user-rentals.service';
+import { UserService } from '../../../../services/user/user.service';
 import { UserRental } from '../../../../models/user-rental';
 import { Incidence } from '../../../../models/incidence';
 
@@ -31,7 +32,8 @@ export class IncidenceForm {
   constructor(
     private fb: FormBuilder,
     private incidencesService: IncidencesService,
-    private userRentalsService: UserRentalsService
+    private userRentalsService: UserRentalsService,
+    private userService: UserService
   ) {
     this.incidenceForm = this.fb.group({
       spokesperson: [' ', [Validators.maxLength(100)]],
@@ -41,16 +43,16 @@ export class IncidenceForm {
   rentalId: [null]
     });
 
-    const userId = localStorage.getItem('userId');
-    this.userRole = localStorage.getItem('role') || '';
+  const userId = this.userService.getUserIdFromToken();
+  this.userRole = this.userService.getRoleFromToken() || '';
 
     if (this.userRole !== 'Admin' && userId) {
       // Solo carga los alquileres del usuario logueado
       this.userRentalsService.getRentalsByUserId(Number(userId)).subscribe({
-            next: (rentals) => {
-              const activos = rentals.filter(r => r.statusId === 'A');
-              this.userRentals = activos;
-              console.log('[Nueva incidencia] Rentals activos traídos:', activos);
+        next: (rentals) => {
+          const activos = rentals.filter(r => r.statusId === 'A');
+          this.userRentals = activos;
+          console.log('[Nueva incidencia] Rentals activos traídos:', activos);
         },
         error: () => this.userRentals = []
       });
@@ -93,6 +95,11 @@ export class IncidenceForm {
         return;
       }
 
+      const tenantId = this.userService.getUserIdFromToken();
+      if (tenantId === null) {
+        alert('No se ha encontrado usuario logueado. Por favor, inicia sesión.');
+        return;
+      }
       const incidence: Incidence = {
         id: 0,
         spokesperson: formValue.spokesperson,
@@ -103,7 +110,7 @@ export class IncidenceForm {
         updatedAt: null,
         apartmentId: Number(formValue.apartmentId),
         rentalId: Number(formValue.rentalId),
-        tenantId: Number(localStorage.getItem('userId')),
+        tenantId,
         statusId: 'P'
       };
 

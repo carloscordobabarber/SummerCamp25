@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangePassService } from '../../../services/change-pass/change-pass.service';
+import { UserService } from '../../../services/user/user.service';
 import { ChangePass } from '../../../models/change-pass';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +22,7 @@ export class ChangePassword implements OnInit {
   showConfirmPassword = false;
   passwordForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private changePassService: ChangePassService) {}
+  constructor(private fb: FormBuilder, private changePassService: ChangePassService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.passwordForm = this.fb.group({
@@ -57,7 +58,11 @@ export class ChangePassword implements OnInit {
 
   onSubmit(): void {
     if (this.passwordForm.valid) {
-      const userId = Number(localStorage.getItem('userId'));
+      const userId = this.userService.getUserIdFromToken();
+      if (userId === null) {
+        alert('No se ha encontrado usuario logueado. Por favor, inicia sesión.');
+        return;
+      }
       const dto: ChangePass = {
         userId,
         oldPassword: this.passwordForm.value.currentPassword,

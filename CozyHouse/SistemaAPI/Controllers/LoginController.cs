@@ -51,7 +51,7 @@ namespace SistemaAPI.Controllers
 
             _logger.LogInformation("Login exitoso para usuario con email {Email}", loginDto.Email);
             var token = _jwtService.GenerateToken(user);
-            return Ok(new { token, id = user.Id, role = user.Role });
+            return Ok(new { token });
         }
     }
 }

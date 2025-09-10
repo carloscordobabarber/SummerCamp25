@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe, CommonModule } from '@angular/common';
 import { IncidencesService } from '../../../../services/incidences/incidences.service';
+import { UserService } from '../../../../services/user/user.service';
 import { Incidence } from '../../../../models/incidence';
 
 @Component({
@@ -22,14 +23,14 @@ export class IncidenceSidebar implements OnInit {
     'Otros'
   ];
 
+  constructor(private incidencesService: IncidencesService, private userService: UserService) {}
+
   ngOnInit() {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      this.getUserIncidences(userId);
+    const userId = this.userService.getUserIdFromToken();
+    if (userId !== null) {
+      this.getUserIncidences(userId.toString());
     }
   }
-
-  constructor(private incidencesService: IncidencesService) {}
 
   getUserIncidences(userId: string) {
     this.incidencesService.getIncidences(1, 10000, { tenantId: userId }).subscribe((res: any) => {

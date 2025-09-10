@@ -19,11 +19,10 @@ export class MyContracts implements AfterViewInit, OnInit {
   @ViewChild('contratoModal') contratoModal!: ElementRef;
   private modalInstance: any;
 
-  constructor(private userService: UserRentalsService) { }
+  constructor(private userService: UserRentalsService, private userProfileService: UserService) { }
 
   ngOnInit(): void {
-    const userIdStr = localStorage.getItem('userId');
-    const userId = userIdStr ? parseInt(userIdStr, 10) : null;
+    const userId = this.userProfileService.getUserIdFromToken();
     if (userId) {
       this.userService.getRentalsByUserId(userId).subscribe({
         next: (data) => this.contracts = data,
