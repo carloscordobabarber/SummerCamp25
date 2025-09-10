@@ -9,7 +9,7 @@ export class ChangePassService {
 
   constructor(private http: HttpClient) {}
 
-  changePassword(dto: ChangePass): Observable<any> {
-    return this.http.post<any>(this.apiUrl, dto);
+  changePassword(dto: ChangePass): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(this.apiUrl, dto);
   }
 }

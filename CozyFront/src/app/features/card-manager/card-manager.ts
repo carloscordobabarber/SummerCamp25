@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApartmentCardService } from '../../services/apartment-card/apartment-card';
+import { ApartmentCard } from '../../models/apartment-card';
 
 @Component({
   selector: 'app-card-manager',
@@ -10,7 +11,7 @@ import { ApartmentCardService } from '../../services/apartment-card/apartment-ca
   styleUrl: './card-manager.css'
 })
 export class CardManager implements OnInit {
-  apartments: any[] = [];
+  apartments: ApartmentCard[] = [];
   totalCount = 0;
   page = 1;
   pageSize = 10;

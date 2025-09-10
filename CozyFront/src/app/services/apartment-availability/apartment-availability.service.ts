@@ -10,11 +10,11 @@ export class ApartmentAvailabilityService {
 
   constructor(private http: HttpClient) {}
 
-  setAvailable(apartmentId: number, available: boolean): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${apartmentId}/set-available`, { available });
+  setAvailable(apartmentId: number, available: boolean): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${apartmentId}/set-available`, { available });
   }
 
-  setUnavailable(apartmentId: number): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${apartmentId}/set-unavailable`, {});
+  setUnavailable(apartmentId: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${apartmentId}/set-unavailable`, {});
   }
 }
