@@ -39,8 +39,8 @@ export class Login implements OnInit {
         // Decodificar el token para obtener id y role
         try {
           const payload = JSON.parse(atob(res.token.split('.')[1]));
-          localStorage.setItem('userId', payload.sub);
-          localStorage.setItem('userRole', payload.role);
+          // localStorage.setItem('userId', payload.sub);
+          // localStorage.setItem('userRole', payload.role);
         } catch (e) {
           console.error('Error decodificando el token', e);
         }

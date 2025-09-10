@@ -23,6 +23,7 @@ export class Contact {
   submitError: string | null = null;
 
   // Admin list
+  // TODO crear modelo Contact
   contacts: any[] = [];
   filterEmail: string = '';
   filterContactReason: string = '';

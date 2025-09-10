@@ -32,7 +32,7 @@ export class Paginador {
     this.pageSizeChange.emit(Number(size));
   }
 
-  onPageSizeSelect(event: any) {
+  onPageSizeSelect(event: Event) {
     // Ya no es necesario con ngModel, pero se deja por compatibilidad
     const value = +(event.target as HTMLSelectElement).value;
     this.changePageSize(value);
