@@ -12,17 +12,19 @@
 		<span class="incidence-label">Descripción:</span>
 		<span class="incidence-value">{{ incidence.description }}</span>
 	</div>
-	<div class="incidence-field">
-		<span class="incidence-label">Compañía asignada:</span>
-		<span class="incidence-value">{{ incidence.assignedCompany || '-' }}</span>
-	</div>
-	<div class="incidence-field">
-		<span class="incidence-label">Creada:</span>
-		<span class="incidence-value">{{ incidence.createdAt | date:'short' }}</span>
-	</div>
-	<div class="incidence-field">
-		<span class="incidence-label">Actualizada:</span>
-		<span class="incidence-value">{{ incidence.updatedAt ? (incidence.updatedAt | date:'short') : '-' }}</span>
+	<div class="incidence-row">
+		<div class="incidence-field">
+			<span class="incidence-label">Tipo:</span>
+			<span class="incidence-value">{{ issueTypeName }}</span>
+		</div>
+		<div class="incidence-field">
+			<span class="incidence-label">Persona de contacto:</span>
+			<span class="incidence-value">{{ incidence.spokesperson }}</span>
+		</div>
+		<div class="incidence-field">
+			<span class="incidence-label">Creada:</span>
+			<span class="incidence-value">{{ incidence.createdAt | date:'short' }}</span>
+		</div>
 	</div>
 	<div class="incidence-field">
 		<span class="incidence-label">ID Apartamento:</span>

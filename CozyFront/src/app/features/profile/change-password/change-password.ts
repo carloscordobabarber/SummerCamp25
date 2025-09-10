@@ -58,17 +58,16 @@ export class ChangePassword implements OnInit {
 
   onSubmit(): void {
     if (this.passwordForm.valid) {
-      const userId = this.userService.getUserIdFromToken();
-      if (userId === null) {
+      const token = this.userService.getToken();
+      if (!token) {
         alert('No se ha encontrado usuario logueado. Por favor, inicia sesión.');
         return;
       }
       const dto: ChangePass = {
-        userId,
         oldPassword: this.passwordForm.value.currentPassword,
         newPassword: this.passwordForm.value.newPassword
       };
-      this.changePassService.changePassword(dto).subscribe({
+      this.changePassService.changePassword(dto, token).subscribe({
         next: (res) => {
           alert('Contraseña cambiada con éxito!');
           this.passwordForm.reset();

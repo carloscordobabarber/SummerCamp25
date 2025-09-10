@@ -14,4 +14,7 @@ export interface UserRental {
   portal: string;
   floor: number;
   districtName: string;
+  paymentDate?: string;
+  paymentStatusId?: string;
+  paymentStatusName?: string;
 }

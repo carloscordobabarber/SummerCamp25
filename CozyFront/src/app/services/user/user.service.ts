@@ -10,6 +10,12 @@ import { UserRental } from '../../models/user-rental';
 })
 export class UserService {
   /**
+   * Devuelve el token JWT almacenado en localStorage
+   */
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+  /**
    * Obtiene el id del usuario actual desde el token JWT (Posiblemente obsoleto con GetUser)
    */
   getUserIdFromToken(): number | null {

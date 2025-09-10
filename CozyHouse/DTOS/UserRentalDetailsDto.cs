@@ -19,6 +19,9 @@ namespace DTOS
         public string StreetName { get; set; } = null!;
         public string Portal { get; set; } = null!;
         public int Floor { get; set; }
-        public string DistrictName { get; set; } = null!;
+    public string DistrictName { get; set; } = null!;
+    public string? PaymentStatusId { get; set; }
+    public DateTime? PaymentDate { get; set; }
+    public string? PaymentStatusName { get; set; }
     }
 }

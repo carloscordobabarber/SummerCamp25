@@ -23,3 +23,22 @@
 .tab-content {
 	min-height: 350px;
 }
+
+.incidence-grid {
+	display: grid;
+	grid-template-columns: auto 2fr;
+	gap: 2em;
+	align-items: flex-start;
+	width: 100%;
+	height: 100%;
+}
+
+.incidence-sidebar {
+	width: 100%;
+	height: 100%;
+}
+
+.incidence-viewer {
+	width: 100%;
+	height: 100%;
+}

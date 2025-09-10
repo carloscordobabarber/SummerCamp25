@@ -22,6 +22,9 @@
           <th>Fecha fin</th>
           <th>Precio</th>
           <th>Estado</th>
+          <th class="border-start"></th>
+          <th>Último Pago</th>
+          <th>Estado pago</th>
           <th></th>
         </tr>
       </thead>
@@ -39,12 +42,22 @@
           <td>{{ rental.apartmentPrice | currency:'EUR':'symbol':'1.0-0' }}</td>
           <td>
             <span class="badge bg-info">{{ rental.statusName }}</span>
-            </td>
-            <td>
-              <span *ngIf="rental.statusName === 'Impago'"> 
-                <button class="btn btn-primary btn-sm ms-2" (click)="openPaymentForm(rental)">Pagar</button>
-              </span>
-            </td>
+          </td>
+          <td class="border-start"></td>
+          <td>
+            <span *ngIf="rental.paymentDate">{{ rental.paymentDate | date:'dd/MM/yyyy' }}</span>
+            <span *ngIf="!rental.paymentDate">-</span>
+          </td>
+          <td>
+            <span class="badge" [ngClass]="{
+              'bg-success': rental.paymentStatusName === 'Pagado',
+              'bg-danger': rental.paymentStatusName === 'Impagado',
+              'bg-warning': rental.paymentStatusName !== 'Pagado' && rental.paymentStatusName !== 'Impagado'
+            }">{{ rental.paymentStatusName || '-' }}</span>
+          </td>
+          <td>
+            <button *ngIf="rental.paymentStatusId === 'U' || rental.paymentStatusName === 'Impago'" class="btn btn-primary btn-sm" (click)="openPaymentForm(rental)">Pagar</button>
+          </td>
         </tr>
       </tbody>
     </table>

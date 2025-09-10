@@ -50,6 +50,20 @@ namespace SistemaAPI.Controllers
                     var districtStreet = street != null ? districtStreets.FirstOrDefault(ds => ds.StreetId == street.Id) : null;
                     var district = districtStreet != null ? districts.FirstOrDefault(d => d.Id == districtStreet.DistrictId) : null;
 
+                    // Obtener el último pago para este alquiler
+                    var payment = await _context.Payments
+                        .Where(p => p.RentalId == rental.Id)
+                        .OrderByDescending(p => p.PaymentDate)
+                        .FirstOrDefaultAsync();
+
+                    // Obtener el nombre del estado de pago
+                    string? paymentStatusName = null;
+                    if (payment != null && payment.StatusId != null)
+                    {
+                        var paymentStatus = await _context.Statuses.FirstOrDefaultAsync(s => s.Id == payment.StatusId);
+                        paymentStatusName = paymentStatus?.Name;
+                    }
+
                     result.Add(new UserRentalDetailsDto
                     {
                         RentalId = rental.Id,
@@ -66,7 +80,10 @@ namespace SistemaAPI.Controllers
                         StreetName = street?.Name ?? string.Empty,
                         Portal = building?.Doorway ?? string.Empty,
                         Floor = apartment?.Floor ?? 0,
-                        DistrictName = district?.Name ?? string.Empty
+                        DistrictName = district?.Name ?? string.Empty,
+                        PaymentDate = payment?.PaymentDate,
+                        PaymentStatusId = payment?.StatusId,
+                        PaymentStatusName = paymentStatusName
                     });
                 }
 

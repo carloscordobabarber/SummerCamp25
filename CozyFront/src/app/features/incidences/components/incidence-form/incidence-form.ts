@@ -40,7 +40,7 @@ export class IncidenceForm {
       description: ['', [Validators.required, Validators.maxLength(1000)]],
       issueType: [6, [Validators.required]],
       apartmentId: ['', [Validators.required]],
-  rentalId: [null]
+  rentalId: [{ value: null, disabled: true }]
     });
 
   const userId = this.userService.getUserIdFromToken();
@@ -74,9 +74,9 @@ export class IncidenceForm {
     const rental = this.userRentals.find(r => r.apartmentId === apartmentId);
     if (rental) {
       this.incidenceForm.patchValue({
-        apartmentId: rental.apartmentId,
-        rentalId: rental.rentalId
+        apartmentId: rental.apartmentId
       });
+      this.incidenceForm.get('rentalId')?.setValue(rental.rentalId);
     }
   }
 

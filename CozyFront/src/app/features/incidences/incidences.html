@@ -7,9 +7,13 @@
 		<app-incidence-form></app-incidence-form>
 	</ng-container>
 	<ng-container *ngIf="tab === 'historial'">
-		<div style="display: flex; gap: 2em; align-items: flex-start;">
-			<app-incidence-sidebar></app-incidence-sidebar>
-			<app-incidence-viewer [incidence]="selectedIncidence" [incidences]="incidences"></app-incidence-viewer>
+		<div class="incidence-grid">
+			<div class="incidence-sidebar">
+				<app-incidence-sidebar></app-incidence-sidebar>
+			</div>
+			<div class="incidence-viewer">
+				<app-incidence-viewer [incidence]="selectedIncidence" [incidences]="incidences"></app-incidence-viewer>
+			</div>
 		</div>
 	</ng-container>
 </div>
