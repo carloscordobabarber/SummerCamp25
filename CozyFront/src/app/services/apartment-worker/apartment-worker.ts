@@ -11,15 +11,15 @@ export class ApartmentWorker {
 
   constructor(private http: HttpClient) { }
 
-  getApartments(page?: number, pageSize?: number): Observable<any> {
+  getApartments(page?: number, pageSize?: number): Observable<Apartment[]> {
     let url = this.apiUrl;
     if (page !== undefined && pageSize !== undefined) {
       url += `?page=${page}&pageSize=${pageSize}`;
     }
-    return this.http.get<any>(url);
+    return this.http.get<Apartment[]>(url);
   }
 
-  getApartmentsWithFilters(filters: any): Observable<any> {
+  getApartmentsWithFilters(filters: any): Observable<{ items: Apartment[]; totalCount: number } | Apartment[]> {
     let params = [];
     if (filters.page) params.push(`page=${filters.page}`);
     if (filters.pageSize) params.push(`pageSize=${filters.pageSize}`);
@@ -32,6 +32,6 @@ export class ApartmentWorker {
     if (filters.door) params.push(`door=${encodeURIComponent(filters.door)}`);
     if (filters.code) params.push(`code=${encodeURIComponent(filters.code)}`);
     const url = this.apiUrl + (params.length ? '?' + params.join('&') : '');
-    return this.http.get<any>(url);
+    return this.http.get<{ items: Apartment[]; totalCount: number } | Apartment[]>(url);
   }
 }

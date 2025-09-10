@@ -9,10 +9,10 @@ import { Incidence } from '../../models/incidence';
 export class IncidencesService {
   private apiUrl = 'https://devdemoapi4.azurewebsites.net/api/incidences';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getIncidences(page?: number, pageSize?: number, filters?: any): Observable<any> {
-    let params = [];
+  getIncidences(page?: number, pageSize?: number, filters?: any): Observable<{ items: Incidence[]; totalCount: number }> {
+    let params: string[] = [];
     if (page !== undefined) params.push(`page=${page}`);
     if (pageSize !== undefined) params.push(`pageSize=${pageSize}`);
     if (filters) {
@@ -24,7 +24,7 @@ export class IncidencesService {
       if (filters.statusId) params.push(`statusId=${encodeURIComponent(filters.statusId)}`);
     }
     const url = this.apiUrl + (params.length ? '?' + params.join('&') : '');
-    return this.http.get<any>(url);
+    return this.http.get<{ items: Incidence[]; totalCount: number }>(url);
   }
 
   createIncidence(incidence: Incidence): Observable<Incidence> {

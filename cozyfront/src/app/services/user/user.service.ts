@@ -42,7 +42,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   //modificado para funcionar con JWT
-  getUsers(page?: number, pageSize?: number, filters?: any): Observable<any> {
+  getUsers(page?: number, pageSize?: number, filters?: any): Observable<{ items: UserProfile[]; totalCount: number }> {
     let params: any = {};
     if (page !== undefined && pageSize !== undefined) {
       params.page = page;
@@ -57,7 +57,7 @@ export class UserService {
     }
     const token = localStorage.getItem('token');
     const headers = token ? new HttpHeaders({ 'Authorization': `Bearer ${token}` }) : undefined;
-    return this.http.get<any>(this.userApiUrl, { params, headers });
+  return this.http.get<{ items: UserProfile[]; totalCount: number }>(this.userApiUrl, { params, headers });
   }
 
   /**
@@ -109,10 +109,10 @@ export class UserService {
     return this.http.get<UserProfile>(`${this.userApiUrl}/${userId}`, { headers });
   }
 
-  createUser(user: any): Observable<any> {
+  createUser(user: UserProfile): Observable<UserProfile> {
     const token = localStorage.getItem('token');
     const headers = token ? new HttpHeaders({ 'Authorization': `Bearer ${token}` }) : undefined;
-    return this.http.post<any>(this.userApiUrl, user, { headers });
+    return this.http.post<UserProfile>(this.userApiUrl, user, { headers });
   }
 
   updateUser(user: UserProfile): Observable<void> {
