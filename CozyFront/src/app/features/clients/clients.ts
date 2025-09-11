@@ -178,6 +178,7 @@ export class Clients implements OnInit {
     }
     // Solo enviar los campos originales, no los de confirmación
     const formValue = { ...this.clientForm.value };
+    formValue.statusId = 'A';
     delete formValue.confirmEmail;
     delete formValue.confirmPassword;
     this.userService.createUser(formValue).subscribe({

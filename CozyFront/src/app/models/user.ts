@@ -18,4 +18,5 @@ export interface UserProfile {
   birthDate: Date;
   phone?: string;
   role: string;
+  statusId: string;
 }

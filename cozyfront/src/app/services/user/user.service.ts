@@ -42,6 +42,7 @@ export class UserService {
     }
   }
 
+
    private userApiUrl = 'https://devdemoapi4.azurewebsites.net/api/users';
    private loginUrl = 'https://devdemoapi4.azurewebsites.net/api/login/login';
 
@@ -116,9 +117,7 @@ export class UserService {
   }
 
   createUser(user: UserProfile): Observable<UserProfile> {
-    const token = localStorage.getItem('token');
-    const headers = token ? new HttpHeaders({ 'Authorization': `Bearer ${token}` }) : undefined;
-    return this.http.post<UserProfile>(this.userApiUrl, user, { headers });
+    return this.http.post<UserProfile>(this.userApiUrl, user);
   }
 
   updateUser(user: UserProfile): Observable<void> {
