@@ -2,11 +2,11 @@ export interface UserRental {
   rentalId: number;
   userId: number;
   apartmentId: number;
-  apartmentArea: number;
   apartmentPrice: number;
   apartmentCode: string;
   apartmentDoor: string;
   apartmentFloor: number;
+  apartmentArea: number;
   startDate: string;
   endDate: string;
   statusId: string;

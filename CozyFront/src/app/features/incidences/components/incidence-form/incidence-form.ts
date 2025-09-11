@@ -95,12 +95,12 @@ export class IncidenceForm {
       formValue.issueType = Number(formValue.issueType);
 
       // Validación: rentalId debe corresponder al apartmentId seleccionado
-      const rental = this.userRentals.find(r => r.apartmentId === Number(formValue.apartmentId) && r.rentalId === this.selectedRentalId);
-      if (!rental) {
+      const user_rental = this.userRentals.find(r => r.apartmentId === Number(formValue.apartmentId) && r.rentalId === this.selectedRentalId);
+      if (!user_rental) {
         alert('El número de contrato no corresponde al apartamento seleccionado.');
         return;
       }
-
+      console.log('user_rental:', user_rental);
       const tenantId = this.userService.getUserIdFromToken();
       if (tenantId === null) {
         alert('No se ha encontrado usuario logueado. Por favor, inicia sesión.');
@@ -124,17 +124,18 @@ export class IncidenceForm {
         next: (res) => {
           // Crear incidencia en CozyFront API si la anterior fue exitosa
           const newIncidenceId = res && res.id ? res.id : 0;
-          const cf_address = `${rental.streetName} ${rental.portal || ''}, ${rental.floor || ''} ${rental.apartmentDoor || ''}`.trim();
+          const cf_address = `${user_rental.streetName} ${user_rental.portal || ''}, ${user_rental.floor || ''} ${user_rental.apartmentDoor || ''}`.trim();
           const cfIncidence: CF_Incidence = {
             incidenceId: newIncidenceId,
             issueTypeId: formValue.issueType,
             description: formValue.description,
             address: cf_address,
-            surface: rental.apartmentArea || 0
+            surface: user_rental.apartmentArea
           };
           this.cfIncidenceService.createIncidence(cfIncidence).subscribe({
             next: () => {
               alert('Incidencia enviada correctamente a CozyFront y API externa');
+              this.selectedRentalId = null;
               this.incidenceForm.reset();
             },
             error: () => {
