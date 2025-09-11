@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CozyData;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity; // Añadido para hashing
 
 namespace SistemaAPI.Controllers
 {
@@ -106,6 +107,10 @@ namespace SistemaAPI.Controllers
             user.CreatedAt = DateTime.UtcNow;
             user.UpdatedAt = null;
             user.StatusId = "A"; // Asignar 'A' por defecto (Activo)
+
+            // Hash de la contraseña antes de guardar
+            var passwordHasher = new PasswordHasher<User>();
+            user.Password = passwordHasher.HashPassword(user, user.Password);
 
             _context.Users.Add(user);
             try

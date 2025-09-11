@@ -30,7 +30,7 @@ namespace Dominio
         [Required, StringLength(20)]
         public string Phone { get; set; }
 
-        [Required, StringLength(24), RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':\""\\|,.<>\/?]).{8,}$", ErrorMessage = "La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y un carácter especial.")]
+        [Required, StringLength(256)]
         public string Password { get; set; } = null!;
 
         [Required, StringLength(6)]

@@ -3,6 +3,7 @@ using Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CozyData;
+using Microsoft.AspNetCore.Identity; // Añadido para hashing
 
 using SistemaAPI.Servicios;
 using Microsoft.Extensions.Logging;
@@ -34,8 +35,7 @@ namespace SistemaAPI.Controllers
                 return BadRequest("Email y contraseña son obligatorios.");
             }
 
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == loginDto.Email && u.Password == loginDto.Password);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
 
             if (user == null)
             {
@@ -43,7 +43,9 @@ namespace SistemaAPI.Controllers
                 return Unauthorized("Usuario no registrado.");
             }
 
-            if (!loginDto.Password.Equals(user.Password))
+            var passwordHasher = new PasswordHasher<User>();
+            var verificationResult = passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password);
+            if (verificationResult == PasswordVerificationResult.Failed)
             {
                 _logger.LogWarning("Intento de login fallido: contraseña incorrecta para usuario con email {Email}", loginDto.Email);
                 return Unauthorized("Contraseña incorrecta");
