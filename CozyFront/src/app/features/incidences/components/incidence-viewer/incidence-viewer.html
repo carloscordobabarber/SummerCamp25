@@ -1,17 +1,5 @@
 <div *ngIf="incidence" class="incidence-card">
 	<div class="incidence-id">Incidencia #{{ incidenceNumber }}</div>
-	<div class="incidence-field">
-		<span class="incidence-label">Tipo:</span>
-		<span class="incidence-value">{{ issueTypeName }}</span>
-	</div>
-	<div class="incidence-field">
-		<span class="incidence-label">Persona de contacto:</span>
-		<span class="incidence-value">{{ incidence.spokesperson }}</span>
-	</div>
-	<div class="incidence-field">
-		<span class="incidence-label">Descripción:</span>
-		<span class="incidence-value">{{ incidence.description }}</span>
-	</div>
 	<div class="incidence-row">
 		<div class="incidence-field">
 			<span class="incidence-label">Tipo:</span>
@@ -26,6 +14,10 @@
 			<span class="incidence-value">{{ incidence.createdAt | date:'short' }}</span>
 		</div>
 	</div>
+	<div class="incidence-field">
+		<span class="incidence-label">Descripción:</span>
+		<span class="incidence-value">{{ incidence.description }}</span>
+	</div>	
 	<div class="incidence-field">
 		<span class="incidence-label">ID Apartamento:</span>
 		<span class="incidence-value">{{ incidence.apartmentId }}</span>

@@ -12,6 +12,7 @@ namespace DTOS
         public string ApartmentCode { get; set; } = null!;
         public string ApartmentDoor { get; set; } = null!;
         public int ApartmentFloor { get; set; }
+        public double ApartmentArea { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string StatusId { get; set; } = null!;
@@ -19,9 +20,9 @@ namespace DTOS
         public string StreetName { get; set; } = null!;
         public string Portal { get; set; } = null!;
         public int Floor { get; set; }
-    public string DistrictName { get; set; } = null!;
-    public string? PaymentStatusId { get; set; }
-    public DateTime? PaymentDate { get; set; }
-    public string? PaymentStatusName { get; set; }
+        public string DistrictName { get; set; } = null!;
+        public string? PaymentStatusId { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public string? PaymentStatusName { get; set; }
     }
 }

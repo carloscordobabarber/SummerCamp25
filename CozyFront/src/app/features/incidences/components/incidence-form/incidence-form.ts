@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IncidencesService } from '../../../../services/incidences/incidences.service';
+import { CfIncidenceService } from '../../../../services/cf-incidence/cf-incidence.service';
 import { UserRentalsService } from '../../../../services/user/user-rentals.service';
 import { UserService } from '../../../../services/user/user.service';
 import { UserRental } from '../../../../models/user-rental';
 import { Incidence } from '../../../../models/incidence';
+import { CF_Incidence } from '../../../../models/cf-incidence';
 
 @Component({
   selector: 'app-incidence-form',
@@ -18,6 +20,7 @@ export class IncidenceForm {
   incidenceForm: FormGroup;
   userRentals: UserRental[] = [];
   userRole: string = '';
+  selectedRentalId: number | null = null;
 
   incidenceTypes = [
     'Avería eléctrica',
@@ -33,18 +36,19 @@ export class IncidenceForm {
     private fb: FormBuilder,
     private incidencesService: IncidencesService,
     private userRentalsService: UserRentalsService,
-    private userService: UserService
+    private userService: UserService,
+    private cfIncidenceService: CfIncidenceService,
   ) {
     this.incidenceForm = this.fb.group({
       spokesperson: [' ', [Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.maxLength(1000)]],
       issueType: [6, [Validators.required]],
       apartmentId: ['', [Validators.required]],
-  rentalId: [{ value: null, disabled: true }]
+      rentalId: [{ value: null, disabled: true }]
     });
 
-  const userId = this.userService.getUserIdFromToken();
-  this.userRole = this.userService.getRoleFromToken() || '';
+    const userId = this.userService.getUserIdFromToken();
+    this.userRole = this.userService.getRoleFromToken() || '';
 
     if (this.userRole !== 'Admin' && userId) {
       // Solo carga los alquileres del usuario logueado
@@ -76,7 +80,9 @@ export class IncidenceForm {
       this.incidenceForm.patchValue({
         apartmentId: rental.apartmentId
       });
-      this.incidenceForm.get('rentalId')?.setValue(rental.rentalId);
+      this.selectedRentalId = rental.rentalId;
+    } else {
+      console.warn('[onRentalChange] No se encontró rental para apartmentId:', apartmentId);
     }
   }
 
@@ -89,7 +95,7 @@ export class IncidenceForm {
       formValue.issueType = Number(formValue.issueType);
 
       // Validación: rentalId debe corresponder al apartmentId seleccionado
-      const rental = this.userRentals.find(r => r.apartmentId === Number(formValue.apartmentId) && r.rentalId === Number(formValue.rentalId));
+      const rental = this.userRentals.find(r => r.apartmentId === Number(formValue.apartmentId) && r.rentalId === this.selectedRentalId);
       if (!rental) {
         alert('El número de contrato no corresponde al apartamento seleccionado.');
         return;
@@ -109,15 +115,33 @@ export class IncidenceForm {
         createdAt: new Date().toISOString(),
         updatedAt: null,
         apartmentId: Number(formValue.apartmentId),
-        rentalId: Number(formValue.rentalId),
+        rentalId: Number(this.selectedRentalId),
         tenantId,
         statusId: 'P'
       };
 
       this.incidencesService.createIncidence(incidence).subscribe({
         next: (res) => {
-          alert('Incidencia enviada correctamente');
-          this.incidenceForm.reset();
+          // Crear incidencia en CozyFront API si la anterior fue exitosa
+          const newIncidenceId = res && res.id ? res.id : 0;
+          const cf_address = `${rental.streetName} ${rental.portal || ''}, ${rental.floor || ''} ${rental.apartmentDoor || ''}`.trim();
+          const cfIncidence: CF_Incidence = {
+            incidenceId: newIncidenceId,
+            issueTypeId: formValue.issueType,
+            description: formValue.description,
+            address: cf_address,
+            surface: rental.apartmentArea || 0
+          };
+          this.cfIncidenceService.createIncidence(cfIncidence).subscribe({
+            next: () => {
+              alert('Incidencia enviada correctamente a CozyFront y API externa');
+              this.incidenceForm.reset();
+            },
+            error: () => {
+              alert('Incidencia guardada en CozyFront pero error al enviar a API externa');
+              this.incidenceForm.reset();
+            }
+          });
         },
         error: (err) => {
           alert('Error al enviar la incidencia');

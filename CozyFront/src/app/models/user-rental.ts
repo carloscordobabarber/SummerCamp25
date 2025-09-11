@@ -2,6 +2,7 @@ export interface UserRental {
   rentalId: number;
   userId: number;
   apartmentId: number;
+  apartmentArea: number;
   apartmentPrice: number;
   apartmentCode: string;
   apartmentDoor: string;

@@ -73,6 +73,7 @@ namespace SistemaAPI.Controllers
                         ApartmentCode = apartment?.Code ?? string.Empty,
                         ApartmentDoor = apartment?.Door ?? string.Empty,
                         ApartmentFloor = apartment?.Floor ?? 0,
+                        ApartmentArea = apartment?.Area ?? 0,
                         StartDate = rental.StartDate,
                         EndDate = rental.EndDate,
                         StatusId = rental.StatusId,
