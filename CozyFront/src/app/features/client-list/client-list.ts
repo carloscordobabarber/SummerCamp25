@@ -1,6 +1,6 @@
 
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserProfile } from '../../models/user';
 import { Client } from '../../models/client';
 import { UserService } from '../../services/user/user.service';
@@ -12,7 +12,7 @@ import { UserService } from '../../services/user/user.service';
   styleUrl: './client-list.css'
 })
 
-export class ClientList {
+export class ClientList implements OnInit {
   clients: Client[] = [];
   cargando: boolean = false;
   page = 1;
@@ -26,9 +26,29 @@ export class ClientList {
   filterPhone = '';
   filterRole = '';
 
+  // Responsive sidebar
+  sidebarOpen = false;
+  isMobileView = false;
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  checkMobileView = () => {
+    this.isMobileView = window.matchMedia('(max-width: 900px)').matches;
+    if (!this.isMobileView) {
+      this.sidebarOpen = true;
+    }
+    if (this.isMobileView) {
+      this.sidebarOpen = false;
+    }
+  }
+
   constructor(private UserService: UserService) {}
 
   ngOnInit(): void {
+    this.checkMobileView();
+    window.addEventListener('resize', this.checkMobileView);
     this.cargando = true;
     this.loadClients();
   }

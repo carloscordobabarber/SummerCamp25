@@ -25,9 +25,29 @@ export class PaymentList implements OnInit {
   pageSize = 10;
   totalCount = 0;
 
+  // Responsive sidebar
+  sidebarOpen = false;
+  isMobileView = false;
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  checkMobileView = () => {
+    this.isMobileView = window.matchMedia('(max-width: 900px)').matches;
+    if (!this.isMobileView) {
+      this.sidebarOpen = true;
+    }
+    if (this.isMobileView) {
+      this.sidebarOpen = false;
+    }
+  }
+
   constructor(private paymentsService: PaymentsService) {}
 
   ngOnInit(): void {
+    this.checkMobileView();
+    window.addEventListener('resize', this.checkMobileView);
     this.loadPayments();
   }
 

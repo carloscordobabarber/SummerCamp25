@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Incidence } from '../../models/incidence';
 import { IncidencesService } from '../../services/incidences/incidences.service';
 
@@ -9,7 +9,7 @@ import { IncidencesService } from '../../services/incidences/incidences.service'
   styleUrl: './incidence-list.css'
 })
 
-export class IncidenceList {
+export class IncidenceList implements OnInit {
   incidences: Incidence[] = [];
   cargando: boolean = false;
   page = 1;
@@ -33,9 +33,29 @@ export class IncidenceList {
   filterTenantId: string = '';
   filterStatusId: string = '';
 
+  // Responsive sidebar
+  sidebarOpen = false;
+  isMobileView = false;
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  checkMobileView = () => {
+    this.isMobileView = window.matchMedia('(max-width: 900px)').matches;
+    if (!this.isMobileView) {
+      this.sidebarOpen = true;
+    }
+    if (this.isMobileView) {
+      this.sidebarOpen = false;
+    }
+  }
+
   constructor(private incidencesService: IncidencesService) { }
 
   ngOnInit(): void {
+    this.checkMobileView();
+    window.addEventListener('resize', this.checkMobileView);
     this.cargando = true;
     this.loadIncidences();
   }

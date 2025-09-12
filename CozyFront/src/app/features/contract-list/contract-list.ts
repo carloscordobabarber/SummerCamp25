@@ -24,6 +24,24 @@ export class ContractList implements OnInit {
   pageSize = 10;
   totalCount = 0;
 
+  // Responsive sidebar
+  sidebarOpen = false;
+  isMobileView = false;
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  checkMobileView = () => {
+    this.isMobileView = window.matchMedia('(max-width: 900px)').matches;
+    if (!this.isMobileView) {
+      this.sidebarOpen = true;
+    }
+    if (this.isMobileView) {
+      this.sidebarOpen = false;
+    }
+  }
+
   // Mapeo de estados
   statusMap: { [key: string]: string } = {
     'A': 'Activo',
@@ -45,6 +63,8 @@ export class ContractList implements OnInit {
   constructor(private rentalsService: RentalsService) {}
 
   ngOnInit(): void {
+    this.checkMobileView();
+    window.addEventListener('resize', this.checkMobileView);
     this.loadRentals();
   }
 

@@ -31,6 +31,23 @@ export class Contact {
   pageSize = 10;
   totalCount = 0;
   cargando = false;
+  // Responsive sidebar
+  sidebarOpen = false;
+  isMobileView = false;
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  checkMobileView = () => {
+    this.isMobileView = window.matchMedia('(max-width: 900px)').matches;
+    if (!this.isMobileView) {
+      this.sidebarOpen = true;
+    }
+    if (this.isMobileView) {
+      this.sidebarOpen = false;
+    }
+  }
 
   contactReasonOptions = [
     'Trabaja con nosotros',
@@ -82,6 +99,8 @@ export class Contact {
 
   // Métodos para la lista de contactos admin
   ngOnInit() {
+    this.checkMobileView();
+    window.addEventListener('resize', this.checkMobileView);
     if (this.isAdmin) {
       this.loadContacts();
     }

@@ -1,3 +1,101 @@
+@media (max-width: 900px) {
+	.main-content {
+		width: 100vw;
+		overflow-x: auto;
+		padding: 0.5rem 0.2rem 1.5rem 0.2rem;
+	}
+	.main-content table {
+		min-width: 700px;
+		width: 100%;
+		display: block;
+		overflow-x: auto;
+		white-space: nowrap;
+	}
+	.main-content thead, .main-content tbody, .main-content tr {
+		display: table;
+		width: 100%;
+		table-layout: fixed;
+	}
+	.main-content td, .main-content th {
+		word-break: break-word;
+		font-size: 0.95em;
+		padding: 0.4em 0.3em;
+	}
+}
+/* Responsive sidebar para móvil */
+.open-filters-btn {
+	display: none;
+	width: 100%;
+	margin-bottom: 18px;
+	background: #3b5c50;
+	color: #fff;
+	border: none;
+	border-radius: 50px;
+	padding: 12px 22px;
+	font-size: 1.1rem;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+	align-items: center;
+	gap: 8px;
+}
+.open-filters-btn .material-icons {
+	vertical-align: middle;
+	font-size: 1.3em;
+}
+.close-filters-btn {
+	display: none;
+	background: none;
+	border: none;
+	color: #3b5c50;
+	font-size: 2rem;
+	position: absolute;
+	top: 18px;
+	right: 18px;
+	z-index: 10;
+}
+.close-filters-btn .material-icons {
+	font-size: 2rem;
+}
+@media (max-width: 900px) {
+	.card-manager-layout {
+		flex-direction: column;
+	}
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: -100vw;
+		width: 85vw;
+		max-width: 350px;
+		height: 100vh;
+		z-index: 1001;
+		background: #f9f9fb;
+		box-shadow: 2px 0 16px rgba(0,0,0,0.13);
+		transition: left 0.3s cubic-bezier(.4,0,.2,1);
+		border-radius: 0 12px 12px 0;
+		padding-top: 2.5rem;
+	}
+	.sidebar.sidebar-mobile-open {
+		left: 0;
+		transition: left 0.3s cubic-bezier(.4,0,.2,1);
+	}
+	.main-content {
+		padding: 1rem 0.5rem 1.5rem 0.5rem;
+	}
+	.open-filters-btn {
+		display: flex;
+	}
+	.close-filters-btn {
+		display: block;
+	}
+	.sidebar {
+		position: fixed;
+	}
+	@media (max-width: 900px) {
+		.sidebar {
+			padding-top: 5.5rem;
+		}
+	}
+}
+/* --- Fin bloque responsive sidebar --- */
 .slider-area-limit input[type="range"] {
 	max-width: 220px !important;
 	width: 100% !important;
