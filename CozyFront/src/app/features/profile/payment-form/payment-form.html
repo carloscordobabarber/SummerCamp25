@@ -1,23 +1,23 @@
-<h2>Formulario de Pago</h2>
-<form [formGroup]="paymentForm" (ngSubmit)="submit()">
-	<div class="mb-3">
-		<label>Monto</label>
+<h2 class="mb-4">Formulario de Pago</h2>
+<form [formGroup]="paymentForm" (ngSubmit)="submit()" class="p-3" style="border-radius: 8px;">
+	<div class="mb-4">
+		<label class="form-label">Monto</label>
 		<input type="number" class="form-control" formControlName="amount" readonly>
 	</div>
-		<div class="mb-3" *ngIf="rental">
-			<label>Alquiler</label>
-			<input type="text" class="form-control" [value]="rental?.districtName + ', ' + rental?.streetName" readonly>
-		</div>
-	<div class="mb-3">
-		<label>Fecha de pago</label>
+	<div class="mb-4" *ngIf="rental">
+		<label class="form-label">Alquiler</label>
+		<input type="text" class="form-control" [value]="rental?.districtName + ', ' + rental?.streetName" readonly>
+	</div>
+	<div class="mb-4">
+		<label class="form-label">Fecha de pago</label>
 		<input type="date" class="form-control" formControlName="paymentDate">
 	</div>
-	<div class="mb-3">
-		<label>Cuenta bancaria</label>
+	<div class="mb-4">
+		<label class="form-label">Cuenta bancaria</label>
 		<input type="text" class="form-control" formControlName="bankAccount" required>
 	</div>
-	<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
-	<div class="d-flex justify-content-end">
+	<div *ngIf="error" class="alert alert-danger mb-3">{{ error }}</div>
+	<div class="d-flex justify-content-end pt-2">
 		<button type="button" class="btn btn-secondary me-2" (click)="cancel()">Cancelar</button>
 		<button type="submit" class="btn btn-primary" [disabled]="loading">Pagar</button>
 	</div>

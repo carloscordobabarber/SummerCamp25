@@ -50,13 +50,16 @@
           </td>
           <td>
             <span class="badge" [ngClass]="{
-              'bg-success': rental.paymentStatusName === 'Pagado',
-              'bg-danger': rental.paymentStatusName === 'Impagado',
-              'bg-warning': rental.paymentStatusName !== 'Pagado' && rental.paymentStatusName !== 'Impagado'
-            }">{{ rental.paymentStatusName || '-' }}</span>
+                'bg-success': rental.paymentStatusName === 'Pagado',
+                'bg-danger': rental.paymentStatusName === 'Impagado',
+                'bg-warning': !rental.paymentStatusName || !rental.paymentDate || (rental.paymentStatusName !== 'Pagado' && rental.paymentStatusName !== 'Impagado')
+              }">
+                {{ !rental.paymentStatusName || !rental.paymentDate ? 'Impagado' : (rental.paymentStatusName || '-') }}
+              </span>
           </td>
           <td>
-            <button *ngIf="rental.paymentStatusId === 'U' || rental.paymentStatusName === 'Impago'" class="btn btn-primary btn-sm" (click)="openPaymentForm(rental)">Pagar</button>
+
+            <button *ngIf="rental.statusId === 'I'" class="btn btn-primary btn-sm" (click)="openPaymentForm(rental)">Pagar</button>
           </td>
         </tr>
       </tbody>

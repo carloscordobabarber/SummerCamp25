@@ -65,14 +65,14 @@ export class PaymentFormComponent implements OnChanges {
     console.log('Enviando pago:', payment);
     this.paymentsService.createPayment(payment).subscribe({
       next: () => {
-        // Actualizar el statusId del alquiler a 'U'
+        // Actualizar el statusId del alquiler a 'A'
         this.rentalsService.updateRental(payment.rentalId, {
           id: payment.rentalId,
           userId: this.rental.userId,
           apartmentId: this.rental.apartmentId,
           startDate: this.rental.startDate,
           endDate: this.rental.endDate,
-          statusId: 'U'
+          statusId: 'A'
         }).subscribe({
           next: () => {
             this.loading = false;
