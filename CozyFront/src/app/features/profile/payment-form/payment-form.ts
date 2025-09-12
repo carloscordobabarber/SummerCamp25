@@ -57,6 +57,8 @@ export class PaymentFormComponent implements OnChanges {
       return;
     }
     this.loading = true;
+    this.error = null;
+
     const payment: Payment = {
       ...this.paymentForm.value,
       statusId: 'G',
@@ -65,10 +67,11 @@ export class PaymentFormComponent implements OnChanges {
       bankAccount: this.paymentForm.value.bankAccount,
       paymentDate: this.paymentForm.value.paymentDate
     };
-    console.log('Enviando pago:', payment);
+
+    // 1. Guardar en tu BD
     this.paymentsService.createPayment(payment).subscribe({
       next: () => {
-        // Actualizar el statusId del alquiler a 'A'
+        // 2. Actualizar el statusId del alquiler a 'A'
         this.rentalsService.updateRental(payment.rentalId, {
           id: payment.rentalId,
           userId: this.rental.userId,
@@ -78,8 +81,26 @@ export class PaymentFormComponent implements OnChanges {
           statusId: 'A'
         }).subscribe({
           next: () => {
-            this.loading = false;
-            this.paymentSuccess.emit();
+            // 3. Mandar el pago a elPaymentService SOLO si todo lo anterior fue bien
+            const apartmentCode = this.rental?.apartmentCode || this.rental?.code || '';
+            const amount = Number(this.paymentForm.value.amount);
+            const description = `Pago del apartamento ${apartmentCode}: ${amount}`;
+            const elPayment: ElPayment = {
+              description,
+              apartmentCode,
+              amount
+            };
+            this.elPaymentService.postPayment(elPayment).subscribe({
+              next: () => {
+                this.loading = false;
+                this.paymentSuccess.emit();
+              },
+              error: (err: any) => {
+                this.loading = false;
+                this.error = 'Error al enviar el pago a ElPayment';
+                console.error('Error en ElPayment:', err);
+              }
+            });
           },
           error: err => {
             this.loading = false;
@@ -92,26 +113,6 @@ export class PaymentFormComponent implements OnChanges {
         this.loading = false;
         this.error = 'Error al realizar el pago';
         console.error('Error en el pago:', err);
-      }
-    });
-    // Construir el objeto ElPayment
-    const apartmentCode = this.rental?.apartmentCode || this.rental?.code || '';
-    const amount = this.paymentForm.value.amount;
-    const description = `Pago del apartamento ${apartmentCode}: ${amount}`;
-    const elPayment: ElPayment = {
-      description,
-      apartmentCode,
-      amount
-    };
-    this.elPaymentService.postPayment(elPayment).subscribe({
-      next: () => {
-        this.loading = false;
-        this.paymentSuccess.emit();
-      },
-      error: (err: any) => {
-        this.loading = false;
-        this.error = 'Error al enviar el pago a ElPayment';
-        console.error('Error en ElPayment:', err);
       }
     });
   }
