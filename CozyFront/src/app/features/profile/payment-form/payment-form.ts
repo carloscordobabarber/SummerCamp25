@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PaymentsService } from '../../../services/payments/payments.service';
 import { RentalsService } from '../../../services/rentals/rentals.service';
 import { Payment } from '../../../models/payment';
+import { ElPayment } from '../../../models/el-payment';
+import { ElPaymentService } from '../../../services/el-Payment/el-payment.service';
 
 @Component({
   selector: 'app-payment-form',
@@ -26,7 +28,8 @@ export class PaymentFormComponent implements OnChanges {
   constructor(
     private fb: FormBuilder,
     private paymentsService: PaymentsService,
-    private rentalsService: RentalsService
+    private rentalsService: RentalsService,
+    private elPaymentService: ElPaymentService
   ) { }
 
   ngOnInit() {
@@ -89,6 +92,26 @@ export class PaymentFormComponent implements OnChanges {
         this.loading = false;
         this.error = 'Error al realizar el pago';
         console.error('Error en el pago:', err);
+      }
+    });
+    // Construir el objeto ElPayment
+    const apartmentCode = this.rental?.apartmentCode || this.rental?.code || '';
+    const amount = this.paymentForm.value.amount;
+    const description = `Pago del apartamento ${apartmentCode}: ${amount}`;
+    const elPayment: ElPayment = {
+      description,
+      apartmentCode,
+      amount
+    };
+    this.elPaymentService.postPayment(elPayment).subscribe({
+      next: () => {
+        this.loading = false;
+        this.paymentSuccess.emit();
+      },
+      error: (err: any) => {
+        this.loading = false;
+        this.error = 'Error al enviar el pago a ElPayment';
+        console.error('Error en ElPayment:', err);
       }
     });
   }

@@ -16,7 +16,6 @@ export interface ElPaymentDto {
 })
 export class ElPaymentService {
   private apiUrl = 'https://devdemoapi3.azurewebsites.net/api/transactions';
-
   constructor(private http: HttpClient) {}
 
   postPayment(payment: ElPaymentDto): Observable<ElPaymentDto> {
