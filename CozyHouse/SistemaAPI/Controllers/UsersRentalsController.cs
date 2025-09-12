@@ -97,5 +97,38 @@ namespace SistemaAPI.Controllers
                 return StatusCode(500, $"Error al obtener los alquileres del usuario: {ex.Message}");
             }
         }
+
+        // PATCH: api/UsersRentals/user/{rentalId}/status
+        [HttpPatch("user/{rentalId}/status")]
+        public async Task<IActionResult> PatchRentalStatus(int rentalId, [FromBody] PatchRentalStatusDto dto)
+        {
+            if (dto == null || string.IsNullOrWhiteSpace(dto.StatusId))
+            {
+                _logger.LogWarning("PATCH alquiler fallido: StatusId nulo o vacío");
+                return BadRequest("StatusId es obligatorio.");
+            }
+
+            var rental = await _context.Rentals.FindAsync(rentalId);
+            if (rental == null)
+            {
+                _logger.LogWarning("PATCH alquiler fallido: alquiler id {RentalId} no encontrado", rentalId);
+                return NotFound();
+            }
+
+            rental.StatusId = dto.StatusId;
+            _context.Entry(rental).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Alquiler id {RentalId} actualizado correctamente a StatusId {StatusId}", rentalId, dto.StatusId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al actualizar el StatusId del alquiler id {RentalId}", rentalId);
+                return StatusCode(500, $"Error al actualizar el StatusId del alquiler: {ex.Message}");
+            }
+
+            return NoContent();
+        }
     }
 }

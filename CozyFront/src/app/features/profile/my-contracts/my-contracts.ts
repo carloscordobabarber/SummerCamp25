@@ -62,13 +62,36 @@ export class MyContracts implements AfterViewInit, OnInit {
     const today = new Date();
     const start = new Date(contract.startDate);
     const end = new Date(contract.endDate);
+
+    // Si today < start, debe ser 'I' (Pendiente)
     if (today < start) {
-      return 'Pending';
-    } else if (today > end) {
-      return 'Finished';
-    } else {
-      return 'Activo';
+      if (contract.statusId !== 'B') {
+        // Actualizar en la BD si es necesario
+        this.userService.updateContractStatus(contract.rentalId, 'B').subscribe({
+          next: () => contract.statusId = 'B',
+          error: (err: any) => console.error('Error actualizando statusId a B', err)
+        });
+      }
     }
+    // Si today > end, debe ser 'B' (Finalizado)
+    else if (today > end) {
+      if (contract.statusId !== 'I') {
+        this.userService.updateContractStatus(contract.rentalId, 'I').subscribe({
+          next: () => contract.statusId = 'I',
+          error: (err: any) => console.error('Error actualizando statusId a I', err)
+        });
+      }
+    }
+    // Si está activo, debe ser 'A'
+    else {
+      if (contract.statusId !== 'A') {
+        this.userService.updateContractStatus(contract.rentalId, 'A').subscribe({
+          next: () => contract.statusId = 'A',
+          error: (err: any) => console.error('Error actualizando statusId a A', err)
+        });
+      }
+    }
+    return contract.statusName;
   }
 
   isContractActive(contract: UserRental): boolean {
