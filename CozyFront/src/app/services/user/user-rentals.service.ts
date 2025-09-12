@@ -7,9 +7,8 @@ import { UserRental } from '../../models/user-rental';
 export class UserRentalsService {
 
 
-
-    private apiUrl = 'https://localhost:7195/api/UsersRentals/user';
-//  private apiUrl = 'https://devdemoapi4.azurewebsites.net/api/UsersRentals/user';
+    // private apiUrl = 'https://localhost:7195/api/UsersRentals/user';
+ private apiUrl = 'https://devdemoapi4.azurewebsites.net/api/UsersRentals/user';
 
   constructor(private http: HttpClient) {}
 
@@ -18,8 +17,6 @@ export class UserRentalsService {
   }
   
   updateContractStatus(rentalId: number, statusId: string): Observable<any> {
-    // Suponiendo que existe un endpoint para actualizar el statusId
-    // PATCH https://localhost:7195/api/UsersRentals/user/{rentalId}/status
     return this.http.patch(`${this.apiUrl}/${rentalId}/status`, { statusId });
   }
 }
