@@ -34,6 +34,24 @@ export class CardManager implements OnInit {
   // Mensaje de redirección por permisos
   redirectMessage: string | null = null;
 
+  // Responsive sidebar
+  sidebarOpen = false;
+  isMobileView = false;
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  checkMobileView = () => {
+    this.isMobileView = window.matchMedia('(max-width: 900px)').matches;
+    if (!this.isMobileView) {
+      this.sidebarOpen = true;
+    }
+    if (this.isMobileView) {
+      this.sidebarOpen = false;
+    }
+  }
+
   constructor(private http: HttpClient, private apartmentCardService: ApartmentCardService) {
     // Verifica si hay mensaje en sessionStorage
     const msg = sessionStorage.getItem('redirectMessage');
@@ -44,6 +62,8 @@ export class CardManager implements OnInit {
   }
 
   ngOnInit() {
+    this.checkMobileView();
+    window.addEventListener('resize', this.checkMobileView);
     this.loadApartments();
   }
 

@@ -1,10 +1,20 @@
 
+
+
 <div class="card-manager-container">
   <div *ngIf="redirectMessage" class="alert alert-warning" style="margin-bottom: 1em;">
     {{ redirectMessage }}
   </div>
   <div class="card-manager-layout">
-    <aside class="sidebar">
+    <!-- Botón de filtros solo visible en móvil, fuera del sidebar -->
+    <button class="open-filters-btn" *ngIf="isMobileView && !sidebarOpen" (click)="toggleSidebar()">
+      <span class="material-icons">filter_list</span> Filtros
+    </button>
+    <!-- Sidebar deslizable -->
+    <aside class="sidebar" [class.sidebar-mobile-open]="sidebarOpen" *ngIf="!isMobileView || sidebarOpen">
+      <button class="close-filters-btn" *ngIf="isMobileView" (click)="toggleSidebar()">
+        <span class="material-icons">close</span>
+      </button>
       <div class="filters-col">
         <div class="filter-item">
           <div class="slider-area-limit">
@@ -14,7 +24,6 @@
         <div class="filter-item">
           <app-range-slider-filter label="Precio (€)" [min]="200" [max]="5000" [step]="50" [minValue]="minPrice" [maxValue]="maxPrice" (rangeChange)="onPriceRangeChange($event)"></app-range-slider-filter>
         </div>
-
         <div class="filter-item">
           <app-search-bar (search)="onRoomsSearch($event)" placeholder="Número de habitaciones..."></app-search-bar>
         </div>
@@ -27,7 +36,7 @@
         <div class="filter-item">
           <label><input type="checkbox" [(ngModel)]="hasGarage" (change)="loadApartments()"> Garaje</label>
         </div>
-                <div class="filter-item" style="margin-top: 1.5em; text-align: center;">
+        <div class="filter-item" style="margin-top: 1.5em; text-align: center;">
           <button class="btn btn-outline-secondary" (click)="resetFilters()">
             Resetear filtros
           </button>
