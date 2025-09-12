@@ -8,10 +8,17 @@ import { UserService } from '../../services/user/user.service';
   styleUrl: './header.css'
 })
 export class Header {
-  constructor(private userService: UserService) {}
+  isMenuOpen = false;
+  
+  constructor(private userService: UserService) { }
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 
   logout() {
     localStorage.clear();
+    this.isMenuOpen = false; // Cierra menú al hacer logout
   }
 
   get isAdmin(): boolean {

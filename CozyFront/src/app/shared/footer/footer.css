@@ -1,3 +1,69 @@
+/* Línea y espaciado para redes sociales */
+.footer-socials-line {
+		border-top: 1.5px solid #AFC3B9;
+		padding-top: 0.7rem;
+		/* margin-top eliminado */
+}
+
+/* Línea y espaciado para copyright */
+.footer-copyright-line {
+	border-top: 1.5px solid #AFC3B9;
+	padding-top: 0.7rem;
+	margin-top: 0.7rem;
+}
+@media (min-width: 601px) {
+	.simple-footer {
+		max-width: 100vw !important;
+		width: 100vw !important;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+}
+@media (max-width: 600px) {
+	.simple-footer {
+		max-width: 360px !important;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+/* Border top igual al copyright para redes sociales */
+.footer-socials {
+	border-top: 1.5px solid #AFC3B9;
+	margin-top: 0.7rem;
+	padding-top: 0.7rem;
+}
+@media (max-width: 600px) {
+	.simple-footer {
+		padding-left: 10px !important;
+		padding-right: 10px !important;
+	}
+		.simple-footer .d-flex.gap-4 {
+			flex-direction: column !important;
+			gap: 0 !important;
+			align-items: center !important;
+		}
+}
+@media (max-width: 600px) {
+	.simple-footer {
+		padding-left: 10px !important;
+		padding-right: 10px !important;
+	}
+}
+/* Enlaces formales para el footer */
+.footer-link {
+	color: #fff !important;
+	font-size: 1.15rem;
+	font-weight: 500;
+	letter-spacing: 0.5px;
+	padding: 0.3rem 1.2rem;
+	border-radius: 6px;
+	text-decoration: none;
+	transition: color 0.2s, text-decoration 0.2s;
+}
+.footer-link:hover {
+	color: #F5F0E6 !important;
+	text-decoration: underline;
+}
 /* Pegado abajo siempre */
 body, app-root {
 	min-height: 100vh;
@@ -17,7 +83,9 @@ main {
 	background: #F5F0E6;
 	color: #222;
 	font-family: 'Inter', Arial, sans-serif;
-	padding: 1.1rem 0 0 0;
+	padding-top: 1.1rem;
+	padding-left: 18px;
+	padding-right: 18px;
 	border-top: 2px solid #AFC3B9;
 	width: 100%;
 	z-index: 100;
@@ -88,8 +156,8 @@ main {
 }
 
 .footer-icon-img {
-	width: 22px;
-	height: 22px;
+	width: 32px;
+	height: 32px;
 	vertical-align: middle;
 	opacity: 0.85;
 	transition: opacity 0.2s;

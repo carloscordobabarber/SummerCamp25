@@ -1,4 +1,4 @@
-<header class="header">
+<!-- <header class="header">
   <div class="logo">
     <a routerLink="/"><img src="assets/LogoCH.png" alt="Logo"></a>
   </div>
@@ -18,5 +18,121 @@
     <a *ngIf="!isLoggedIn" routerLink="/login" class="cta-button">Iniciar Sesión</a>
     <a *ngIf="!isLoggedIn" routerLink="/register" class="cta-button ms-2">Regístrate</a>
     <button *ngIf="isLoggedIn" (click)="logout()" routerLink="/" class="cta-button">Cerrar Sesión</button>
+  </div>
+</header> -->
+
+
+
+
+<!-- 
+
+<header class="header navbar navbar-expand-lg shadow-sm" style="background: linear-gradient(90deg, #afc3b9 0%, #f5f0e6 60%, #7a988f 100%) !important;">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <img src="assets/LogoCH.png" alt="Logo" class="logo-img me-2" />
+      <span class="fw-bold text-">CozyHouse</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-controls="navbarNav"
+      [attr.aria-expanded]="isMenuOpen" aria-label="Toggle navigation">
+
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [ngClass]="{ show: isMenuOpen }" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="">Inicio</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link" routerLink="/profile">Perfil</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/apartment-list">Apartamentos</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/client-list">Clientes</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/incidence-list">Incidencias</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/contract-list">Contratos</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/payment-list">Pagos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact">Contacto</a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center">
+        <a *ngIf="!isLoggedIn" routerLink="/login" class="btn btn-outline-primary me-2">Iniciar Sesión</a>
+        <a *ngIf="!isLoggedIn" routerLink="/register" class="btn btn-outline-primary me-3">Regístrate</a>
+        <button *ngIf="isLoggedIn" (click)="logout()" class="btn btn-danger" routerLink="/">
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </div>
+</header> -->
+
+
+
+<header class="header navbar navbar-expand-lg shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <img src="assets/LogoCH.png" alt="Logo" class="logo-img me-2" />
+      <span class="fw-bold text-">CozyHouse</span>
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMenu()"
+      aria-controls="navbarNav"
+      [attr.aria-expanded]="isMenuOpen"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [ngClass]="{ show: isMenuOpen }" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="">Inicio</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link" routerLink="/profile">Perfil</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/apartment-list">Apartamentos</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/client-list">Clientes</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/incidence-list">Incidencias</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/contract-list">Contratos</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/payment-list">Pagos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact">Contacto</a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center">
+        <a *ngIf="!isLoggedIn" routerLink="/login" class="btn btn-outline-primary me-2">Iniciar Sesión</a>
+        <a *ngIf="!isLoggedIn" routerLink="/register" class="btn btn-outline-primary me-3">Regístrate</a>
+        <button *ngIf="isLoggedIn" (click)="logout()" class="btn btn-danger" routerLink="/">
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
   </div>
 </header>

@@ -130,7 +130,7 @@ export class IncidenceForm {
             issueTypeId: formValue.issueType,
             description: formValue.description,
             address: cf_address,
-            surface: user_rental.apartmentArea
+            surface: user_rental.apartmentArea || 0
           };
           this.cfIncidenceService.createIncidence(cfIncidence).subscribe({
             next: () => {
