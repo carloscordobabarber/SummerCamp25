@@ -1,6 +1,15 @@
 <div class="card-manager-container">
   <div class="card-manager-layout">
-    <aside class="sidebar">
+    <!-- Botón de filtros solo visible en móvil, junto al sidebar -->
+    <!-- Botón de filtros solo visible en móvil, fuera del sidebar -->
+    <button class="open-filters-btn" *ngIf="isMobileView && !sidebarOpen" (click)="toggleSidebar()">
+      <span class="material-icons">filter_list</span> Filtros
+    </button>
+    <!-- Sidebar deslizable -->
+    <aside class="sidebar" [class.sidebar-mobile-open]="sidebarOpen" *ngIf="!isMobileView || sidebarOpen">
+      <button class="close-filters-btn" *ngIf="isMobileView" (click)="toggleSidebar()">
+        <span class="material-icons">close</span>
+      </button>
       <div class="filters-col">
         <div class="filter-item">
           <app-search-bar (search)="onCodeSearch($event)" placeholder="Buscar por código..."></app-search-bar>

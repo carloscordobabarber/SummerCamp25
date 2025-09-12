@@ -1,4 +1,5 @@
 
+
 import { Component, OnInit } from '@angular/core';
 import { Apartment } from '../../models/apartment';
 import { ApartmentFilters } from '../../models/apartment-filters';
@@ -14,6 +15,23 @@ import { ApartmentWorker } from '../../services/apartment-worker/apartment-worke
 })
 
 export class ApartmentList implements OnInit {
+  sidebarOpen = false;
+  isMobileView = false;
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  checkMobileView = () => {
+    // Usar matchMedia para detectar correctamente móviles y pantallas con alta densidad de píxeles
+    this.isMobileView = window.matchMedia('(max-width: 900px)').matches;
+    if (!this.isMobileView) {
+      this.sidebarOpen = true;
+    }
+    if (this.isMobileView) {
+      this.sidebarOpen = false;
+    }
+  }
   roomsOptions: number[] = [];
   bathsOptions: number[] = [];
   allApartments: Apartment[] = [];
@@ -49,6 +67,8 @@ export class ApartmentList implements OnInit {
   constructor(private apartmentWorker: ApartmentWorker) { }
 
   ngOnInit(): void {
+    this.checkMobileView();
+    window.addEventListener('resize', this.checkMobileView);
     this.cargando = true;
     // Cargar todos los apartamentos para los filtros globales
     this.apartmentWorker.getApartmentsWithFilters({ page: 1, pageSize: 10000 }).subscribe((result: ApartmentApiResult) => {
