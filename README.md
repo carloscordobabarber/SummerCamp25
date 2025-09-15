@@ -26,3 +26,7 @@ https://deepwiki.com/carloscordobabarber/SummerCamp25
 Link al build actual online:
 
 https://cozyhousesc25.netlify.app/
+
+Diagrama de BD:
+https://dbdiagram.io/d/BD-CH-revision-689c59791d75ee360a63fbda
+
